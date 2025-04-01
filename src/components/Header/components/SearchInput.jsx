@@ -4,7 +4,7 @@ import SearchBtn from "../ui/SearchBtn";
 
 const SearchInput =()=>{
     return(
-        <div>
+        <div className="flex">
             <Input/>
             <SearchBtn/>
         </div>

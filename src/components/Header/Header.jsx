@@ -6,9 +6,9 @@ import logo from '../../assets/logo.svg'
 
 const Header =()=>{
     return(
-        <header>
+        <header className="flex">
             <div>
-                <img src={logo} alt="logo"/>
+                <img src={logo} alt="logo" className="w-25"/>
             </div>
                 <InfoBtn/>
                 <SearchInput/>
