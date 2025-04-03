@@ -2,7 +2,7 @@ import React from "react";
 
 const Input =()=>{
     return(
-        <div className="mt-7.5 w-200 max-w-md mx-5  ">
+        <div className=" w-200 max-w-md mx-5  ">
         <input 
           type="text" 
           placeholder="Search" 
