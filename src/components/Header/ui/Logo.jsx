@@ -1,13 +1,19 @@
 import React from "react"
 import logo from '../../../assets/logo.svg'
+import { Link } from "react-router-dom"
 
-export const Logo=()=>{
+export const Logo=({size='lg', className=''})=>{
+    const sizes ={
+        sm: 'w-8 h-8',
+        md: 'w-10 h-10',
+        lg: 'w-24 h-24',
+        xl: 'w-40 h-40'
+    }
     return(
-    <div className="flex items-center">
-        <img src={logo} alt="logo" className="w-25 cursor-pointer"/>
-        <h1 className="mx-5 text-4xl font-bold bg-gradient-to-r from-blue-600  via-cyan-500 to-cyan-300
-         bg-clip-text text-transparent bg-size-200 animate-gradient
-         duration-300 cursor-pointer">Sellica</h1>
-    </div>
+        <Link to='/'>
+            <div>
+                <img src={logo} alt="logo" className={`${sizes[size]} ${className}`}/>
+            </div>
+        </Link>
     )
 }

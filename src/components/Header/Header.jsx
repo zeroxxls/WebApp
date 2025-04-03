@@ -3,18 +3,22 @@ import SearchInput from "./components/SearchInput";
 import AuthBtn from "../../modules/auth/components/authBtn";
 import InfoBtn from "./ui/InfoBtn";
 import { Logo } from "./ui/Logo";
+import { HeaderBrand } from "./ui/HeaderBrand";
 import { MoreBtn } from "./ui/MoreBtn";
 
 const Header =()=>{
     return(
         <header className="flex justify-between">
+            <div className="flex">
                 <Logo/>
-                <InfoBtn/>
-                <SearchInput/>
-                <div className="flex">
+                <HeaderBrand/>
+            </div>
+            <InfoBtn/>
+            <SearchInput/>
+            <div className="flex">
                 <AuthBtn/>
                 <MoreBtn/>
-                </div>
+            </div>
         </header>
     )
 }
