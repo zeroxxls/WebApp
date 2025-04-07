@@ -6,8 +6,8 @@ export const FooterInfo =()=>{
     return(
         <div className="md:col-span-2">
           <div className="flex items-center mb-4">
-            <Logo size="lg" className="mr-3"/>
-            <HeaderBrand size="lg" gradient="from-orange-500 to-amber-300"/>
+            <Logo />
+            <HeaderBrand />
           </div>
           <p className="text-gray-400 text-sm">
           The world of digital art, where everyone can find something new for themselves.
