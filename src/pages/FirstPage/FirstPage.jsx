@@ -1,6 +1,6 @@
 import React from "react";
-import { HeroSection } from "../../components/FirstPageInfo/components/HeroSection";
-import { TextSection } from "../../components/FirstPageInfo/components/TextSection";
+import { HeroSection } from "../../components/FirstPageInfo/HeroSection";
+import { TextSection } from "../../components/FirstPageInfo/TextSection";
 
 export const FirstPage = () => {
     return (
