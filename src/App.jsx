@@ -8,7 +8,7 @@ export const App =()=>{
     return(
         <div>
             <Routes>
-                <Route path="/FirstPage" element={<FirstPage/>}/>
+                <Route path="/" element={<FirstPage/>}/>
                 <Route path="/MainPage" element={
                     <WithHeader>
                             <MainPage/>
