@@ -1,6 +1,6 @@
 import React from "react";
 import SearchInput from "./components/SearchInput";
-import AuthBtn from "../../modules/auth/components/authBtn";
+import AuthBtn from "../../modules/auth/ui/authBtn";
 import InfoBtn from "./ui/InfoBtn";
 import { Logo } from "./ui/Logo";
 import { HeaderBrand } from "./ui/HeaderBrand";
