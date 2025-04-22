@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 
-const AuthBtn =({children, variant='sign-in', className='', ...props})=>{
+const AuthBtn =({children, variant='signIn', className='', ...props})=>{
     const baseClasses = "cursor-pointer rounded m-auto text-gray-300 font-semibold w-25 h-10 hover:shadow-md hover:outline-none transition-all duration-500"
     const variants={
         signIn:"bg-blue-600 hover:bg-blue-500",

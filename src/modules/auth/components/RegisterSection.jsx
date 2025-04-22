@@ -12,7 +12,7 @@ export const RegisterSection = () => {
                 <AuthInput placeholder={'E-Mail'}/>
                 <AuthInput placeholder={'Telefon'}/>
                 <AuthInput placeholder={'Password'} type={'password'}/>
-                <button className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded">Войти</button>
+                <button className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded">Register</button>
             </div>
         </div>
     </div>
