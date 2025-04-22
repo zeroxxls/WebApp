@@ -12,6 +12,7 @@ export const App =()=>{
         <div>
             <Routes>
                 <Route path="/" element={<FirstPage/>}/>
+                <Route path="/FirstPage" element={<FirstPage/>}/>
                 <Route path="/LoginPage" element={<LoginPage/>}/>
                 <Route path="/RegisterPage" element={<RegisterPage/>}/> 
                 <Route path="/MainPage" element={
