@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import SearchInput from "./components/SearchInput";
 import AuthBtn from "../../modules/auth/ui/authBtn";
 import InfoBtn from "./ui/InfoBtn";
@@ -18,7 +19,14 @@ const Header =()=>{
             <InfoBtn/>
             <SearchInput/>
             <div className="flex">
-                <AuthBtn/>
+                <div className="flex gap-7">
+                    <Link to="/RegisterPage">
+                     <AuthBtn variant="signUp">Sign Up</AuthBtn>
+                     </Link>
+                    <Link to="/LoginPage">
+                    <AuthBtn variant="signIn">Sign In</AuthBtn>
+                    </Link>
+                </div>
                 <MoreBtn/>
             </div>
         </header>
