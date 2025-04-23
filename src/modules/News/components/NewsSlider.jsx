@@ -9,37 +9,37 @@ const news = [
     {
       title: 'Новая 3D-работа от художника X',
       description: 'Фантастический концепт-флот в Sci-Fi сеттинге',
-      image: 'https://cdna.artstation.com/p/assets/images/images/000/123/456/large/example.jpg',
+      image: 'https://magazine.artstation.com/wp-content/uploads/2025/04/B_1280x400.png',
     },
     {
       title: 'Обновление портфолио',
       description: 'Добавлены 5 новых скульптур',
-      image: 'https://cdnb.artstation.com/p/assets/images/images/000/123/457/large/example2.jpg',
+      image: 'https://magazine.artstation.com/wp-content/uploads/2024/12/AW2_artstation_DLC_article_1280x400.png',
     },
     {
       title: 'Процесс создания монстра',
       description: 'Подробный breakdown персонажа',
-      image: 'https://cdna.artstation.com/p/assets/images/images/000/123/458/large/example3.jpg',
+      image: 'https://magazine.artstation.com/wp-content/uploads/2025/04/SOM_1280x400.jpg',
     },
     {
         title: 'Процесс создания монстра',
         description: 'Подробный breakdown персонажа',
-        image: 'https://cdna.artstation.com/p/assets/images/images/000/123/458/large/example3.jpg',
+        image: 'https://cdnb.artstation.com/p/assets/images/images/087/285/463/large/kasimir-v-robo-4-4-p5.jpg?1745397828',
       },
       {
         title: 'Процесс создания монстра',
         description: 'Подробный breakdown персонажа',
-        image: 'https://cdna.artstation.com/p/assets/images/images/000/123/458/large/example3.jpg',
+        image: 'https://cdna.artstation.com/p/assets/images/images/087/228/154/4k/bugra-erke-tarkan-8.jpg?1745255791',
       },
       {
         title: 'Процесс создания монстра',
         description: 'Подробный breakdown персонажа',
-        image: 'https://cdna.artstation.com/p/assets/images/images/000/123/458/large/example3.jpg',
+        image: 'https://cdna.artstation.com/p/assets/images/images/087/127/382/large/gabriel-tan-assassins-creed-shadows-omi-mt-hiei-concept-art-gabriel-tan.jpg?1744959349',
       },
       {
         title: 'Процесс создания монстра',
         description: 'Подробный breakdown персонажа',
-        image: 'https://cdna.artstation.com/p/assets/images/images/000/123/458/large/example3.jpg',
+        image: 'https://cdna.artstation.com/p/assets/images/images/086/718/070/4k/frederic-daoust-fullbody.jpg?1743891261',
       },
   ];
 
@@ -48,33 +48,38 @@ const news = [
       <div className="relative m-5">
         <CustomSwiperBtn/>
         <Swiper
-          modules={[Navigation]}
-          navigation={{
-            nextEl: '.custom-next',
-            prevEl: '.custom-prev',
+  modules={[Navigation]}
+  navigation={{
+    nextEl: '.custom-next',
+    prevEl: '.custom-prev',
+  }}
+  spaceBetween={16} // уменьшенное расстояние между слайдами
+  slidesPerView="auto"
+  loop
+  className="newsSwiper"
+>
+  {news.map((item, index) => (
+    <SwiperSlide
+      key={index}
+      className="!w-[500px]" // фиксированная ширина слайда, можно менять
+    >
+      <div className="relative h-72 rounded-2xl overflow-hidden shadow-lg cursor-pointer group">
+        <div
+          className="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110"
+          style={{
+            backgroundImage: `url(${item.image})`,
           }}
-          spaceBetween={20}
-          slidesPerView={3}
-          loop
-          className="newsSwiper"
-          breakpoints={{
-            320: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-        >
-          {news.map((item, index) => (
-            <SwiperSlide key={index}>
-              <div className="bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-lg hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
-                <img src={item.image} alt={item.title} className="w-full h-48 object-cover" />
-                <div className="p-4">
-                  <h3 className="text-white text-lg font-semibold mb-1">{item.title}</h3>
-                  <p className="text-slate-400 text-sm">{item.description}</p>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        ></div>
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-30 transition duration-300 z-10"></div>
+        <div className="relative z-20 p-5 h-full flex flex-col justify-end bg-gradient-to-t from-black/50 to-transparent">
+          <h3 className="text-white text-3xl font-bold mb-2">{item.title}</h3>
+          <p className="text-gray-400 text-lg font-semibold">{item.description}</p>
+        </div>
+      </div>
+    </SwiperSlide>
+  ))}
+</Swiper>
+
       </div>
     );
   }
