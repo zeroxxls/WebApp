@@ -1,7 +1,6 @@
 import React from "react";
-import { HeroSection } from "../../components/FirstPageInfo/HeroSection";
-import { TextSection } from "../../components/FirstPageInfo/TextSection";
-import { Footer } from "../../components/Footer/Footer";
+import { HeroSection, TextSection } from '../../modules/FirstPageInfo';
+import { Footer } from "../../modules/Footer";
 
 export const FirstPage = () => {
     return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { NewsSlider } from "../../components/News/NewsSlider";
+import { NewsSlider } from '../../modules/News';
 
 const MainPage =()=>{
     return(

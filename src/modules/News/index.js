@@ -1,0 +1,1 @@
+export {NewsSlider} from './components/NewsSlider'

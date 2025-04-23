@@ -2,7 +2,7 @@ import {Routes, Route,} from "react-router-dom"
 import React from "react"
 import MainPage from "./pages/MainPage/MainPage"
 import { FirstPage } from "./pages/FirstPage/FirstPage"
-import { WithHeader } from "./components/WithHeader"
+import { WithHeader } from "./layouts/WithHeader"
 import { LoginPage } from "./pages/LoginPage/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage/RegisterPage"
 
