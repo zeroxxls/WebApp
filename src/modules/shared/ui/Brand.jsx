@@ -1,5 +1,4 @@
-
-export const HeaderBrand = ({ 
+export const Brand = ({ 
     textSize = 'xl',
     className = '' 
   }) => {

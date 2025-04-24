@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import {SearchInput} from "../HeaderFeatures/SearchInput";
 import {AuthBtn} from "../../../auth/ui/authBtn";
 import {InfoBtn} from "../../ui/InfoBtn";
-import { Logo } from "../../ui/Logo";
-import { HeaderBrand } from "../../ui/HeaderBrand";
+import { Logo } from "../../../shared/ui/Logo";
+import {Brand} from "../../../shared/ui/Brand"
 import { MoreBtn } from "../../ui/MoreBtn";
 
 export const Header =()=>{
@@ -14,7 +14,7 @@ export const Header =()=>{
   hover:border-blue-400 hover:shadow-[0_4px_12px_-1px_rgba(59,130,246,0.5)]">
             <div className="flex">
                 <Logo/>
-                <HeaderBrand/>
+                <Brand/>
             </div>
             <InfoBtn/>
             <SearchInput/>

@@ -1,6 +1,6 @@
 import React from "react";
-import { Logo } from "../../../Header/ui/Logo";
-import { HeaderBrand } from "../../../Header/ui/HeaderBrand";
+import { Logo } from "../../../shared/ui/Logo";
+import { Brand } from "../../../shared/ui/Brand";
 import { FirstNavBtn } from "../../ui/FirstNavBtn";
 import { MainVideo } from "../../ui/MainVideo";
 
@@ -13,7 +13,7 @@ export const HeroSection=()=>{
           <div className="mx-auto px-4 text-white flex-col  ">
             <div className="flex mx-auto items-center justify-center">
             <Logo size="xl" className="drop-shadow-lg"/>
-            <HeaderBrand textSize="2xl"/>
+            <Brand textSize="2xl"/>
             </div>
             <FirstNavBtn/>
           </div>
