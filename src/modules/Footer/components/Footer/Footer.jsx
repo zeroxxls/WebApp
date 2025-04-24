@@ -1,8 +1,8 @@
 import React from "react";
-import { FooterInfo } from "../components/FooterInfo";
-import { FooterSections } from "../components/FooterSections";
-import { FooterCooperation } from "../components/FooterCooperation";
-import { FooterCopyRight } from "../components/FooterCopyRight";
+import { FooterInfo } from "../FooterFeatures/FooterInfo";
+import { FooterSections } from "../FooterFeatures/FooterSections";
+import { FooterCooperation } from "../FooterFeatures/FooterCooperation";
+import { FooterCopyRight } from "../FooterFeatures/FooterCopyRight";
 
 export const Footer = () => {
   return (

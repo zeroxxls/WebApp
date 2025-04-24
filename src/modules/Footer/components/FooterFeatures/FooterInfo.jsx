@@ -1,6 +1,6 @@
 import React from "react";
-import { Logo } from "../../Header/ui/Logo";
-import { HeaderBrand } from "../../Header/ui/HeaderBrand";
+import { Logo } from "../../../Header/ui/Logo";
+import { HeaderBrand } from "../../../Header/ui/HeaderBrand";
 
 export const FooterInfo =()=>{
     return(

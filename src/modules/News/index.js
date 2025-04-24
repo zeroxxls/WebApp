@@ -1,1 +1,1 @@
-export {NewsSlider} from './components/NewsSlider'
+export {NewsSlider} from './components/NewsSlider/NewsSlider'

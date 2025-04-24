@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {SearchInput} from "./SearchInput";
-import {AuthBtn} from "../../auth/ui/authBtn";
-import {InfoBtn} from "../ui/InfoBtn";
-import { Logo } from "../ui/Logo";
-import { HeaderBrand } from "../ui/HeaderBrand";
-import { MoreBtn } from "../ui/MoreBtn";
+import {SearchInput} from "../HeaderFeatures/SearchInput";
+import {AuthBtn} from "../../../auth/ui/authBtn";
+import {InfoBtn} from "../../ui/InfoBtn";
+import { Logo } from "../../ui/Logo";
+import { HeaderBrand } from "../../ui/HeaderBrand";
+import { MoreBtn } from "../../ui/MoreBtn";
 
 export const Header =()=>{
     return(
