@@ -1,0 +1,1 @@
+export {FilterSection} from './components/FilterSection/FilterSection'

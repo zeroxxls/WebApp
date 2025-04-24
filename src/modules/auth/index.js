@@ -1,2 +1,2 @@
-export {LoginSection} from './components/LoginSection'
-export {RegisterSection} from './components/RegisterSection'
+export {LoginSection} from './components/LoginSection/LoginSection'
+export {RegisterSection} from './components/RegisterSection/RegisterSection'
