@@ -51,20 +51,24 @@ export const FilterSlider = () => {
       >
         {filters.map((item, index) => (
             <SwiperSlide key={index} className="!w-[230px]">
-            <div className="group relative flex items-center gap-4 w-full h-20 rounded-2xl shadow-lg bg-transparent cursor-pointer overflow-hidden">
+            <div className="group relative flex items-center gap-4 w-full h-20 rounded-xl bg-gray-800/60 cursor-pointer overflow-hidden border border-gray-700 hover:border-indigo-400/50 transition-all duration-300 shadow-lg hover:shadow-indigo-500/20">
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-transparent z-10"></div>
               
-              {/* Затемнение при наведении */}
-              <div className="absolute inset-0 bg-gray-500 opacity-0 group-hover:opacity-30 transition-opacity duration-300 z-10" />
-          
-              {/* Картинка */}
+              {/* Hover effect */}
+              <div className="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+              
+              {/* Image */}
               <div
-                className="w-20 h-15 ml-3 flex-shrink-0 bg-center bg-cover bg-no-repeat rounded-xl z-20"
+                className="w-16 h-16 ml-3 flex-shrink-0 bg-center bg-cover bg-no-repeat rounded-xl z-20 border border-gray-600/50 group-hover:border-indigo-400/30 transition-all duration-300"
                 style={{ backgroundImage: `url(${item.image})` }}
               />
-          
-              {/* Текст */}
-              <h3 className="text-white text-base font-semibold pr-4 line-clamp-2 z-20">
-                {item.title}
+              
+              {/* Text */}
+              <h3 className="text-white text-base font-semibold pr-4 line-clamp-2 z-20 relative">
+                <span className="bg-gradient-to-r from-indigo-400 to-indigo-300 bg-clip-text text-transparent">
+                  {item.title}
+                </span>
               </h3>
             </div>
           </SwiperSlide>

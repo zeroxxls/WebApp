@@ -2,17 +2,18 @@ import React from 'react'
 
 export const FilterBtn = () => {
   return (
-    <div>
-        <div className="flex gap-5 flex-shrink-0 overflow-x-auto w-full md:w-auto m-3"> 
-              {['All', 'Trending', 'Following', 'Community', 'NoAi'].map((btn, index) => (
-                <button
-                  key={index}
-                  className="px-10 h-10 flex items-center justify-center rounded bg-gray-800 text-white text-sm font-medium cursor-pointer hover:bg-gray-700 hover:[background:linear-gradient(45deg,#172033,theme(colors.slate.800)_50%,#172033)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.600/.48)_80%,_theme(colors.indigo.500)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.500)_94%,_theme(colors.slate.600/.48))_border-box] border border-transparent animate-border transition-all duration-500 hover:shadow-md hover:outline-none whitespace-nowrap" 
-                >
-                  {btn}
-                </button>
-              ))}
-            </div>
+    <div className="relative">
+      <div className="flex gap-4 flex-shrink-0 overflow-x-auto w-full pb-3 hide-scrollbar">
+        {['All', 'Trending', 'Following', 'Community', 'NoAi'].map((btn, index) => (
+          <button
+            key={index}
+            className="px-8 h-10 flex items-center justify-center rounded bg-gray-800/80 text-white text-sm font-medium cursor-pointer hover:bg-gray-700/90 border border-gray-700 hover:border-indigo-400 transition-all duration-300 whitespace-nowrap relative overflow-hidden group"
+          >
+            <span className="relative z-10">{btn}</span>
+            <span className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
