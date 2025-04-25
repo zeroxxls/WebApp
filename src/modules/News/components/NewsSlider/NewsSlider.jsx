@@ -64,7 +64,6 @@ const news = [
           }}
           spaceBetween={16}
           slidesPerView="auto"
-          loop
           className="newsSwiper"
         >
           {news.map((item, index) => (

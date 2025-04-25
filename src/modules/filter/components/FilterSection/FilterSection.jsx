@@ -1,24 +1,18 @@
 import React from 'react';
 import { FilterSlider } from '../FilterSlider/FilterSlider';
+import { FilterBtn } from '../../ui/FilterBtn';
+import '../../../shared/styles/Border.css';
 
 export const FilterSection = () => {
   return (
-    <div className="w-full px-6 py-10 max-w-screen-xl mx-auto">
-      <div className="flex gap-6">
-        {/* Фильтры */}
-        <div className="flex gap-4 items-center justify-center md:justify-start">
-          {['All Categories', 'Trending', 'Following'].map((btn, index) => (
-            <button
-              key={index}
-              className="px-4 py-2 rounded-full "
-            >
-              {btn}
-            </button>
-          ))}
+    <div className="w-full py-4">
+      <div className="flex flex-col gap-6">
+        <div className='ml-4'>
+          <FilterBtn />
         </div>
-
-        {/* Слайдер */}
-        <FilterSlider />
+        <div className='ml-4'>
+         <FilterSlider />
+        </div>
       </div>
     </div>
   );

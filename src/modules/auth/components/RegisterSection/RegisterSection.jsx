@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../styles/LoginBorder.css';
+import '../../../shared/styles/Border.css';
 import { AuthInput } from '../../ui/AuthInput'
 
 export const RegisterSection = () => {
