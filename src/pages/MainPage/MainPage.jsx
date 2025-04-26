@@ -4,9 +4,9 @@ import {FilterSection} from '../../modules/filter'
 
 const MainPage =()=>{
     return(
-        <div >
+        <div>
             <NewsSlider/>
-            <FilterSection/>
+             <FilterSection/>
         </div>
     )
 }

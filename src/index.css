@@ -1,10 +1,21 @@
 @import "tailwindcss";
-
+* {
+    box-sizing: border-box;
+  }
 body{
     background-color: #1c1c25;
     color: white;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Отключить горизонтальную прокрутку */
 }
 
 p{
     color: #a1a1a1;
 }
+
+#root {
+    max-width: 100%; /* Фиксированная ширина приложения */
+    margin: 0 auto; /* Центрируем по горизонтали */
+    width: 100%;
+  }
