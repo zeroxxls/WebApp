@@ -10,7 +10,7 @@ export const Logo=({size='lg', className=''})=>{
         xl: 'w-40 h-40'
     }
     return(
-        <Link to='/FirstPage'>
+        <Link to='/'>
             <div>
                 <img src={logo} alt="logo" className={`${sizes[size]} ${className}`}/>
             </div>

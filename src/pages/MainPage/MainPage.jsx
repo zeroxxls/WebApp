@@ -6,7 +6,7 @@ const MainPage =()=>{
     return(
         <div>
             <NewsSlider/>
-             <FilterSection/>
+            <FilterSection/>
         </div>
     )
 }
