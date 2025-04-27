@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { ModalWindow } from '../ModalWindow/ModalWindow';
 
 export const Channels = () => {
     const works = [
@@ -104,13 +105,19 @@ export const Channels = () => {
             { id: 48, name: 'Диана Данилова', avatarUrl: 'https://avatar.iran.liara.run/public/50' },
             { id: 49, name: 'Константин Сафонов', avatarUrl: 'https://avatar.iran.liara.run/public/50' },
             { id: 50, name: 'Снежана Кудрявцева', avatarUrl: 'https://avatar.iran.liara.run/public/50' }          
-      ]
+      ];
+      const [selectedWork, setSelectedWork] = useState(null);
+      const handleWorkClick = (work) => {
+        setSelectedWork(work);
+      };
+      const handleCloseModal = () => {
+        setSelectedWork(null);
+      }
   return (
 <div className="p-4">
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 gap-1">
     {works.map((work, index) => (
-      <div key={work.id} className="relative group overflow-hidden rounded shadow-md hover:shadow-xl transition-shadow bg-gray-100">
-      
+      <div key={work.id} className="relative group overflow-hidden rounded shadow-md hover:shadow-xl transition-shadow bg-gray-100" onClick={() => handleWorkClick(work)}>
         <img 
           src={work.imageUrl} 
           alt={work.title} 
@@ -138,8 +145,9 @@ export const Channels = () => {
       </div>
     ))}
   </div>
+  {selectedWork && (
+    <ModalWindow work={selectedWork} onClose={handleCloseModal} />
+  )}
 </div>
-
-
   )
 }

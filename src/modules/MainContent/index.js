@@ -1,1 +1,1 @@
-export{Channels} from './components/Channels'
+export{Channels} from './components/Channels/Channels'
