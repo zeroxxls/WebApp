@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../shared/styles/Border.css';
+import '../../../../shared/styles/Border.css';
 import { AuthInput } from '../../ui/AuthInput';
 import { Link } from 'react-router-dom';
 

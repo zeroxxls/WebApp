@@ -1,5 +1,5 @@
 import React from "react";
-import { Brand } from "../../../shared/ui/Brand";
+import { Brand } from "../../../../shared/ui/Brand";
 
 export const MainTextSection =()=>{
     return(

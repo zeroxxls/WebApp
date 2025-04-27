@@ -1,6 +1,6 @@
 import React from "react";
-import { Logo } from "../../../shared/ui/Logo";
-import { Brand } from "../../../shared/ui/Brand";
+import { Logo } from "../../../../shared/ui/Logo";
+import { Brand } from "../../../../shared/ui/Brand";
 
 export const FooterInfo =()=>{
     return(

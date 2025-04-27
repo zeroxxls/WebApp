@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import {SearchInput} from "../HeaderFeatures/SearchInput";
 import {AuthBtn} from "../../../auth/ui/authBtn";
 import {InfoBtn} from "../../ui/InfoBtn";
-import { Logo } from "../../../shared/ui/Logo";
-import {Brand} from "../../../shared/ui/Brand"
+import { Logo } from "../../../../shared/ui/Logo";
+import {Brand} from "../../../../shared/ui/Brand"
 import { MoreBtn } from "../../ui/MoreBtn";
 
 export const Header =()=>{
