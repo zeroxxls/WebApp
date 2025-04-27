@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { CustomSwiperBtn } from '../../../shared/ui/CustomSwiperBtn';
+import { CustomSwiperBtn } from '../../../../shared/ui/CustomSwiperBtn';
 
 const filters = [
   { title: 'Stylized', image: 'https://cdnb.artstation.com/p/channels/covers/000/000/119/20200505155012/thumb/thumb.jpg?1588711812' },
