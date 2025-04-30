@@ -8,24 +8,47 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={onClose}
       />
-      
-      {/* Модальное окно - увеличенный размер */}
+
+      {/* Модальное окно */}
       <div className="flex z-10 w-full max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
-        {/* Левая часть - большое изображение проекта */}
-        <div className="p-6 w-3/4 h-full">
+        {/* Левая часть — прокручиваемая */}
+        <div className="p-4 w-3/4 h-full overflow-y-auto scroll-smooth space-y-4 pr-2">
           {selectedWork && (
-            <div className="h-full flex ">
+            <div className="flex flex-col items-center justify-start space-y-4">
+              {/* Главное изображение */}
               <img 
-                src={selectedWork.imageUrl} 
+                src={selectedWork.channelUrl} 
                 alt={selectedWork.title} 
-                className="max-h-full max-w-full object-contain"
+                className="w-full rounded object-contain"
               />
+              
+              {/* Остальные работы */}
+              {Array.isArray(selectedWork.worksUrl) ? (
+                selectedWork.worksUrl.map((url, index) => (
+                  <img
+                    key={index}
+                    src={url}
+                    className="w-full rounded object-contain"
+                    alt={`Work ${index + 1}`}
+                  />
+                ))
+              ) : (
+                <img
+                  src={selectedWork.worksUrl}
+                  className="w-full rounded object-contain"
+                  alt={selectedWork.title}
+                />
+              )}
             </div>
           )}
         </div>
-        
-        {/* Правая часть - информация (оставлена как у вас) */}
-        <div className='flex flex-col w-1/4 p-6 border-l border-gray-800'>
+
+        {/* Правая часть — инфо */}
+        <div className='flex flex-col w-1/4 p-6 border-l border-gray-800 relative overflow-y-auto'>
+          <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+            ✕
+          </button>
+
           {selectedUser && (
             <div className="mb-8">
               <img 
@@ -36,9 +59,15 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
               <h2 className="text-lg font-bold text-white">{selectedUser.name}</h2>
             </div>
           )}
+
           {selectedWork && (
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">{selectedWork.title}</h2>
+              <div>
+                <h2 className="text-xl font-bold text-white mb-4">{selectedWork.title}</h2>
+              </div>
+              <div>
+                <p className="text-gray-400">{selectedWork.description}</p>
+              </div>
             </div>
           )}
         </div>
