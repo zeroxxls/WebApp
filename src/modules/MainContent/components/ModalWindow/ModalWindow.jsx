@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../../../shared/styles/hideScrollBar.css'
 
 export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
   return (
@@ -10,11 +11,11 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
       />
 
       {/* Модальное окно */}
-      <div className="flex z-10 w-full max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
+      <div className="flex z-10 w-full max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden" >
         {/* Левая часть — прокручиваемая */}
-        <div className="p-4 w-3/4 h-full overflow-y-auto scroll-smooth space-y-4 pr-2">
+        <div className="p-4 w-3/4 h-full overflow-y-auto scroll-smooth space-y-4 pr-2 hide-scrollbar">
           {selectedWork && (
-            <div className="flex flex-col items-center justify-start space-y-4">
+            <div className="flex flex-col items-center justify-start space-y-4 " >
               {/* Главное изображение */}
               <img 
                 src={selectedWork.channelUrl} 
