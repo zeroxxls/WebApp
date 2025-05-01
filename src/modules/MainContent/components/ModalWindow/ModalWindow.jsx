@@ -1,4 +1,5 @@
 import React from 'react'
+import { ActionBtn } from '../../ui/ActionBtn'
 import '../../../../shared/styles/hideScrollBar.css'
 
 export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
@@ -60,6 +61,13 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
               <h2 className="text-lg font-bold text-white">{selectedUser.name}</h2>
             </div>
           )}
+
+          <div>
+            <div className="flex space-x-4">
+              <ActionBtn variant="like" >Like</ActionBtn>
+              <ActionBtn variant="save">Save</ActionBtn>
+            </div>
+          </div>
 
           {selectedWork && (
             <div>
