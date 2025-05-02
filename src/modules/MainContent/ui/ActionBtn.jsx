@@ -12,7 +12,7 @@ export const ActionBtn = ({
     flex items-center justify-center gap-2
     text-white rounded-lg px-4 py-2
     transition-all duration-300
-    cursor-pointer text-xl w-xl
+    cursor-pointer text-l w-xl
     hover:scale-101
   `;
 
