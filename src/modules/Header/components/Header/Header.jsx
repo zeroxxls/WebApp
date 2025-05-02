@@ -5,7 +5,7 @@ import {AuthBtn} from "../../../auth/ui/authBtn";
 import {InfoBtn} from "../../ui/InfoBtn";
 import { Logo } from "../../../../shared/ui/Logo";
 import {Brand} from "../../../../shared/ui/Brand"
-import { MoreBtn } from "../../ui/MoreBtn";
+import { VscSettings } from "react-icons/vsc";
 
 export const Header =()=>{
     return(
@@ -27,7 +27,9 @@ export const Header =()=>{
                     <AuthBtn variant="signIn">Sign In</AuthBtn>
                     </Link>
                 </div>
-                <MoreBtn/>
+                <Link to="/SettingsPage">
+                    <VscSettings  className="w-8 h-8 mx-10 cursor-pointer"/>
+                </Link>
             </div>
         </header>
     )

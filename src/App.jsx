@@ -6,6 +6,7 @@ import { WithHeader } from "./layouts/WithHeader"
 import { LoginPage } from "./pages/LoginPage/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage/RegisterPage"
 import { AuthPage } from "./pages/AuthPage/AuthPage"
+import { SettingsPage } from "./pages/SettingsPage/SettingsPage"
 
 
 export const App =()=>{
@@ -16,6 +17,7 @@ export const App =()=>{
                 <Route path="/LoginPage" element={<LoginPage/>}/>
                 <Route path="/RegisterPage" element={<RegisterPage/>}/> 
                 <Route path="/AuthPage" element={<AuthPage/>}/>
+                <Route path="/SettingsPage" element={<SettingsPage/>}/>
                 <Route path="/MainPage" element={
                     <WithHeader>
                             <MainPage/>
