@@ -40,7 +40,18 @@ export const works = [
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
-    ], channelUrl: 'https://cdna.artstation.com/p/assets/images/images/087/359/118/large/yuliya-halauko-6.jpg?1745578085',description:'In the realm of perception within the paradigm of fragmentary reflection, cognitive structures take on a hypothetical character, reflecting the synergistic vectors of meaningful deconstruction. In this way, latent aspects of the symbolic field activate a virtual multiplicity of potential realities, transforming marginal contexts into a metaphorical plane of metaphysical uncertainty.', },
+    ], comments: [
+        {
+          id: 1,
+          text: 'Amazing atmosphere and lighting!',
+          author: 'JohnDoe',
+        },
+        {
+          id: 2,
+          text: 'Great composition and color balance!',
+          author: 'JaneSmith',
+        },
+      ], channelUrl: 'https://cdna.artstation.com/p/assets/images/images/087/359/118/large/yuliya-halauko-6.jpg?1745578085',description:'In the realm of perception within the paradigm of fragmentary reflection, cognitive structures take on a hypothetical character, reflecting the synergistic vectors of meaningful deconstruction. In this way, latent aspects of the symbolic field activate a virtual multiplicity of potential realities, transforming marginal contexts into a metaphorical plane of metaphysical uncertainty.', },
     { id: 7, title: 'Работа 7', worksUrl :[
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
