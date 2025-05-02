@@ -12,13 +12,14 @@ export const ActionBtn = ({
     flex items-center justify-center gap-2
     text-white rounded-lg px-4 py-2
     transition-all duration-300
-    cursor-pointer text-l w-xl
+    cursor-pointer text-l w-[150px]
     hover:scale-101
   `;
 
   const variants = {
     like: isActive ? 'bg-blue-500 shadow-md' : 'bg-blue-600',
     save: isActive ? 'bg-gray-600 shadow-md' : 'bg-gray-600/70',
+    cart: isActive ? 'bg-green-600 shadow-md' : 'bg-green-600/90',
   };
 
   return (

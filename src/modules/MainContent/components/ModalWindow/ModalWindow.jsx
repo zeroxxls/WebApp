@@ -2,6 +2,8 @@ import React from 'react'
 import { useState ,useEffect} from 'react'
 import { ActionBtn } from '../../ui/ActionBtn'
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
+import { IoMdAddCircle } from "react-icons/io";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import { FiBookmark } from 'react-icons/fi';
 import { FaBookmark } from "react-icons/fa";
 import '../../../../shared/styles/hideScrollBar.css'
@@ -9,6 +11,11 @@ import '../../../../shared/styles/hideScrollBar.css'
 export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
   const likeKey = `post_${selectedWork.id}_liked`
   const saveKey = `post_${selectedWork.id}_saved`;
+  const addingKey = `post_${selectedWork.id}_adding`;
+
+  const [isAddingToCart, setIsAddingToCart] = useState(
+    localStorage.getItem(addingKey) === 'true'
+  )
   const [isLiked, setIsLiked] = useState(
     localStorage.getItem(likeKey)=== 'true'
   )
@@ -18,7 +25,12 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
   useEffect(()=>{
     localStorage.setItem(likeKey, isLiked)
     localStorage.setItem(saveKey, isSaved)
-  },[isLiked, isSaved])
+  },[isLiked, isSaved,likeKey, saveKey])
+
+  const handleAddToCart = () => {
+    setIsAddingToCart(!isAddingToCart)
+  }
+
   const handleLike=()=>{
     setIsLiked(!isLiked)
   }
@@ -101,6 +113,24 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
               >{isSaved? <FaBookmark className="w-6 h-6"/> : <FiBookmark className="w-6 h-6"/>}<span>{isSaved? 'Saved' : 'Save'}</span>
               </ActionBtn>
             </div>
+          </div>
+
+          <div className="flex flex-col gap-4 p-4 rounded-2xl border border-gray-700 bg-gray-800 shadow-md mb-8">
+              <h2 className="text-xl font-bold text-white">
+                Cost: <span className="text-green-400">{selectedWork.price}$</span>
+              </h2>
+              <ActionBtn
+                variant="cart"
+                isActive={isAddingToCart}
+                onClick={handleAddToCart}
+                className="flex items-center gap-2 text-white">
+                {isAddingToCart ? (
+                  <IoMdAddCircle className="w-6 h-6 text-green-400" />
+                ) : (
+                  <IoMdAddCircleOutline className="w-6 h-6" />
+                )}
+                <span>{isAddingToCart ? 'Added' : 'Add to Cart'}</span>
+              </ActionBtn>
           </div>
 
           {selectedWork && (
