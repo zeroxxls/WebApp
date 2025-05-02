@@ -91,14 +91,15 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
                variant="like"
                isActive={isLiked}
                onClick={handleLike}
-               >{isLiked ? <AiFillLike className="w-6 h-6"/> : <AiOutlineLike className="w-6 h-6" />} Like
+               >{isLiked ? <AiFillLike className="w-6 h-6"/> : <AiOutlineLike className="w-6 h-6" />} <span>{isLiked ? 'Liked' : 'Like' }</span>
                </ActionBtn>
 
               <ActionBtn 
               variant="save"
               isActive={isSaved}
               onClick={handleSave}
-              >{isSaved? <FaBookmark className="w-6 h-6"/> : <FiBookmark className="w-6 h-6"/>}Save</ActionBtn>
+              >{isSaved? <FaBookmark className="w-6 h-6"/> : <FiBookmark className="w-6 h-6"/>}<span>{isSaved? 'Saved' : 'Save'}</span>
+              </ActionBtn>
             </div>
           </div>
 
