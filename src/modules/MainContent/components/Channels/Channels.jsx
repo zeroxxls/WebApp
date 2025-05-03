@@ -1,17 +1,40 @@
 import React from 'react'
+import { FILTER_TYPES } from '../../../filter/constant/filters.js'
+import { useState } from 'react'
+import { useFilters } from '../../../filter/context/FilterContext.jsx';
 import { works } from '../../data/works'; // Импортируем массив works из файла data.js
 import { users } from '../../data/users'; // Импортируем массив users из файла data.js
 import { ModalWindow } from '../ModalWindow/ModalWindow';
 
 export const Channels = () => {
-const [open, setOpen] = React.useState(false);
-const [selectedWork, setSelectedWork] = React.useState(null);
-const [selectedUser, setSelectedUser] = React.useState(null);
+const [open, setOpen] = useState(false);
+const [selectedWork, setSelectedWork] = useState(null);
+const [selectedUser, setSelectedUser] = useState(null);
+const { activeFilter } = useFilters(); // Получаем активный фильтр из контекста
+
+const filteredWorks = works.filter(work => {
+  if (!activeFilter || activeFilter === FILTER_TYPES.ALL) return true
+  
+  switch(activeFilter) {
+    case FILTER_TYPES.TRENDING:
+      return work.isTrending
+    case FILTER_TYPES.FOLLOWING:
+      return work.isFollowing
+    case FILTER_TYPES.NO_AI:
+      return !work.isAI
+    case FILTER_TYPES.STYLIZED:
+    case FILTER_TYPES.ARCHVIZ:
+    case FILTER_TYPES.MECHA:
+      return work.tags?.includes(activeFilter)
+    default:
+      return true
+  }
+})
 
 return (
   <div className="p-4">
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 gap-1">
-      {works.map((work, index) => (
+      {filteredWorks.map((work, index) => (
         <div 
           key={work.id} 
           onClick={() => {

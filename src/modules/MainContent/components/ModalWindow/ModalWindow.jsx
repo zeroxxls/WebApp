@@ -143,6 +143,22 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
               </div>
             </div>
           )}
+
+          {selectedWork.tags && selectedWork.tags.length > 0 && (
+            <div className='mt-4 mb-4'>
+              <div className='flex flex-wrap gap-2'>
+                {selectedWork.tags.map(tag=>(
+                  <span 
+                  key={tag}
+                  className="px-3 py-1 rounded-full bg-gray-700 text-sm text-indigo-300 border border-indigo-400/30"
+                >
+                  {tag}
+                </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="flex flex-col gap-4 p-4 rounded-2xl border border-gray-700 bg-gray-800 shadow-md mb-8">
             <h3 className="text-lg font-semibold text-white">Comments({selectedWork.comments?.length || 0})</h3>
 
