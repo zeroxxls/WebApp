@@ -1,7 +1,7 @@
 import React from "react";
 import { NewsSlider } from '../../modules/News';
 import { FilterSection } from '../../modules/filter';
-import { FilterProvider } from "../../modules/filter/context/FilterContext";
+import { FilterProvider } from "../../modules/filter/context/FilterProvider";
 import { Channels } from "../../modules/MainContent";
 
 const MainPage = () => {

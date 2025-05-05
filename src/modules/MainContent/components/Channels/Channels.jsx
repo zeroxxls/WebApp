@@ -1,7 +1,7 @@
 import React from 'react'
 import { FILTER_TYPES } from '../../../filter/constant/filters.js'
 import { useState } from 'react'
-import { useFilters } from '../../../filter/context/FilterContext.jsx';
+import { useFilters } from '../../../filter/hooks/useFilters.js';
 import { works } from '../../data/works'; // Импортируем массив works из файла data.js
 import { users } from '../../data/users'; // Импортируем массив users из файла data.js
 import { ModalWindow } from '../ModalWindow/ModalWindow';
@@ -12,36 +12,36 @@ const [selectedWork, setSelectedWork] = useState(null);
 const [selectedUser, setSelectedUser] = useState(null);
 const { activeFilter } = useFilters(); // Получаем активный фильтр из контекста
 
-const filteredWorks = works.filter(work => {
-  if (!activeFilter || activeFilter === FILTER_TYPES.ALL) return true
-  
-  switch(activeFilter) {
-    case FILTER_TYPES.TRENDING:
-      return work.isTrending
-    case FILTER_TYPES.FOLLOWING:
-      return work.isFollowing
-    case FILTER_TYPES.NO_AI:
-      return !work.isAI
-    case FILTER_TYPES.STYLIZED:
-    case FILTER_TYPES.ARCHVIZ:
-    case FILTER_TYPES.MECHA:
-    case FILTER_TYPES.CHARACTER_DESIGN:
-    case FILTER_TYPES.CHARACTER_MODELING:
-    case FILTER_TYPES.ILLUSTRATION:
-    case FILTER_TYPES.LIGHTING:
-    case FILTER_TYPES.CONCEPT_ART:
-    case FILTER_TYPES.ANIMATION:
-    case FILTER_TYPES.VFX:
-    case FILTER_TYPES.MODELING:
-    case FILTER_TYPES.TEXTURING:
-    case FILTER_TYPES.PAINTING:
-    case FILTER_TYPES.RIGGING:
-    case FILTER_TYPES.ANIMATION_TESTING:  
-      return work.tags?.includes(activeFilter)
-    default:
-      return true
-  }
-})
+const filteredWorks = works.filter((work) => {
+  if (!activeFilter.length || activeFilter.includes(FILTER_TYPES.ALL)) return true;
+
+  const tagFilters = [
+    FILTER_TYPES.STYLIZED,
+    FILTER_TYPES.ARCHVIZ,
+    FILTER_TYPES.MECHA,
+    FILTER_TYPES.CHARACTER_DESIGN,
+    FILTER_TYPES.CHARACTER_MODELING,
+    FILTER_TYPES.ILLUSTRATION,
+    FILTER_TYPES.LIGHTING,
+    FILTER_TYPES.CONCEPT_ART,
+    FILTER_TYPES.ANIMATION,
+    FILTER_TYPES.VFX,
+    FILTER_TYPES.MODELING,
+    FILTER_TYPES.TEXTURING,
+    FILTER_TYPES.PAINTING,
+    FILTER_TYPES.RIGGING,
+    FILTER_TYPES.ANIMATION_TESTING
+  ];
+
+  const matchesTrending = activeFilter.includes(FILTER_TYPES.TRENDING) ? work.isTrending : true;
+  const matchesFollowing = activeFilter.includes(FILTER_TYPES.FOLLOWING) ? work.isFollowing : true;
+  const matchesNoAI = activeFilter.includes(FILTER_TYPES.NO_AI) ? !work.isAI : true;
+  const matchesTags = tagFilters.some(tag => activeFilter.includes(tag))
+    ? work.tags?.some(tag => activeFilter.includes(tag))
+    : true;
+
+  return matchesTrending && matchesFollowing && matchesNoAI && matchesTags;
+});
 
 return (
   <div className="p-4">

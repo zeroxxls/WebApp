@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useFilters } from '../../context/FilterContext.jsx';
+import { useFilters } from '../../hooks/useFilters.js';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SLIDER_FILTERS } from '../../constant/filters.js';
 import { Navigation } from 'swiper/modules';
@@ -8,7 +8,7 @@ import 'swiper/css/navigation';
 import { CustomSwiperBtn } from '../../../../shared/ui/CustomSwiperBtn';
 
 export const FilterSlider = () => {
-  const { activeFilter, setActiveFilter } = useFilters();
+  const { activeFilter, toggleFilter } = useFilters();
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const swiperRef = useRef(null);
@@ -41,10 +41,10 @@ export const FilterSlider = () => {
           <SwiperSlide
             key={item.id}
             className="!w-[230px]"
-            onClick={() => {setActiveFilter(activeFilter === item.id ? null : item.id)}}
+            onClick={() => {toggleFilter(activeFilter === item.id ? null : item.id)}}
           >
             <div className={`group relative flex items-center gap-4 w-full h-20 rounded-xl bg-gray-800/60 cursor-pointer overflow-hidden border border-gray-700 hover:border-indigo-400/50${
-              activeFilter === item.id
+              activeFilter.includes(item.id)
                 ? 'bg-indigo-600/20 text-indigo-300 border-indigo-400'
                 : 'bg-gray-800/80 text-white border-gray-700 hover:bg-gray-700/90 hover:border-indigo-400'
             }  transition-all duration-300 shadow-lg hover:shadow-indigo-500/20`} >
