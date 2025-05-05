@@ -25,6 +25,18 @@ const filteredWorks = works.filter(work => {
     case FILTER_TYPES.STYLIZED:
     case FILTER_TYPES.ARCHVIZ:
     case FILTER_TYPES.MECHA:
+    case FILTER_TYPES.CHARACTER_DESIGN:
+    case FILTER_TYPES.CHARACTER_MODELING:
+    case FILTER_TYPES.ILLUSTRATION:
+    case FILTER_TYPES.LIGHTING:
+    case FILTER_TYPES.CONCEPT_ART:
+    case FILTER_TYPES.ANIMATION:
+    case FILTER_TYPES.VFX:
+    case FILTER_TYPES.MODELING:
+    case FILTER_TYPES.TEXTURING:
+    case FILTER_TYPES.PAINTING:
+    case FILTER_TYPES.RIGGING:
+    case FILTER_TYPES.ANIMATION_TESTING:  
       return work.tags?.includes(activeFilter)
     default:
       return true

@@ -6,7 +6,19 @@ export const FILTER_TYPES = {
     NO_AI: 'noai',
     STYLIZED: 'stylized',
     ARCHVIZ: 'archviz',
-    MECHA: 'mecha'
+    MECHA: 'mecha',
+    CHARACTER_DESIGN: 'character design',
+    CHARACTER_MODELING: 'character modeling',
+    ILLUSTRATION: 'illustration',
+    LIGHTING: 'lighting',
+    CONCEPT_ART: 'conceptArt',
+    ANIMATION: 'animation',
+    VFX: 'vfx',
+    MODELING: 'modeling',
+    TEXTURING: 'texturing',
+    PAINTING: 'painting',
+    RIGGING: 'rigging',
+    ANIMATION_TESTING: 'animation testing',
   }
 
 export const BUTTON_FILTERS = [
