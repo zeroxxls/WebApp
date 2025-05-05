@@ -3,10 +3,17 @@ import React, { createContext, useContext, useState } from 'react';
 const FilterContext = createContext();
 
 export const FilterProvider = ({ children }) => {
-    const [activeFilter, setActiveFilter] = useState(null);
+    const [activeFilter, setActiveFilter] = useState([]);
+    const toggleFilter = (filterId)=>{
+        setActiveFilter((prevFilters)=>
+            prevFilters.includes(filterId) 
+            ? prevFilters.filter((id) => id !== filterId)
+            : [...prevFilters, filterId]
+        )
+    }
 
     return (
-        <FilterContext.Provider value={{ activeFilter, setActiveFilter }}>
+        <FilterContext.Provider value={{ activeFilter, setActiveFilter,toggleFilter }}>
             {children}
         </FilterContext.Provider>
     );

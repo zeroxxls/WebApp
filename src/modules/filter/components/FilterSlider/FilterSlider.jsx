@@ -41,9 +41,13 @@ export const FilterSlider = () => {
           <SwiperSlide
             key={item.id}
             className="!w-[230px]"
-            onClick={() => setActiveFilter(activeFilter === item.id ? null : item.id)}
+            onClick={() => {setActiveFilter(activeFilter === item.id ? null : item.id)}}
           >
-            <div className="group relative flex items-center gap-4 w-full h-20 rounded-xl bg-gray-800/60 cursor-pointer overflow-hidden border border-gray-700 hover:border-indigo-400/50  transition-all duration-300 shadow-lg hover:shadow-indigo-500/20" >
+            <div className={`group relative flex items-center gap-4 w-full h-20 rounded-xl bg-gray-800/60 cursor-pointer overflow-hidden border border-gray-700 hover:border-indigo-400/50${
+              activeFilter === item.id
+                ? 'bg-indigo-600/20 text-indigo-300 border-indigo-400'
+                : 'bg-gray-800/80 text-white border-gray-700 hover:bg-gray-700/90 hover:border-indigo-400'
+            }  transition-all duration-300 shadow-lg hover:shadow-indigo-500/20`} >
               <div className="absolute inset-0 bg-gradient-to-r from-gray-900/70 to-transparent z-10" />
               <div className="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
               <div
