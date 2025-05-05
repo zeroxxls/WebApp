@@ -11,7 +11,7 @@ export const FILTER_TYPES = {
     CHARACTER_MODELING: 'character modeling',
     ILLUSTRATION: 'illustration',
     LIGHTING: 'lighting',
-    CONCEPT_ART: 'conceptArt',
+    CONCEPT_ART: 'concept art',
     ANIMATION: 'animation',
     VFX: 'vfx',
     MODELING: 'modeling',
