@@ -77,7 +77,7 @@ export const Channels = () => {
               <h3 className="text-white text-lg font-semibold transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
                 {work.title}
               </h3>
-              <div className="flex items-center space-x-2 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+              <div className="flex items-center space-x-2 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
                 <img 
                   src={users[index % users.length].avatarUrl} 
                   alt={users[index % users.length].name} 
