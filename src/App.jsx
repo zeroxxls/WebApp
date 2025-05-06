@@ -7,6 +7,7 @@ import { LoginPage } from "./pages/LoginPage/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage/RegisterPage"
 import { AuthPage } from "./pages/AuthPage/AuthPage"
 import { SettingsPage } from "./pages/SettingsPage/SettingsPage"
+import { ArticlePage } from "./pages/ArticlePage/ArticlePage"
 
 
 export const App =()=>{
@@ -18,6 +19,7 @@ export const App =()=>{
                 <Route path="/RegisterPage" element={<RegisterPage/>}/> 
                 <Route path="/AuthPage" element={<AuthPage/>}/>
                 <Route path="/SettingsPage" element={<SettingsPage/>}/>
+                <Route path="article/:id" element={<ArticlePage/>}/>
                 <Route path="/MainPage" element={
                     <WithHeader>
                             <MainPage/>

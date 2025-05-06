@@ -7,7 +7,7 @@ body{
     color: white;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Отключить горизонтальную прокрутку */
+    overflow-x: hidden;
 }
 
 p{
