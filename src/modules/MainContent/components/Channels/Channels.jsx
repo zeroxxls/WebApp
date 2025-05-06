@@ -53,8 +53,6 @@ export const Channels = () => {
   
     return matchesActiveFilters && matchesSearch;
   });
-  
-  console.log('Filtered works:', filteredWorks);
 
   return (
     <div className="p-4">

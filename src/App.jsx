@@ -24,7 +24,7 @@ export const App =()=>{
                     <WithHeader>
                             <MainPage/>
                     </WithHeader>
-                    }/>
+                    }/> 
             </Routes>
         </div>
     )

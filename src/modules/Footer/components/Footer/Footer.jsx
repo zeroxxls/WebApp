@@ -13,7 +13,6 @@ export const Footer = () => {
         <FooterCooperation/>
       </div>
         <FooterCopyRight/>
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-20" />
     </footer>
   );
 };
