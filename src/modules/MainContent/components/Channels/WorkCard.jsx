@@ -4,7 +4,7 @@ export const WorkCard = ({ work, user, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="relative group overflow-hidden rounded shadow-md hover:shadow-xl transition-shadow bg-gray-100"
+      className="relative cursor-pointer group overflow-hidden rounded shadow-md hover:shadow-xl transition-shadow bg-gray-100"
     >
       <img
         src={work.channelUrl}
