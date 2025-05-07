@@ -13,7 +13,7 @@ export const NewsGridSection = () => {
         {news.map((item, index) => (
           <div
             key={index}
-            className="group bg-gray-800 rounded-md overflow-hidden shadow-md hover:shadow-xl transition duration-300"
+            className="group bg-gray-800 rounded overflow-hidden shadow-md hover:shadow-xl transition duration-300"
           >
             <img
               src={item.NewsPrevImage}

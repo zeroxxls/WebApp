@@ -8,6 +8,7 @@ import { RegisterPage } from "./pages/RegisterPage/RegisterPage"
 import { AuthPage } from "./pages/AuthPage/AuthPage"
 import { SettingsPage } from "./pages/SettingsPage/SettingsPage"
 import { ArticlePage } from "./pages/ArticlePage/ArticlePage"
+import { NewsPage } from "./pages/NewsPage/NewsPage"
 
 
 export const App =()=>{
@@ -19,6 +20,7 @@ export const App =()=>{
                 <Route path="/RegisterPage" element={<RegisterPage/>}/> 
                 <Route path="/AuthPage" element={<AuthPage/>}/>
                 <Route path="/SettingsPage" element={<SettingsPage/>}/>
+                <Route path="/NewsPage" element={<NewsPage/>}/>
                 <Route path="article/:id" element={<ArticlePage/>}/>
                 <Route path="/MainPage" element={
                     <WithHeader>
