@@ -15,11 +15,11 @@ export const Channels = () => {
   const { activeFilter } = useFilters();
   const search = useSelector((state) => state.search.searchQuery.toLowerCase());
 
-  // Имитация загрузки при первом рендере
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsPostsLoading(false);
-    },1000); // 1 секунда задержки для имитации
+    },1000);
 
     return () => clearTimeout(timer);
   }, []);

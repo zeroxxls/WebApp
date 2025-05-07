@@ -22,6 +22,8 @@ From the passionate Art teams at Massive Entertainment, Ubisoft Reflections, Ubi
         'https://cdnb.artstation.com/p/assets/images/images/085/779/021/large/brenda-bae-msv-brenda-hyungyung-bae-conceptart-tsulo.jpg?1741628621',
         'https://cdnb.artstation.com/p/assets/images/images/085/778/221/large/brenda-bae-msv-brenda-hyungyung-bae-conceptart-kametireexile.jpg?1741627540'
       ],
+      date:"1.01.2025",
+      author:"Luminio"
     },
     {
       id:2,  
