@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsPostLoading } from "../../../../store/slices/loadingSlice.js";
 import { useFilters } from "../../../filter/hooks/useFilters.js";
 import { works } from "../../data/works";
 import { users } from "../../data/users";
@@ -9,24 +10,30 @@ import { useFilteredWorks } from "../../hooks/useFilteredWorks.js";
 import { WorkCard } from "./WorkCard.jsx";
 
 export const Channels = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [selectedWork, setSelectedWork] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [isPostsLoading, setIsPostsLoading] = useState(true);
 
   const { activeFilter } = useFilters();
+  const isPostLoading = useSelector((state) => state.loading.isPostLoading)
   const search = useSelector((state) => state.search.searchQuery.toLowerCase());
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsPostsLoading(false), 1000);
+    dispatch(setIsPostLoading(true)); // Сначала включаем загрузку
+  
+    const timer = setTimeout(() => {
+      dispatch(setIsPostLoading(false)); // Через секунду выключаем загрузку
+    }, 1000);
+  
     return () => clearTimeout(timer);
-  }, []);
+  }, [dispatch]);
 
   const filteredWorks = useFilteredWorks(works, activeFilter, search);
 
   return (
     <div className="p-4">
-      {isPostsLoading ? (
+      {isPostLoading ? (
         <Loader />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 gap-1">
