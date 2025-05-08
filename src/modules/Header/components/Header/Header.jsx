@@ -8,12 +8,11 @@ import { Logo } from "../../../../shared/ui/Logo";
 import {Brand} from "../../../../shared/ui/Brand"
 import { VscSettings } from "react-icons/vsc";
 import { useSelector } from "react-redux";
+import { MdFileUpload } from "react-icons/md";
+import { handleProfileClick } from "../../../../shared/utils/navigation";
 
 export const Header =()=>{
     const navigate = useNavigate();
-    const handleProfileClick = (id)=>{
-        navigate(`/profile/${id}`)
-    }
     const user = useSelector((state)=> state.auth.user)
     return(
         <header className="flex justify-between items-center border-b border-gray-200/10 
@@ -29,11 +28,12 @@ export const Header =()=>{
             {user ? (
           // Если залогинен — показываем аватар и имя
           <div className="flex items-center gap-4 mr-6">
+            <MdFileUpload className="w-8 h-8 mx-10 cursor-pointer"/>
             <img
               src={user.avatarUrl}
               alt={user.name}
               className="w-8 h-8 rounded-full object-cover cursor-pointer"
-              onClick={()=>handleProfileClick(user.id)}
+              onClick={()=>handleProfileClick(navigate,user.id)}
             />
             <span className="text-white">{user.name}</span>
           </div>

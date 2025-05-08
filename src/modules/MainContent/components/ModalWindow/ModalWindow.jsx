@@ -8,8 +8,8 @@ import { FiBookmark } from 'react-icons/fi';
 import { FaBookmark } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { handleProfileClick } from "../../../../shared/utils/navigation";
-import '../../../../shared/styles/hideScrollBar.css'
 import { useSelector } from 'react-redux';
+import '../../../../shared/styles/hideScrollBar.css'
 
 export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
   const navigate = useNavigate();
