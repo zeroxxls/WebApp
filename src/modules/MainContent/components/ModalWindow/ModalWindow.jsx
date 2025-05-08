@@ -6,9 +6,14 @@ import { IoMdAddCircle } from "react-icons/io";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FiBookmark } from 'react-icons/fi';
 import { FaBookmark } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { handleProfileClick } from "../../../../shared/utils/navigation";
 import '../../../../shared/styles/hideScrollBar.css'
+import { useSelector } from 'react-redux';
 
 export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
+  const navigate = useNavigate();
+  const user = useSelector((state)=>state.auth.user)
   const likeKey = `post_${selectedWork.id}_liked`
   const saveKey = `post_${selectedWork.id}_saved`;
   const addingKey = `post_${selectedWork.id}_adding`;
@@ -91,9 +96,18 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
               <img 
                 src={selectedUser.avatarUrl} 
                 alt={selectedUser.name}
-                className="w-16 h-16 rounded-full object-cover mb-4"
+                className="w-16 h-16 rounded-full object-cover mb-4 cursor-pointer"
+                onClick={() => {
+                  handleProfileClick(navigate, user.id);
+                }}
               />
-              <h2 className="ml-4 text-lg font-bold text-white">{selectedUser.name}</h2>
+              <h2 className="ml-4 text-lg font-bold hover:text-blue-100
+               text-white cursor-pointer"
+                  onClick={() => {
+                    handleProfileClick(navigate, user.id);
+                  }}
+              >{selectedUser.name}
+              </h2>
             </div>
           )}
 

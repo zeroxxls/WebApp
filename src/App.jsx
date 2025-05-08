@@ -23,7 +23,11 @@ export const App =()=>{
                 <Route path="/SettingsPage" element={<SettingsPage/>}/>
                 <Route path="/NewsPage" element={<NewsPage/>}/>
                 <Route path="article/:id" element={<ArticlePage/>}/>
-                <Route path="profile/:id" element={<ProfilePage/>}/>
+                <Route path="profile/:id" element={
+                    <WithHeader>
+                        <ProfilePage/>
+                    </WithHeader>
+                }/>
                 <Route path="/MainPage" element={
                     <WithHeader>
                             <MainPage/>

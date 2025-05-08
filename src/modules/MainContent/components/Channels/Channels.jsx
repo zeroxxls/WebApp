@@ -20,10 +20,10 @@ export const Channels = () => {
   const search = useSelector((state) => state.search.searchQuery.toLowerCase());
 
   useEffect(() => {
-    dispatch(setIsPostLoading(true)); // Сначала включаем загрузку
+    dispatch(setIsPostLoading(true));
   
     const timer = setTimeout(() => {
-      dispatch(setIsPostLoading(false)); // Через секунду выключаем загрузку
+      dispatch(setIsPostLoading(false));
     }, 1000);
   
     return () => clearTimeout(timer);

@@ -4,11 +4,20 @@ import '../../../../shared/styles/Border.css';
 import { AuthBtns } from '../../ui/AuthBtns';
 import { AuthInput } from '../../ui/AuthInput';
 import {users} from '../../../MainContent/data/users'
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../../../store/slices/authSlice';
 
 export const LoginSection = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate()
   const handleUserProfileClick = (id)=>{
-    navigate(`/profile/${id}`)
+    const loggedInUser = users.find(user=> user.id === id);
+    if(loggedInUser){
+      dispatch(setUser(loggedInUser))
+      navigate(`/profile/${id}`)
+    }else{
+      console.error("User not found")
+    }
   }
   return (
     <div className="flex items-center justify-center min-h-screen">

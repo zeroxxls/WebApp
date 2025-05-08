@@ -17,12 +17,14 @@ export const WorkCard = ({ work, user, onClick }) => {
           {work.title}
         </h3>
         <div className="flex items-center space-x-2 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-          <img
-            src={user.avatarUrl}
-            alt={user.name}
-            className="w-6 h-6 rounded-full object-cover"
-          />
-          <span className="text-white text-sm">{user.name}</span>
+          {user && (
+            <img
+              src={user.avatarUrl}
+              alt={user.name}
+              className="w-6 h-6 rounded-full object-cover cursor-pointer"
+            />
+          )}
+          <span className="text-white text-sm">{user?.name}</span>
         </div>
       </div>
     </div>
