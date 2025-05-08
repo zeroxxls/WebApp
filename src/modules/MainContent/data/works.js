@@ -7,35 +7,35 @@ export const works = [
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
     ], channelUrl: 'https://cdnb.artstation.com/p/assets/images/images/087/330/709/large/tatyana-kupriyanova-first-render00010215.jpg?1745508411' },
-    { id: 2, title: 'Работа 2',   price: 1000, worksUrl :[
+    { id: 2,userId: 2, title: 'Работа 2',   price: 1000, worksUrl :[
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
     ], channelUrl: 'https://cdnb.artstation.com/p/assets/images/images/087/312/543/large/eric-cousin-51-basse-def.jpg?1745453211' },
-    { id: 3, title: 'Работа 3', worksUrl :[
+    { id: 3,userId: 3, title: 'Работа 3', worksUrl :[
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
     ], channelUrl: 'https://cdnb.artstation.com/p/assets/images/images/087/338/053/4k/tyler-ryan-design05.jpg?1745514614' },
-    { id: 4, title: 'Работа 4', worksUrl :[
+    { id: 4,userId: 4, title: 'Работа 4', worksUrl :[
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
     ], channelUrl: 'https://cdna.artstation.com/p/assets/images/images/087/326/104/large/fedorov-rustam-0.jpg?1745494221' },
-    { id: 5, title: 'Работа 5', worksUrl :[
+    { id: 5,userId: 5, title: 'Работа 5', worksUrl :[
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
     ], channelUrl: 'https://cdnb.artstation.com/p/assets/images/images/087/294/249/large/heuu__-484252656-618866781116343-575507366022332633-n.jpg?1745416178' },
-    { id: 6, title: 'Работа 6', price: 800, worksUrl :[
+    { id: 6,userId: 6, title: 'Работа 6', price: 800, worksUrl :[
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',
