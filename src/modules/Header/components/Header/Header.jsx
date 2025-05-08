@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {SearchInput} from "../HeaderFeatures/SearchInput";
-import {AuthBtn} from "../../../auth/ui/authBtn";
+import {AuthHeaderBtn} from "../../ui/authHeaderBtn";
 import {InfoBtn} from "../../ui/InfoBtn";
 import { Logo } from "../../../../shared/ui/Logo";
 import {Brand} from "../../../../shared/ui/Brand"
@@ -21,10 +21,10 @@ export const Header =()=>{
             <div className="flex">
                 <div className="flex gap-7">
                     <Link to="/RegisterPage">
-                     <AuthBtn variant="signUp">Sign Up</AuthBtn>
+                     <AuthHeaderBtn variant="signHeaderUp">Sign Up</AuthHeaderBtn>
                      </Link>
                     <Link to="/LoginPage">
-                    <AuthBtn variant="signIn">Sign In</AuthBtn>
+                    <AuthHeaderBtn variant="signHeaderIn">Sign In</AuthHeaderBtn>
                     </Link>
                 </div>
                 <Link to="/SettingsPage">

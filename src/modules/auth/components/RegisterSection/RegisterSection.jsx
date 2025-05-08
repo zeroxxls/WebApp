@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../../../shared/styles/Border.css';
+import { AuthBtns } from '../../ui/AuthBtns';
 import { AuthInput } from '../../ui/AuthInput'
 
 export const RegisterSection = () => {
@@ -12,7 +13,7 @@ export const RegisterSection = () => {
                 <AuthInput placeholder={'E-Mail'}/>
                 <AuthInput placeholder={'Telefon'}/>
                 <AuthInput placeholder={'Password'} type={'password'}/>
-                <button className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded">Register</button>
+                <AuthBtns variant='signUp'>Register</AuthBtns>
             </div>
         </div>
     </div>
