@@ -28,7 +28,9 @@ export const Header =()=>{
             {user ? (
           // Если залогинен — показываем аватар и имя
           <div className="flex items-center gap-4 mr-6">
-            <MdFileUpload className="w-8 h-8 mx-10 cursor-pointer"/>
+            <div className="bg-gray-700 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+            <MdFileUpload className="w-6 h-6 text-white transition hover:scale-110" />
+            </div>
             <img
               src={user.avatarUrl}
               alt={user.name}
@@ -49,7 +51,9 @@ export const Header =()=>{
           </div>
         )}
                 <Link to="/SettingsPage">
-                    <VscSettings  className="w-8 h-8 mx-10 cursor-pointer"/>
+                <div className="bg-gray-700  mx-10 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+                <VscSettings className="w-6 h-6 text-white transition hover:scale-110"/>
+                </div>
                 </Link>
             </div>
         </header>
