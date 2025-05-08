@@ -7,7 +7,7 @@ import {users} from '../../../MainContent/data/users'
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../../store/slices/authSlice';
 
-export const LoginSection = () => {
+export const LoginSection = ({children}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const handleUserProfileClick = (id)=>{
@@ -27,6 +27,7 @@ export const LoginSection = () => {
                 <AuthInput placeholder={'Name'}/>
                 <AuthInput placeholder={'Password'} type={'password'}/>
                 <AuthBtns onClick={()=>handleUserProfileClick(users[0].id)} variant='signIn'>Sign In</AuthBtns>
+                {children && <div className="mt-4">{children}</div>}
             </div>
         </div>
     </div>
