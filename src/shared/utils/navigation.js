@@ -5,3 +5,7 @@ export const handleProfileClick = (navigate, id )=>{
         console.warn("User ID is missing for navigation.");
     }
 }
+
+export const handleArticleClick = (navigate,id)=>{
+      navigate(`/article/${id}`);
+    }

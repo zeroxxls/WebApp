@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { handleArticleClick } from '../../../../shared/utils/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -8,10 +9,7 @@ import { news } from '../../data/news';
 import { CustomSwiperBtn } from '../../../../shared/ui/CustomSwiperBtn';
 
   export const NewsSlider = () => {
-    const navigate = useNavigate()
-    const handleArticleClick = (id)=>{
-      navigate(`/article/${id}`);
-    }
+    const navigate = useNavigate();
     const prevRef = useRef(null);
     const nextRef = useRef(null);
   
@@ -36,7 +34,7 @@ import { CustomSwiperBtn } from '../../../../shared/ui/CustomSwiperBtn';
         >
           {news.map((item, index) => (
             <SwiperSlide key={index} className="!w-[500px]">
-              <div className="relative h-72 rounded-2xl overflow-hidden shadow-lg cursor-pointer group" onClick={()=> handleArticleClick(item.id)}>
+              <div className="relative h-72 rounded-2xl overflow-hidden shadow-lg cursor-pointer group" onClick={()=> handleArticleClick(navigate,item.id)}>
                 <div
                   className="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110"
                   style={{ backgroundImage: `url(${item.NewsPrevImage})` }}
