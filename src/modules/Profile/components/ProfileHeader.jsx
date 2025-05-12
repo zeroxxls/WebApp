@@ -1,8 +1,8 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { FollowBtn } from '../ui/FollowBtn';
-import {users} from '../../MainContent/data/users'
-import { works } from '../../MainContent/data/works';
+import {users} from '../../../shared/data/users'
+import { works } from '../../../shared/data/works';
 
 export const ProfileHeader = () => {
     const { id } = useParams();

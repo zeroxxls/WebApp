@@ -1,4 +1,4 @@
-import { FILTER_TYPES } from '../../filter/constant/filters.js';
+import { FILTER_TYPES } from '../../modules/filter/constant/filters.js';
 export const works = [
     { id: 1,userId: 1, title: 'Работа 1', worksUrl :[
         'https://cdnb.artstation.com/p/assets/images/images/087/341/975/4k/daniel-merticariu-the-crone-render-1.jpg?1745522127',

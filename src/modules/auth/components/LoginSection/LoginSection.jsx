@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../../shared/styles/Border.css';
 import { AuthBtns } from '../../ui/AuthBtns';
 import { AuthInput } from '../../ui/AuthInput';
-import {users} from '../../../MainContent/data/users'
+import {users} from '../../../../shared/data/users'
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../../store/slices/authSlice';
 

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { setIsPostLoading } from "../../../store/slices/loadingSlice.js";
-import { users } from "../../MainContent/data/users.js";
-import { works } from "../../MainContent/data/works.js";
+import { users } from "../../../shared/data/users.js";
+import { works } from "../../../shared/data/works.js";
 import { ModalWindow } from "../../MainContent/components/ModalWindow/ModalWindow";
 import { Footer } from "../../Footer/index.js";
 import { ProfileHeader } from "./ProfileHeader.jsx";
-import { NoUserFound } from "../../../shared/components/NoUserFound.jsx";
+import { NoUserFound } from "./NoUserFound.jsx";
 import {ProfileWorksGrid } from "./ProfileWorksGrid.jsx";
 
 export const Profile = () => {
