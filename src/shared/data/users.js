@@ -1,5 +1,30 @@
 export const users =[
-    { id: 1, name: 'Алексей Иванов', avatarUrl: 'https://avatar.iran.liara.run/public/50' },
+{ 
+    id: 1, 
+    name: 'Алексей Иванов', 
+    avatarUrl: 'https://avatar.iran.liara.run/public/50', 
+    bio: 'CGI Artist and Developer',
+    contacts: [
+      {
+        type: 'github',
+        name: 'GitHub',
+        url: "https://github.com/zeroxxls",
+        isPublic: true
+      },
+      {
+        type: 'facebook',
+        name: 'Facebook',
+        url: "https://facebook.com/username",
+        isPublic: true
+      },
+      {
+        type: 'instagram',
+        name: 'Instagram',
+        url: "https://instagram.com/username",
+        isPublic: true
+      }
+    ]
+  },
     { id: 2, name: 'Мария Смирнова', avatarUrl: 'https://avatar.iran.liara.run/public/50' },
     { id: 3, name: 'Иван Петров', avatarUrl: 'https://avatar.iran.liara.run/public/50' },
     { id: 4, name: 'Ольга Кузнецова', avatarUrl: 'https://avatar.iran.liara.run/public/50' },

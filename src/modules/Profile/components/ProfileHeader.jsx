@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { FollowBtn } from '../ui/FollowBtn';
+import { ProfileContacts } from './ProfileContacts';
 import {users} from '../../../shared/data/users'
 import { works } from '../../../shared/data/works';
 
@@ -38,6 +39,9 @@ export const ProfileHeader = () => {
                 <span className="text-white font-medium">256</span>
                 <span className="text-gray-400 text-sm">following</span>
               </div>
+            <div>
+                <ProfileContacts contacts={user.contacts}/>
+            </div>
             </div>
           </div>
           <FollowBtn/>
