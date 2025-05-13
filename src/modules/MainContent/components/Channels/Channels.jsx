@@ -32,7 +32,7 @@ export const Channels = () => {
   const filteredWorks = useFilteredWorks(works, activeFilter, search);
 
   const findWorkAuthor = (work) => {
-    return users.find(user => user.id === work.userId) || users[0]; // fallback на первого пользователя
+    return users.find(user => user.id === work.userId);
   };
 
   return (
