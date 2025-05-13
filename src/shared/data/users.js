@@ -1,7 +1,9 @@
 export const users =[
 { 
     id: 1, 
-    name: 'Алексей Иванов', 
+    name: 'Alex',
+    email: 'alex@gmail.com' ,
+    password:"1234",
     avatarUrl: 'https://avatar.iran.liara.run/public/50', 
     bio: 'CGI Artist and Developer',
     contacts: [
@@ -23,7 +25,7 @@ export const users =[
         url: "https://instagram.com/username",
         isPublic: true
       }
-    ]
+    ],
   },
     { id: 2, name: 'Мария Смирнова', avatarUrl: 'https://avatar.iran.liara.run/public/50' },
     { id: 3, name: 'Иван Петров', avatarUrl: 'https://avatar.iran.liara.run/public/50' },
