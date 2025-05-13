@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
 import { OnCloseBtn } from '../../ui/OnCloseBtn'
@@ -13,9 +13,11 @@ import { CommentsBlock } from './CommentsBlock'
 export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
   const user = useSelector((state) => state.auth.user)
 
-  const likeKey = `post_${selectedWork.id}_liked`
-  const saveKey = `post_${selectedWork.id}_saved`
-  const addingKey = `post_${selectedWork.id}_adding`
+  const { likeKey, saveKey, addingKey } = useMemo(() => ({
+    likeKey: `post_${selectedWork.id}_liked`,
+    saveKey: `post_${selectedWork.id}_saved`,
+    addingKey: `post_${selectedWork.id}_adding`
+  }), [selectedWork.id]);
 
   const [isAddingToCart, setIsAddingToCart] = useState(localStorage.getItem(addingKey) === 'true')
   const [isLiked, setIsLiked] = useState(localStorage.getItem(likeKey) === 'true')
@@ -24,7 +26,7 @@ export const ModalWindow = ({ onClose, selectedWork, selectedUser }) => {
   useEffect(() => {
     localStorage.setItem(likeKey, isLiked)
     localStorage.setItem(saveKey, isSaved)
-  }, [isLiked, isSaved])
+  }, [isLiked, isSaved, likeKey, saveKey])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

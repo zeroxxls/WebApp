@@ -16,7 +16,7 @@ export const Channels = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const { activeFilter } = useFilters();
-  const isPostLoading = useSelector((state) => state.loading.isPostLoading)
+  const isPostLoading = useSelector((state) => state.loading.isPostLoading);
   const search = useSelector((state) => state.search.searchQuery.toLowerCase());
 
   useEffect(() => {
@@ -31,24 +31,31 @@ export const Channels = () => {
 
   const filteredWorks = useFilteredWorks(works, activeFilter, search);
 
+  const findWorkAuthor = (work) => {
+    return users.find(user => user.id === work.userId) || users[0]; // fallback на первого пользователя
+  };
+
   return (
     <div className="p-4">
       {isPostLoading ? (
         <Loader />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 gap-1">
-          {filteredWorks.map((work, index) => (
-            <WorkCard
-              key={work.id}
-              work={work}
-              user={users[index % users.length]}
-              onClick={() => {
-                setSelectedWork(work);
-                setSelectedUser(users[index % users.length]);
-                setOpen(true);
-              }}
-            />
-          ))}
+          {filteredWorks.map((work) => {
+            const author = findWorkAuthor(work);
+            return (
+              <WorkCard
+                key={work.id}
+                work={work}
+                user={author}
+                onClick={() => {
+                  setSelectedWork(work);
+                  setSelectedUser(author);
+                  setOpen(true);
+                }}
+              />
+            );
+          })}
         </div>
       )}
 
