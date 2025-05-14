@@ -29,13 +29,21 @@ export const LoginSection = ({children}) => {
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Ошибка входа');
+      throw new Error(data.message || 'Ошибка входа');
     }
 
-    const data = await response.json();
-    dispatch(setUser(data.user));
+    // Сохраняем пользователя и токен
+    dispatch(setUser({
+      user: data.user,
+      token: data.token
+    }));
+    
+    // Сохраняем токен в localStorage
+    localStorage.setItem('token', data.token);
+    
     navigate(`/profile/${data.user.id}`);
   } catch (err) {
     console.error('Login error:', err);
