@@ -1,9 +1,5 @@
-export const handleProfileClick = (navigate, id )=>{
-    if(id){
-        navigate(`/profile/${id}`)
-    }else{
-        console.warn("User ID is missing for navigation.");
-    }
+export const handleProfileClick = (navigate, id) => {
+  navigate(`/profile/${id}`)
 }
 
 export const handleArticleClick = (navigate,id)=>{

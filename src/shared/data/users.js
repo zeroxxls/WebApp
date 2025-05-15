@@ -4,6 +4,7 @@ export const users =[
     name: 'Alex',
     email: 'alex@gmail.com' ,
     password:"1234",
+    phone:"+1234",
     avatarUrl: 'https://avatar.iran.liara.run/public/50', 
     bio: 'CGI Artist and Developer',
     contacts: [
