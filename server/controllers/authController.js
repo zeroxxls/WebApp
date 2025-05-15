@@ -149,3 +149,41 @@ export const getUserById = async (req, res) => {
         });
     }
 };
+
+export const uploadAvatar = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No file uploaded',
+      });
+    }
+
+    const avatarUrl = `/avatars/${req.file.filename}`;
+    
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { avatarUrl },
+      { new: true }
+    ).select('-passwordHash');
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    res.json({
+      success: true,
+      user: updatedUser,
+    });
+  } catch (err) {
+    console.error('Error uploading avatar:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to upload avatar',
+      error: err.message,
+    });
+  }
+};
