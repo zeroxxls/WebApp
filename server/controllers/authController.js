@@ -1,62 +1,151 @@
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import process from 'node:process'
-import { users } from '../../src/shared/data/users.js'
+import User from '../models/User.js';
 
 export const registerUser = async (req, res) => {
-  try {
-    const { name, email, phone, password } = req.body
+    try {
+        const { fullName, email, phone, password } = req.body;
 
-    const existingUser = users.find(u => u.email === email)
-    if (existingUser) {
-      return res.status(400).json({ success: false, message: 'User already exists' })
+        // Проверяем обязательные поля
+        if (!fullName || !email || !phone || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'All fields are required'
+            });
+        }
+
+        // Проверяем, существует ли пользователь
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'User with this email already exists' 
+            });
+        }
+
+        // Хешируем пароль
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(password, salt);
+
+        // Создаем нового пользователя
+        const newUser = new User({
+            fullName,
+            email,
+            phone,
+            passwordHash,
+        });
+
+        // Сохраняем пользователя в БД
+        const savedUser = await newUser.save();
+
+        // Создаем JWT токен
+        const token = jwt.sign(
+            { id: savedUser._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        // Формируем ответ без пароля
+        const userResponse = {
+            _id: savedUser._id,
+            fullName: savedUser.fullName,
+            email: savedUser.email,
+            phone: savedUser.phone,
+            createdAt: savedUser.createdAt,
+            updatedAt: savedUser.updatedAt
+        };
+
+        res.status(201).json({
+            success: true,
+            user: userResponse,
+            token,
+        });
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to register user',
+            error: error.message 
+        });
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    const newUser = {
-      id: users.length + 1,
-      name,
-      email,
-      phone,
-      password: hashedPassword,
-    }
-
-    users.push(newUser)
-
-    const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '1h' })
-
-    res.status(201).json({
-      success: true,
-      user: { id: newUser.id, name, email, phone },
-      token,
-    })
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error:', error })
-  }
-}
+};
 
 export const loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body
-    const user = users.find(u => u.email === email)
+    try {
+        const { email, password } = req.body;
 
-    if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' })
+        // Ищем пользователя по email
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Invalid email or password' 
+            });
+        }
+
+        // Проверяем пароль
+        const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+        if (!isPasswordValid) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Invalid email or password' 
+            });
+        }
+
+        // Создаем JWT токен
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        // Формируем ответ без пароля
+        const userResponse = {
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            phone: user.phone,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        };
+
+        res.json({
+            success: true,
+            user: userResponse,
+            token,
+        });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Failed to login',
+            error: error.message 
+        });
     }
+};
 
-    if (password !== user.password) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' })
+export const getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('-passwordHash');
+        
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        res.json({
+            success: true,
+            user
+        });
+    } catch (error) {
+        console.error('Error getting user:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to get user',
+            error: error.message
+        });
     }
-
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' })
-
-    res.json({
-      success: true,
-      user: { id: user.id, name: user.name, email: user.email, phone: user.phone },
-      token,
-    })
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error:', error })
-  }
-}
+};

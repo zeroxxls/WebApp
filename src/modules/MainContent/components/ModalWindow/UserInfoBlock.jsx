@@ -12,14 +12,15 @@ export const UserInfoBlock = ({ selectedUser, user }) => {
         src={selectedUser.avatarUrl}
         alt={selectedUser.name}
         className="w-16 h-16 rounded-full object-cover mb-4 cursor-pointer"
-        onClick={() => handleProfileClick(navigate, user.id)}
+        onClick={() => handleProfileClick(navigate, selectedUser._id)}
       />
       <h2
         className="ml-4 text-lg font-bold hover:text-blue-100 text-white cursor-pointer"
-        onClick={() => handleProfileClick(navigate, user.id)}
+        onClick={() => handleProfileClick(navigate, selectedUser._id)}
       >
         {selectedUser.name}
       </h2>
     </div>
   )
 }
+

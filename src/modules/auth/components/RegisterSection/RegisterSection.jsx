@@ -1,48 +1,54 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import '../../../../shared/styles/Border.css';
 import { AuthBtns } from '../../ui/AuthBtns';
-import { AuthInput } from '../../ui/AuthInput'
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../../../store/slices/authSlice';
+import { AuthInput } from '../../ui/AuthInput';
 import { useNavigate } from 'react-router-dom';
 
 export const RegisterSection = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!email.trim() || !password.trim() || !name.trim() || !phone.trim()) {
-      setError('Пожалуйста, заполните все поля');
+    if (!fullName.trim() || !email.trim() || !phone.trim() || !password.trim()) {
+      setError('Please fill in all fields');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:4444/auth/register', { // <-- ПРАВИЛЬНЫЙ путь
+      const response = await fetch('http://localhost:4444/auth/register', {
         method: 'POST',
-        headers: { // <-- БЫЛО "header", ДОЛЖНО БЫТЬ "headers"
+        headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, name, phone, password }),
+        body: JSON.stringify({ fullName, email, phone, password }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Ошибка регистрации');
+        throw new Error(data.message || 'Registration failed');
       }
 
-      const data = await response.json();
-      dispatch(setUser(data.user));
-      navigate(`/profile/${data.user.id}`);
+      // Показываем сообщение об успехе
+      setSuccessMessage('Registration successful! Redirecting to login...');
+      setError('');
+      
+      // Через 2 секунды перенаправляем на страницу логина
+      setTimeout(() => {
+        navigate('/LoginPage');
+      }, 2000);
+      
     } catch (err) {
       console.error('Register error:', err);
-      setError(err.message || 'Ошибка сервера');
+      setError(err.message || 'Registration failed');
+      setSuccessMessage('');
     }
   };
 
@@ -52,10 +58,23 @@ export const RegisterSection = () => {
         <div className="w-full max-w-sm [background:linear-gradient(45deg,#172033,theme(colors.slate.800)_50%,#172033)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.600/.48)_80%,_theme(colors.indigo.500)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.500)_94%,_theme(colors.slate.600/.48))_border-box] rounded-lg border border-transparent animate-border">
           <div className="p-8 bg-gray-950/25 border border-blue-900 rounded-lg relative z-10">
             <h2 className="text-white text-xl font-bold text-center mb-4">Sign Up</h2>
+            
+            {successMessage && (
+              <p className="text-green-500 text-sm text-center mb-2">
+                {successMessage}
+              </p>
+            )}
+            
+            {error && (
+              <p className="text-red-500 text-sm text-center mb-2">
+                {error}
+              </p>
+            )}
+            
             <AuthInput
-              placeholder={'Name'}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder={'Full Name'}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
             />
             <AuthInput
               placeholder={'E-Mail'}
@@ -63,7 +82,7 @@ export const RegisterSection = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <AuthInput
-              placeholder={'Telefon'}
+              placeholder={'Phone'}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -73,12 +92,12 @@ export const RegisterSection = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            
             <AuthBtns variant='signUp'>Register</AuthBtns>
-            {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
           </div>
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
