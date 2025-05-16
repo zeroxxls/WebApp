@@ -39,7 +39,7 @@ export const Header = () => {
                             <MdFileUpload className="w-6 h-6 text-white transition hover:scale-110" />
                         </div>
                         <img
-                            src={user.avatarUrl || 'https://avatar.iran.liara.run/public'}
+                             src={`http://localhost:4444/auth/avatar/${user._id}?${Date.now()}`}
                             alt={user.fullName || user.name || 'User'}
                             className="w-8 h-8 rounded-full object-cover cursor-pointer"
                             onClick={() => handleProfileClick(navigate, user._id || user.id)}
