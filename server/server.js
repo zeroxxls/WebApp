@@ -41,11 +41,6 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRoutes);
 app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
-app.use(cors({
-  origin: 'http://localhost:5173', // или ваш фронтенд URL
-  credentials: true,
-  exposedHeaders: ['Content-Type'] // Добавляем для изображений
-}));
 
 // Global error handler
 app.use((err, req, res,next) => {
