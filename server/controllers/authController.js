@@ -43,7 +43,7 @@ export const registerUser = async (req, res) => {
         const token = jwt.sign(
             { id: savedUser._id },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '7d' }
         );
 
         // Формируем ответ без пароля
@@ -97,7 +97,7 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign(
             { id: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '7d' }
         );
 
         // Формируем ответ без пароля
@@ -242,22 +242,10 @@ export const getAvatar = async (req, res) => {
       hasAvatarUrl: !!user?.avatarUrl
     });
 
-    // 1. Проверка бинарных данных (новый формат)
     if (user?.avatar?.data) {
-      console.log('Serving binary avatar data');
       res.set('Content-Type', user.avatar.contentType);
       return res.send(user.avatar.data);
     }
-    
-    // 2. Проверка старого URL (если есть переходной период)
-    if (user?.avatarUrl) {
-      console.log('Redirecting to old avatar URL:', user.avatarUrl);
-      return res.redirect(user.avatarUrl);
-    }
-
-    // 3. Если ничего не найдено
-    console.log('No avatar found, serving default');
-    return res.redirect('/default-avatar.png');
 
   } catch (err) {
     console.error('Error getting avatar:', {
@@ -265,5 +253,31 @@ export const getAvatar = async (req, res) => {
       stack: err.stack
     });
     res.redirect('/default-avatar.png');
+  }
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    // Пользователь доступен через req.user благодаря middleware verifyToken
+    const user = await User.findById(req.userId).select('-passwordHash');
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      user
+    });
+  } catch (error) {
+    console.error('Auth check error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to authenticate',
+      error: error.message
+    });
   }
 };
