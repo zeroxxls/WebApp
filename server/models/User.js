@@ -1,3 +1,4 @@
+/* global Buffer */
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
@@ -10,15 +11,24 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  phone: {
-    type: String,
-    required: true,
-  },
   passwordHash: {
     type: String,
     required: true,
   },
-  avatarUrl: String,
+  phone: {
+    type: String,
+    required: true,
+  },
+  avatar: {
+    data: { 
+      type: Buffer, // Бинарные данные изображения
+      required: false 
+    },
+    contentType: { 
+      type: String, // MIME-тип (image/jpeg, image/png и т.д.)
+      required: false
+    }
+  },
   bio: String,
   worksCount: {
     type: Number,

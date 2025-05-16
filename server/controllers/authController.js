@@ -152,38 +152,118 @@ export const getUserById = async (req, res) => {
 
 export const uploadAvatar = async (req, res) => {
   try {
+    // 1. Проверка загруженного файла
     if (!req.file) {
+      console.error('No file was uploaded');
       return res.status(400).json({
         success: false,
         message: 'No file uploaded',
       });
     }
 
-    const avatarUrl = `/avatars/${req.file.filename}`;
-    
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { avatarUrl },
-      { new: true }
-    ).select('-passwordHash');
+    // 2. Логирование информации о файле
+    console.log('Uploading avatar for user:', req.params.id);
+    console.log('File info:', {
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      bufferLength: req.file.buffer?.length || 0
+    });
 
-    if (!updatedUser) {
-      return res.status(404).json({
+    // 3. Проверка прав доступа
+    if (req.params.id !== req.user._id.toString()) {
+      console.error(`User ${req.user._id} tried to update profile ${req.params.id}`);
+      return res.status(403).json({
         success: false,
-        message: 'User not found',
+        message: 'Not authorized to update this profile'
       });
     }
 
+    // 4. Сохранение в базу данных
+    const updateData = {
+      avatar: {
+        data: req.file.buffer,
+        contentType: req.file.mimetype
+      },
+      avatarUrl: null // Очищаем старый URL если был
+    };
+
+    console.log('Updating user with:', {
+      dataLength: updateData.avatar.data.length,
+      contentType: updateData.avatar.contentType
+    });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    ).select('-passwordHash');
+
+    // 5. Проверка результата обновления
+    if (!updatedUser) {
+      console.error('User not found after update attempt');
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    console.log('Successfully updated avatar for user:', updatedUser._id);
+
+    // 6. Возвращаем обновленные данные
     res.json({
       success: true,
       user: updatedUser,
+      token: req.token
     });
+
   } catch (err) {
-    console.error('Error uploading avatar:', err);
+    console.error('Error uploading avatar:', {
+      error: err.message,
+      stack: err.stack
+    });
     res.status(500).json({
       success: false,
       message: 'Failed to upload avatar',
       error: err.message,
     });
+  }
+};
+
+export const getAvatar = async (req, res) => {
+  try {
+    console.log(`Fetching avatar for user ${req.params.id}`);
+    
+    const user = await User.findById(req.params.id)
+      .select('avatar.data avatar.contentType avatarUrl');
+    
+    console.log('Found user avatar data:', {
+      hasBinaryData: !!user?.avatar?.data,
+      hasAvatarUrl: !!user?.avatarUrl
+    });
+
+    // 1. Проверка бинарных данных (новый формат)
+    if (user?.avatar?.data) {
+      console.log('Serving binary avatar data');
+      res.set('Content-Type', user.avatar.contentType);
+      return res.send(user.avatar.data);
+    }
+    
+    // 2. Проверка старого URL (если есть переходной период)
+    if (user?.avatarUrl) {
+      console.log('Redirecting to old avatar URL:', user.avatarUrl);
+      return res.redirect(user.avatarUrl);
+    }
+
+    // 3. Если ничего не найдено
+    console.log('No avatar found, serving default');
+    return res.redirect('/default-avatar.png');
+
+  } catch (err) {
+    console.error('Error getting avatar:', {
+      error: err.message,
+      stack: err.stack
+    });
+    res.redirect('/default-avatar.png');
   }
 };
