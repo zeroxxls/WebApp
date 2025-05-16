@@ -46,37 +46,43 @@ export const Profile = () => {
     fetchUserData();
   }, [dispatch, id, currentUser, isOwnProfile]);
 
-  const handleAvatarUpload = async (file) => {
-    if (!file || !isOwnProfile) return;
+ const handleAvatarUpload = async (file) => {
+  if (!file || !isOwnProfile) return;
+  
+  try {
+    setIsAvatarLoading(true);
     
-    try {
-      setIsAvatarLoading(true);
-      
-      const formData = new FormData();
-      formData.append('avatar', file);
-      
-      // Отправляем файл на сервер
-      const response = await axios.patch(
-        `http://localhost:4444/auth/upload-avatar/${currentUser._id}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+    const formData = new FormData();
+    formData.append('avatar', file);
+    
+    // Добавляем токен в заголовки
+    const token = localStorage.getItem('token');
+    
+    const response = await axios.patch(
+      `http://localhost:4444/auth/upload-avatar/${currentUser._id}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
         }
-      );
-      
-      // Обновляем данные пользователя в Redux
-      dispatch(setUser(response.data.user));
-      // Обновляем данные профиля
-      setProfileUser(response.data.user);
-      
-      setIsAvatarLoading(false);
-    } catch (error) {
-      console.error("Error uploading avatar:", error);
-      setIsAvatarLoading(false);
-    }
-  };
+      }
+    );
+    
+    // Обновляем только пользователя, сохраняя текущий токен
+    dispatch(setUser({
+      user: response.data.user,
+      token: token // Сохраняем текущий токен
+    }));
+    
+    setProfileUser(response.data.user);
+    
+    setIsAvatarLoading(false);
+  } catch (error) {
+    console.error("Error uploading avatar:", error);
+    setIsAvatarLoading(false);
+  }
+};
 
   if (isPostLoading) {
     return (

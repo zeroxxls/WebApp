@@ -24,6 +24,7 @@ export const authMiddleware = async (req, res, next) => {
         }
 
         req.user = user;
+        req.token = token; // Добавляем токен в request
         next();
     } catch (error) {
         console.error('Auth middleware error:', error);
