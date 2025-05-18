@@ -1,41 +1,26 @@
 /* global Buffer */
 import mongoose from 'mongoose';
 
-const UserSchema = new mongoose.Schema({
-  fullName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  passwordHash: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-  },
-  avatar: {
-    data: { 
-      type: Buffer, // Бинарные данные изображения
-      required: false 
-    },
-    contentType: { 
-      type: String, // MIME-тип (image/jpeg, image/png и т.д.)
-      required: false
-    }
-  },
-  bio: String,
-  worksCount: {
-    type: Number,
-    default: 0,
-  },
-}, {
-  timestamps: true,
+const contactSchema = new mongoose.Schema({
+  type: { type: String, enum: ['github', 'facebook', 'instagram', 'website', 'other'] },
+  name: String,
+  url: String,
+  isPublic: { type: Boolean, default: true }
 });
 
-export default mongoose.model('User', UserSchema);
+const userSchema = new mongoose.Schema({
+  fullName: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  phone: { type: String },
+  passwordHash: { type: String, required: true },
+  bio: { type: String, default: '' },
+  techStack: [{ type: String }],
+  contacts: [contactSchema],
+  avatar: {
+    data: Buffer,
+    contentType: String
+  },
+  avatarUrl: String
+}, { timestamps: true });
+
+export default mongoose.model('User', userSchema);

@@ -8,6 +8,7 @@ import { ProfileHeader } from "./ProfileHeader.jsx";
 import { NoUserFound } from "./NoUserFound.jsx";
 import { NoWorksFound } from "./NoWorksFound.jsx";
 import { ProfileWorksGrid } from "./ProfileWorksGrid.jsx";
+import { ProfileContacts } from './ProfileContacts';
 import axios from "axios";
 import { setUser } from "../../../store/slices/authSlice.js"; // Импортируем action для обновления пользователя
 
@@ -67,7 +68,7 @@ export const Profile = () => {
           'Authorization': `Bearer ${token}`
         }
       }
-    );
+    ); 
     
     // Обновляем только пользователя, сохраняя текущий токен
     dispatch(setUser({
@@ -107,6 +108,16 @@ export const Profile = () => {
 
   if (!profileUser) return <NoUserFound />;
 
+    const handleProfileUpdate = (updatedUser) => {
+    setProfileUser(updatedUser);
+    if (isOwnProfile) {
+      dispatch(setUser({
+        user: updatedUser,
+        token: localStorage.getItem('token')
+      }));
+    }
+  }; 
+
   return (
     <div>
       <div className="p-6 max-w-7xl mx-auto">
@@ -115,6 +126,7 @@ export const Profile = () => {
           isOwnProfile={isOwnProfile}
           onAvatarUpload={handleAvatarUpload}
           isAvatarLoading={isAvatarLoading}
+          onProfileUpdate={handleProfileUpdate}
         />
         {userWorks.length > 0 ? (
           <ProfileWorksGrid
