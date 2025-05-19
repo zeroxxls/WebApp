@@ -22,6 +22,7 @@ export const Profile = () => {
   const isPostLoading = useSelector((state) => state.loading.isPostLoading);
   const [isAvatarLoading, setIsAvatarLoading] = useState(false);
   const isOwnProfile = currentUser && currentUser._id === id;
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -31,7 +32,7 @@ export const Profile = () => {
         if (isOwnProfile) {
           setProfileUser(currentUser);
         } else {
-          const userResponse = await axios.get(`http://localhost:4444/auth/user/${id}`);
+          const userResponse = await axios.get(`http://localhost:4444/users/${id}`);
           setProfileUser(userResponse.data.user);
         }
         
@@ -54,32 +55,37 @@ export const Profile = () => {
     const formData = new FormData();
     formData.append('avatar', file);
     
-    // Добавляем токен в заголовки
     const token = localStorage.getItem('token');
     
     const response = await axios.patch(
-      `http://localhost:4444/auth/upload-avatar/${currentUser._id}`,
+      `http://localhost:4444/avatars/${currentUser._id}/avatar`,
       formData,
       {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
-        }
+        },
+        withCredentials: true // Добавляем для передачи куков, если используется
       }
-    ); 
+    );
     
-    // Обновляем только пользователя, сохраняя текущий токен
     dispatch(setUser({
       user: response.data.user,
-      token: token // Сохраняем текущий токен
+      token: response.data.token || token // Используем новый токен, если он пришел
     }));
     
     setProfileUser(response.data.user);
+    setIsAvatarLoading(false);
     
-    setIsAvatarLoading(false);
   } catch (error) {
-    console.error("Error uploading avatar:", error);
+    console.error("Avatar upload failed:", {
+      message: error.message,
+      response: error.response?.data
+    });
     setIsAvatarLoading(false);
+    
+    // Показываем пользователю понятное сообщение
+    alert(error.response?.data?.message || 'Failed to upload avatar');
   }
 };
 

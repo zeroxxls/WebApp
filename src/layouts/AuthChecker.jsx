@@ -12,7 +12,7 @@ export const AuthChecker = ({ children }) => {
       
       if (token) {
         try {
-          const response = await axios.get("http://localhost:4444/auth/me", {
+          const response = await axios.get("http://localhost:4444/auth/check", {
             headers: {
               Authorization: `Bearer ${token}`,
             },

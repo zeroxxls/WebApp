@@ -3,9 +3,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import process from 'node:process';
-import authRoutes from './routes/authRoutes.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import authRoutes from './routes/authRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import avatarRoutes from './routes/avatarRoutes.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,10 +27,21 @@ mongoose.connect(uri, {
     process.exit(1);
   });
 
-app.use(cors());
+  const corsOptions = {
+  origin: 'http://localhost:5173', // Укажите конкретный origin
+  credentials: true, // Разрешаем передачу credentials
+  optionsSuccessStatus: 200 // Для старых браузеров
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
-// Middleware для проверки подключения к базе
+// Routes
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/avatars', avatarRoutes);
+app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
+
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
     return res.status(503).json({
@@ -39,10 +52,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/auth', authRoutes);
-app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
-
-// Global error handler
 app.use((err, req, res,next) => {
   console.error('error:', err.stack);
   res.status(500).json({

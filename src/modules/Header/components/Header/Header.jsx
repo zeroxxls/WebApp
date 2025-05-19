@@ -63,7 +63,7 @@ export const Header = () => {
 
                         <div className="flex items-center gap-2 cursor-pointer">
                             <img
-                                src={`http://localhost:4444/auth/avatar/${user._id}?${Date.now()}`}
+                                src={`http://localhost:4444/avatars/${user._id}/avatar?${Date.now()}}`}
                                 alt={user.fullName || user.name || 'User'}
                                 className="w-8 h-8 rounded-full object-cover"
                                 onClick={() => handleProfileClick(navigate, user._id || user.id)}
@@ -72,7 +72,7 @@ export const Header = () => {
                         </div>
 
                         {isDropdownOpen && (
-                            <div className="absolute top-full right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg z-50">
+                            <div className="absolute top-full right-0 ml-5 mt-2 w-48 bg-gray-800 rounded-md shadow-lg z-50">
                                 <div className="py-1">
                                     <Link
                                         to={`/profile/${user._id || user.id}`}
