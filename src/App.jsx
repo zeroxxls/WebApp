@@ -1,5 +1,5 @@
 import {Routes, Route,} from "react-router-dom"
-import React from "react"
+import React from "react";
 import MainPage from "./pages/MainPage/MainPage"
 import { FirstPage } from "./pages/FirstPage/FirstPage"
 import { WithHeader } from "./layouts/WithHeader"
