@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import process from 'node:process';
 
-export const verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   
   if (!token) {
@@ -16,3 +16,5 @@ export const verifyToken = (req, res, next) => {
     return res.status(401).json({ message: 'Unauthorized error', error });
   }
 };
+
+export default verifyToken;
