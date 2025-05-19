@@ -4,7 +4,7 @@ import { EditProfileModal } from './EditProfileModal';
 import { ProfileContacts } from './ProfileContacts';
 import { MdModeEdit } from "react-icons/md";
 import { FaCode } from "react-icons/fa";
-import { FaCheck, FaReact, FaNodeJs, FaJs, FaPython, FaJava, FaHtml5, FaCss3Alt, FaDatabase } from "react-icons/fa";
+import { FaReact, FaNodeJs, FaJs, FaPython, FaJava, FaHtml5, FaCss3Alt, FaDatabase } from "react-icons/fa";
 import { SiTypescript, SiMongodb, SiPostgresql, SiDocker, SiKubernetes } from "react-icons/si";
 
 const techIcons = {
@@ -33,19 +33,10 @@ export const ProfileHeader = ({
 }) => {
   const fileInputRef = useRef(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedTech, setSelectedTech] = useState([]);
   
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       onAvatarUpload(e.target.files[0]);
-    }
-  };
-
-  const toggleTechSelection = (tech) => {
-    if (selectedTech.includes(tech)) {
-      setSelectedTech(selectedTech.filter(t => t !== tech));
-    } else {
-      setSelectedTech([...selectedTech, tech]);
     }
   };
 
@@ -119,7 +110,7 @@ export const ProfileHeader = ({
               {isOwnProfile && (
                 <button
                   onClick={() => setIsEditModalOpen(true)}
-                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors"
+                  className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 cursor-pointer text-white px-4 py-2 rounded-lg transition-colors"
                 >
                   <MdModeEdit />
                   Edit Profile
@@ -133,21 +124,13 @@ export const ProfileHeader = ({
           {user.techStack?.length > 0 && (
             <div className="flex flex-wrap gap-3 mt-6 justify-center md:justify-start">
               {user.techStack.map((tech, index) => (
-                <button
+                <div
                   key={index}
-                  onClick={() => toggleTechSelection(tech)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm transition-all ${
-                    selectedTech.includes(tech) 
-                      ? 'bg-indigo-600 text-white' 
-                      : 'bg-indigo-900/30 text-indigo-300 hover:bg-indigo-900/50'
-                  }`}
+                  className="flex items-center gap-2 bg-indigo-900/30 text-indigo-300 px-3 py-2 rounded-full text-sm"
                 >
                   {getTechIcon(tech)}
                   <span>{tech}</span>
-                  {selectedTech.includes(tech) && (
-                    <FaCheck className="text-xs" />
-                  )}
-                </button>
+                </div>
               ))}
             </div>
           )}
