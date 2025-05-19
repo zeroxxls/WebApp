@@ -40,10 +40,9 @@ export const LoginSection = ({children}) => {
       localStorage.setItem('token', data.token);
       
       // Диспатчим данные пользователя и токен в Redux
-      dispatch(setUser({
-        user: data.user,
-        token: data.token
-      }));
+      dispatch(setUser({ user: data.user, token: data.token }));
+
+
       
       // Перенаправляем на страницу профиля
       navigate(`/profile/${data.user._id}`);

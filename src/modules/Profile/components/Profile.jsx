@@ -8,9 +8,8 @@ import { ProfileHeader } from "./ProfileHeader.jsx";
 import { NoUserFound } from "./NoUserFound.jsx";
 import { NoWorksFound } from "./NoWorksFound.jsx";
 import { ProfileWorksGrid } from "./ProfileWorksGrid.jsx";
-import { ProfileContacts } from './ProfileContacts';
 import axios from "axios";
-import { setUser } from "../../../store/slices/authSlice.js"; // Импортируем action для обновления пользователя
+import { setUser } from "../../../store/slices/authSlice.js";
 
 export const Profile = () => {
   const { id } = useParams();
@@ -22,7 +21,6 @@ export const Profile = () => {
   const [userWorks, setUserWorks] = useState([]);
   const isPostLoading = useSelector((state) => state.loading.isPostLoading);
   const [isAvatarLoading, setIsAvatarLoading] = useState(false);
-
   const isOwnProfile = currentUser && currentUser._id === id;
 
   useEffect(() => {
