@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
+  works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
   avatarUrl: String
 }, { timestamps: true });
 

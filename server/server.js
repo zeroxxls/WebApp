@@ -8,6 +8,7 @@ import path from 'path';
 import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import avatarRoutes from './routes/avatarRoutes.js'
+import workRoutes from './routes/workRoutes.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,6 +42,8 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/avatars', avatarRoutes);
 app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
+app.use('/works', workRoutes);
+app.use('/works', express.static(path.join(__dirname, 'uploads', 'works')));
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
