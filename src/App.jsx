@@ -10,6 +10,7 @@ import { SettingsPage } from "./pages/SettingsPage/SettingsPage"
 import { ArticlePage } from "./pages/ArticlePage/ArticlePage"
 import { NewsPage } from "./pages/NewsPage/NewsPage"
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage"
+import { UploadPage } from "./pages/UploadPage/UploadPage";
 
 
 export const App =()=>{
@@ -22,6 +23,7 @@ export const App =()=>{
                 <Route path="/AuthPage" element={<AuthPage/>}/>
                 <Route path="/SettingsPage" element={<SettingsPage/>}/>
                 <Route path="/NewsPage" element={<NewsPage/>}/>
+                <Route path="/UploadPage" element={<UploadPage/>}/>
                 <Route path="article/:id" element={<ArticlePage/>}/>
                 <Route path="profile/:id" element={
                     <WithHeader>

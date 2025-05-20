@@ -57,9 +57,11 @@ export const Header = () => {
                          onMouseEnter={handleMouseEnter}
                          onMouseLeave={handleMouseLeave}
                     >
-                        <div className="bg-gray-700 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+                        <Link to="/UploadPage">
+                         <div className="bg-gray-700 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
                             <MdFileUpload className="w-6 h-6 text-white transition hover:scale-110" />
                         </div>
+                        </Link>
 
                         <div className="flex items-center gap-2 cursor-pointer">
                             <img
