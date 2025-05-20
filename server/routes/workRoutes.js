@@ -11,7 +11,7 @@ import upload from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', authMiddleware , upload.array('files'), uploadWork);
+router.post('/upload', authMiddleware , upload.array('files'), uploadWork);
 router.get('/', getWorks);
 router.get('/:id', getWorkById);
 router.put('/:id', authMiddleware , upload.array('files'), updateWork);
