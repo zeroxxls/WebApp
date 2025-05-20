@@ -72,7 +72,7 @@ export const Header = () => {
                         </div>
 
                         {isDropdownOpen && (
-                            <div className="absolute top-full right-0 ml-5 mt-2 w-48 bg-gray-800 rounded-md shadow-lg z-50">
+                            <div className="absolute top-full right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg z-50">
                                 <div className="py-1">
                                     <Link
                                         to={`/profile/${user._id || user.id}`}
