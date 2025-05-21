@@ -4,4 +4,4 @@ export const handleProfileClick = (navigate, id) => {
 
 export const handleArticleClick = (navigate,id)=>{
       navigate(`/article/${id}`);
-    }
+}
