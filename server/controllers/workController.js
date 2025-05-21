@@ -105,6 +105,8 @@ export const getWorkById = async (req, res) => {
   }
 };
 
+
+
 export const deleteWork = async (req, res) => {
   try {
     const work = await Work.findById(req.params.id);
