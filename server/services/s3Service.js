@@ -51,12 +51,6 @@ export const getFileUrl = async (fileName) => {
     Bucket: bucketName,
     Key: fileName,
   };
-  console.log('AWS Config:', {
-  region: process.env.AWS_REGION,
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID ? '****' : 'NOT SET',
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ? '****' : 'NOT SET',
-  bucket: process.env.AWS_BUCKET_NAME,
-});
 
   try {
     // Generate a presigned URL that's valid for 1 hour

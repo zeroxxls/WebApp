@@ -24,8 +24,12 @@ const workSchema = new mongoose.Schema({
     updatedAt: { 
         type: Date, 
         default: Date.now 
-    }
-});
+    },
+    path: { type: String, required: true },
+    originalName: { type: String, required: true },
+    mimeType: { type: String, required: true },
+    size: { type: Number, required: true },
+},{ _id: false });
 
 workSchema.pre('save', function(next) {
     this.updatedAt = Date.now();

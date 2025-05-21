@@ -3,13 +3,13 @@ import User from '../models/User.js';
 import path from 'path';
 import { uploadFile, getFileUrl, deleteFile } from '../services/s3Service.js';
 
-// Вспомогательная функция
 const saveFilesToS3 = async (files, workId) => {
   const savedFiles = [];
 
   for (const file of files) {
-    const fileExt = path.extname(file.originalname);
-    const fileName = `works/${workId}/${Date.now()}${fileExt}`;
+    const fileExt = path.extname(file.originalname).toLowerCase();
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    const fileName = `works/${workId}/${uniqueSuffix}${fileExt}`;
 
     try {
       await uploadFile(file.buffer, fileName, file.mimetype);
@@ -17,10 +17,12 @@ const saveFilesToS3 = async (files, workId) => {
       savedFiles.push({
         path: fileName,
         originalName: file.originalname,
-        mimeType: file.mimetype
+        mimeType: file.mimetype,
+        size: file.size
       });
     } catch (err) {
       console.error('Error uploading file to S3:', err);
+      await Promise.all(savedFiles.map(f => deleteFile(f.path).catch(e => console.error(e))));
       throw err;
     }
   }
@@ -29,36 +31,30 @@ const saveFilesToS3 = async (files, workId) => {
 };
 
 export const uploadWork = async (req, res) => {
-      console.log('Files received:', req.files);
-  console.log('Body:', req.body);
   try {
-    const { description, price, filters, technologies } = req.body;
-    const userId = req.userId;
-
     if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ success: false, message: 'No files uploaded' });
+      return res.status(400).json({ message: 'No files uploaded' });
     }
-
-    const savedFiles = await saveFilesToS3(req.files, userId);
-
-    const newWork = new Work({
-      description,
-      price,
-      filters: JSON.parse(filters),
-      technologies: JSON.parse(technologies),
-      files: savedFiles,
-      author: userId,
+    
+    // Process files and upload to S3
+    const uploadResults = await Promise.all(
+      req.files.map(file => uploadFile(file.buffer, file.originalname, file.mimetype))
+    );
+    
+    // Save to database, etc.
+    
+    res.status(200).json({
+      success: true,
+      message: 'Files uploaded successfully',
+      files: uploadResults
     });
-
-    await newWork.save();
-
-    // Добавить работу пользователю
-    await User.findByIdAndUpdate(userId, { $push: { works: newWork._id } });
-
-    res.status(201).json({ success: true, work: newWork });
-  } catch (err) {
-    console.error('Error uploading work:', err);
-    res.status(500).json({ success: false, message: 'Upload failed', error: err.message });
+  } catch (error) {
+    console.error('Upload error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to upload files',
+      error: error.message
+    });
   }
 };
 
