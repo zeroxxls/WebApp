@@ -3,10 +3,10 @@ import { ProfileHeader } from "../ProfileHeader/ProfileHeader";
 import { ProfileWorksGrid } from "./ProfileWorksGrid";
 import { NoWorksFound } from "../Errors/NoWorksFound";
 import { ModalWindow } from "../../../MainContent/components/ModalWindow/ModalWindow";
+import { useSelector } from "react-redux";
 
 export const ProfileContent = ({
   profileUser,
-  userWorks,
   isOwnProfile,
   handleAvatarUpload,
   isAvatarLoading,
@@ -16,6 +16,8 @@ export const ProfileContent = ({
   open,
   setOpen
 }) => {
+  const { userWorks, isLoading } = useSelector((state) => state.works);
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <ProfileHeader
@@ -25,9 +27,11 @@ export const ProfileContent = ({
         isAvatarLoading={isAvatarLoading}
         onProfileUpdate={handleProfileUpdate}
       />
-      {userWorks.length > 0 ? (
+      
+      {isLoading ? (
+        <div>Loading works...</div>
+      ) : userWorks.length > 0 ? (
         <ProfileWorksGrid
-          isLoading={false}
           userWorks={userWorks}
           user={profileUser}
           isOwnProfile={isOwnProfile}

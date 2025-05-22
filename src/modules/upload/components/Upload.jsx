@@ -4,8 +4,11 @@ import { UploadDropzone } from './UploadDropzone';
 import { UploadForm } from './UploadForm/UploadForm';
 import { UploadPreview } from './UploadPreview';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addNewWork } from '../../../store/slices/workSlice';
 
 export const Upload = () => {
+  const dispatch = useDispatch();
   const [files, setFiles] = useState([]);
   const [uploadStatus, setUploadStatus] = useState(null); // 'success', 'error', null
   const [uploadError, setUploadError] = useState(null);
@@ -13,6 +16,7 @@ export const Upload = () => {
   const user = useSelector((state) => state.auth.user);
 
   const handleUploadSuccess = (uploadData) => {
+    dispatch(addNewWork(uploadData.work));
     setUploadStatus('success');
     setUploadError(null);
   };
