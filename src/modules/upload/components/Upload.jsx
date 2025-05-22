@@ -1,16 +1,16 @@
-// Upload.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UploadDropzone } from './UploadDropzone';
 import { UploadForm } from './UploadForm/UploadForm';
 import { UploadPreview } from './UploadPreview';
-import { Header } from '../../Header';
+import { useSelector } from 'react-redux';
 
 export const Upload = () => {
   const [files, setFiles] = useState([]);
   const [uploadStatus, setUploadStatus] = useState(null); // 'success', 'error', null
   const [uploadError, setUploadError] = useState(null);
-  const navigate = useNavigate();
+   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   const handleUploadSuccess = (uploadData) => {
     setUploadStatus('success');
@@ -23,7 +23,9 @@ export const Upload = () => {
   };
 
   const handleReturnToProfile = () => {
-    navigate('/profile');
+    if (user && user._id) {
+      navigate(`/profile/${user._id}`);
+    }
   };
 
   if (uploadStatus === 'success') {
