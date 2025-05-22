@@ -2,8 +2,16 @@ import { FILTER_TYPES } from "../../filter/constant/filters";
 
 export const useFilteredWorks = (works, activeFilter, search) => {
   return works.filter((work) => {
-    const matchesTitle = work.title.toLowerCase().includes(search);
-    const matchesTag = work.tags?.some(tag => tag.toLowerCase().includes(search));
+    const lowerCaseSearch = search ? search.toLowerCase() : ''; // Приводим search к нижнему регистру один раз
+
+    // Поиск по названию
+    const matchesTitle = work.title?.toLowerCase().includes(lowerCaseSearch);
+
+    // Поиск по описанию
+    const matchesDescription = work.description?.toLowerCase().includes(lowerCaseSearch);
+
+    // Поиск по технологиям
+    const matchesTechnology = work.technologies?.some(tech => tech?.toLowerCase().includes(lowerCaseSearch));
 
     const matchesTrending = activeFilter.includes(FILTER_TYPES.TRENDING) ? work.isTrending : true;
     const matchesFollowing = activeFilter.includes(FILTER_TYPES.FOLLOWING) ? work.isFollowing : true;
@@ -19,11 +27,12 @@ export const useFilteredWorks = (works, activeFilter, search) => {
     ];
 
     const matchesTags = tagFilters.some(tag => activeFilter.includes(tag))
-      ? work.tags?.some(tag => activeFilter.includes(tag))
+      ? work.filters?.some(filter => activeFilter.includes(filter))
       : true;
 
     const matchesActiveFilters = matchesTrending && matchesFollowing && matchesNoAI && matchesTags;
-    const matchesSearch = matchesTitle || matchesTag;
+    // Поиск теперь включает название, описание и технологии
+    const matchesSearch = matchesTitle || matchesDescription || matchesTechnology;
 
     return matchesActiveFilters && matchesSearch;
   });

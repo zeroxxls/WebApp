@@ -1,4 +1,3 @@
-// UploadForm.jsx
 import React, { useState } from 'react';
 import { DescriptionInput } from './DescriptionInput';
 import { PriceInput } from './PriceInput';
@@ -6,12 +5,13 @@ import { TechnologiesInput } from './TechnologiesInput';
 import { CategoryFilters } from './CategoryFilters';
 import { SubmitButton } from './SubmitButton';
 
-export const UploadForm = ({ 
-  files, 
+export const UploadForm = ({
+  files,
   setFiles,
   onUploadSuccess,
   onUploadError
 }) => {
+  const [title, setTitle] = useState(''); // <--- Новое состояние для названия
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -27,11 +27,16 @@ export const UploadForm = ({
       setLocalError('Please select at least one file');
       return;
     }
+    if (!title.trim()) { // <--- Проверка на заполненность названия
+      setLocalError('Please enter a title for your work');
+      return;
+    }
 
     const formData = new FormData();
     files.forEach(file => {
       formData.append('files', file);
     });
+    formData.append('title', title); // <--- Добавляем название в FormData
     formData.append('description', description);
     formData.append('price', price.toString());
     formData.append('technologies', JSON.stringify(selectedTechnologies));
@@ -54,14 +59,15 @@ export const UploadForm = ({
 
       const data = await response.json();
       console.log('Upload success:', data);
-      
+
       // Reset form
       setFiles([]);
+      setTitle(''); // <--- Сбрасываем название
       setDescription('');
       setPrice(0);
       setSelectedTechnologies([]);
       setSelectedFilters([]);
-      
+
       // Notify parent component
       if (onUploadSuccess) {
         onUploadSuccess(data);
@@ -69,7 +75,7 @@ export const UploadForm = ({
     } catch (err) {
       console.error('Upload error:', err);
       setLocalError(err.message || 'Failed to upload files');
-      
+
       // Notify parent component
       if (onUploadError) {
         onUploadError(err);
@@ -86,37 +92,53 @@ export const UploadForm = ({
           {localError}
         </div>
       )}
-      
-      <DescriptionInput 
-        value={description} 
-        onChange={setDescription} 
+
+      {/* Новое поле для названия */}
+      <div>
+        <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-2">
+          Title
+        </label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full p-3 bg-gray-700 rounded-lg border border-gray-600 focus:ring-blue-500 focus:border-blue-500 text-white placeholder-gray-400"
+          placeholder="Enter a title for your work"
+          required
+        />
+      </div>
+
+      <DescriptionInput
+        value={description}
+        onChange={setDescription}
       />
-      
-      <PriceInput 
-        value={price} 
-        onChange={setPrice} 
+
+      <PriceInput
+        value={price}
+        onChange={setPrice}
       />
-      
-      <TechnologiesInput 
+
+      <TechnologiesInput
         technologies={selectedTechnologies}
         onAddTech={(tech) => setSelectedTechnologies([...selectedTechnologies, tech])}
         onRemoveTech={(tech) => setSelectedTechnologies(selectedTechnologies.filter(t => t !== tech))}
       />
-      
-      <CategoryFilters 
+
+      <CategoryFilters
         selectedFilters={selectedFilters}
-        onToggleFilter={(filterId) => 
-          setSelectedFilters(prev => 
-            prev.includes(filterId) 
-              ? prev.filter(id => id !== filterId) 
+        onToggleFilter={(filterId) =>
+          setSelectedFilters(prev =>
+            prev.includes(filterId)
+              ? prev.filter(id => id !== filterId)
               : [...prev, filterId]
           )
         }
       />
-      
-      <SubmitButton 
+
+      <SubmitButton
         isLoading={isLoading}
-        disabled={isLoading || !files || files.length === 0}
+        disabled={isLoading || !files || files.length === 0 || !title.trim()} // Добавлена проверка на название
       />
     </form>
   );

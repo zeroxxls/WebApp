@@ -8,13 +8,18 @@ import { LikeSaveButtons } from './LikeSaveButtons';
 import { PriceBlock } from './PriceBlock';
 import { DescriptionBlock } from './DescriptionBlock';
 import { TagsBlock } from './TagsBlock';
+import { TechnologiesBlock } from './TechnologiesBlock'; // Импортируем новый компонент
 import { CommentsBlock } from './CommentsBlock';
 
 export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
+   console.log('selectedWork in ModalWindow:', selectedWork);
   const user = useSelector((state) => state.auth.user);
+  const allWorks = useSelector((state) => state.works.userWorks);
   const navigate = useNavigate();
 
   const { id = 'unknown' } = selectedWork;
+  const technologies = selectedWork.technologies || [];
+  const filters = selectedWork.filters || [];
 
   const { likeKey, saveKey, addingKey } = useMemo(() => ({
     likeKey: `post_${id}_liked`,
@@ -47,12 +52,11 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
       <div className="flex z-10 w-full max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
-        <LeftSide selectedWork={selectedWork} />
+        <LeftSide selectedWork={selectedWork} allWorks={allWorks} />
         <div className="flex flex-col w-1/4 p-6 border-l border-gray-800 relative overflow-y-auto">
           <OnCloseBtn onClose={onClose} />
           <UserInfoBlock
             selectedUser={selectedUser}
-            user={user}
             onProfileClick={handleProfileClick}
           />
           <LikeSaveButtons
@@ -74,7 +78,8 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
             title={selectedWork.title}
             description={selectedWork.description}
           />
-          <TagsBlock tags={selectedWork.tags || []} />
+          <TechnologiesBlock technologies={technologies} /> {/* Используем TechnologiesBlock */}
+          <TagsBlock tags={filters} /> {/* Используем TagsBlock для фильтров */}
           <CommentsBlock
             comments={selectedWork.comments || []}
             selectedUser={selectedUser}

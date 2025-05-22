@@ -1,25 +1,30 @@
-import React from 'react'
-import { handleProfileClick } from '../../../../shared/utils/navigation'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
 
-export const UserInfoBlock = ({ selectedUser, user }) => {
-  const navigate = useNavigate()
+export const UserInfoBlock = ({ selectedUser, onProfileClick }) => {
   if (!selectedUser) return null;
+
+  const userId = selectedUser?._id;
+  const displayName = selectedUser?.fullName || selectedUser?.name || 'Creator';
 
   return (
     <div className="mb-8 flex items-center">
-      <img
-        src={selectedUser.avatarUrl}
-        alt={selectedUser.name}
-        className="w-16 h-16 rounded-full object-cover mb-4 cursor-pointer"
-        onClick={() => handleProfileClick(navigate, user.id)}
-      />
+      <div
+        className="relative w-16 h-16 rounded-full overflow-hidden cursor-pointer"
+        onClick={() => userId && onProfileClick(userId)}
+      >
+        <img
+          src={userId ? `http://localhost:4444/avatars/${userId}/avatar?${Date.now()}` : '/default-avatar.png'}
+          alt={displayName}
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={(e) => { e.target.src = '/default-avatar.png'; }}
+        />
+      </div>
       <h2
         className="ml-4 text-lg font-bold hover:text-blue-100 text-white cursor-pointer"
-        onClick={() => handleProfileClick(navigate, user.id)}
+        onClick={() => userId && onProfileClick(userId)}
       >
-        {selectedUser.name}
+        {displayName}
       </h2>
     </div>
-  )
-}
+  );
+};

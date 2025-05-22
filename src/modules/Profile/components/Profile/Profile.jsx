@@ -13,9 +13,6 @@ export const Profile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
-  const isPostLoading = useSelector((state) => state.loading.isPostLoading);
-
-  const [userWorks, setUserWorks] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedWork, setSelectedWork] = useState(null);
   const [isAvatarLoading, setIsAvatarLoading] = useState(false);
@@ -24,6 +21,8 @@ export const Profile = () => {
     profileUser,
     setProfileUser,
     isOwnProfile,
+    userWorks,
+    isLoading,
   } = useProfileData(id, currentUser);
 
   const handleAvatarUpload = (file) => {
@@ -48,7 +47,7 @@ export const Profile = () => {
     }
   };
 
-  if (isPostLoading) {
+  if (isLoading) {
     return (
       <>
         <LoadingSkeleton
@@ -75,6 +74,7 @@ export const Profile = () => {
         setSelectedWork={setSelectedWork}
         open={open}
         setOpen={setOpen}
+        isLoading={isLoading}
       />
       <Footer />
     </>
