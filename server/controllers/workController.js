@@ -57,7 +57,7 @@ export const uploadWork = async (req, res) => {
       return res.status(400).json({ message: 'No files uploaded' });
     }
 
-    const { description, price, technologies, filters } = req.body;
+    const {title, description, price, technologies, filters } = req.body;
     const authorId = req.user._id; // Получаем ID пользователя из middleware
 
     // Загружаем файлы в S3
@@ -65,6 +65,7 @@ export const uploadWork = async (req, res) => {
 
     // Создаем новую запись о работе в базе данных
     const newWork = new Work({
+      title,
       description,
       price: parseFloat(price),
       technologies: JSON.parse(technologies || '[]'),
@@ -101,7 +102,7 @@ export const uploadWork = async (req, res) => {
 
 export const getWorks = async (req, res) => {
   try {
-    const works = await Work.find().populate('author', 'name avatar');
+    const works = await Work.find().populate('author', 'fullName name avatar');
 
     const worksWithUrls = await Promise.all(works.map(async work => {
       const filesWithUrls = await Promise.all(work.files.map(async file => {
@@ -186,7 +187,7 @@ export const deleteWork = async (req, res) => {
 export const updateWork = async (req, res) => {
   try {
     const workId = req.params.id;
-    const { description, price, filters, technologies } = req.body;
+    const {title, description, price, filters, technologies } = req.body;
     
     const work = await Work.findById(workId);
     if (!work) {
@@ -194,6 +195,7 @@ export const updateWork = async (req, res) => {
     }
     
     // Обновляем поля (если они есть в запросе)
+    if (title) work.title = title;
     if (description) work.description = description;
     if (price) work.price = price;
     if (filters) work.filters = JSON.parse(filters);

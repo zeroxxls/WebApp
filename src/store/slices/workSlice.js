@@ -24,7 +24,7 @@ export const workSlice = createSlice({
         state.userWorks.unshift(action.payload);
     }
     },
-  extraReducers: (builder) => {
+    extraReducers: (builder) => {
     builder
       .addCase(fetchWorks.pending, (state) => {
         state.isLoading = true;
@@ -40,6 +40,21 @@ export const workSlice = createSlice({
       })
       .addCase(uploadNewWork.fulfilled, (state, action) => {
         state.userWorks.unshift(action.payload);
+      })
+      .addCase(fetchAllWorks.pending, (state) => { // Обработка загрузки всех работ
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllWorks.fulfilled, (state, action) => { // Обработка успешной загрузки всех работ
+        state.isLoading = false;
+        // Возможно, вам захочется создать отдельное состояние для всех работ,
+        // чтобы не путать с работами пользователя.
+        // Например: state.allWorks = action.payload;
+        state.userWorks = action.payload; // Временно используем userWorks
+      })
+      .addCase(fetchAllWorks.rejected, (state, action) => { // Обработка ошибки загрузки всех работ
+        state.isLoading = false;
+        state.error = action.payload;
       });
   }
 });
@@ -50,6 +65,27 @@ export const fetchWorks = createAsyncThunk(
     try {
       const works = await fetchUserWorks(userId);
       return works;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchAllWorks = createAsyncThunk(
+  'works/fetchAllWorks',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:4444/works', { // Запрос на эндпоинт для всех работ
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        return rejectWithValue(error.message || 'Failed to fetch all works');
+      }
+      const data = await response.json();
+      return data.works;
     } catch (error) {
       return rejectWithValue(error.message);
     }

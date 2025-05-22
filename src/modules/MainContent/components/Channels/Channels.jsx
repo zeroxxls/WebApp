@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsPostLoading } from "../../../../store/slices/loadingSlice.js";
 import { useFilters } from "../../../filter/hooks/useFilters.js";
-import { works } from "../../../../shared/data/works.js";
-import { users } from "../../../../shared/data/users.js";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
 import { Loader } from "../../../../shared/ui/Loader.jsx";
 import { useFilteredWorks } from "../../hooks/useFilteredWorks.js";
 import { WorkCard } from "./WorkCard.jsx";
+import { fetchAllWorks } from "../../../../store/slices/workSlice.js";
 
 export const Channels = () => {
   const dispatch = useDispatch();
@@ -18,22 +17,28 @@ export const Channels = () => {
   const { activeFilter } = useFilters();
   const isPostLoading = useSelector((state) => state.loading.isPostLoading);
   const search = useSelector((state) => state.search.searchQuery.toLowerCase());
+  const allWorks = useSelector((state) => state.works.userWorks); // Получаем все работы из состояния
+  const worksLoading = useSelector((state) => state.works.isLoading);
+  const worksError = useSelector((state) => state.works.error);
 
-  useEffect(() => {
-    dispatch(setIsPostLoading(true));
-  
-    const timer = setTimeout(() => {
-      dispatch(setIsPostLoading(false));
-    }, 1000);
-  
-    return () => clearTimeout(timer);
+ useEffect(() => {
+    dispatch(fetchAllWorks()); // Загружаем все работы при монтировании
   }, [dispatch]);
 
-  const filteredWorks = useFilteredWorks(works, activeFilter, search);
+  // const filteredWorks = useFilteredWorks(works, activeFilter, search); // Больше не используем моковые данные
+  const filteredWorks = useFilteredWorks(allWorks, activeFilter, search);
 
-  const findWorkAuthor = (work) => {
-    return users.find(user => user.id === work.userId);
-  };
+  // const findWorkAuthor = (work) => { // Больше не нужно, автор должен быть в work
+  //   return users.find(user => user.id === work.userId);
+  // };
+
+  if (worksLoading) {
+    return <Loader />;
+  }
+
+  if (worksError) {
+    return <div>Error loading works: {worksError}</div>;
+  }
 
   return (
     <div className="p-4">
@@ -42,15 +47,14 @@ export const Channels = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-8 gap-1">
           {filteredWorks.map((work) => {
-            const author = findWorkAuthor(work);
             return (
               <WorkCard
-                key={work.id}
+                key={work._id}
                 work={work}
-                user={author}
+                user={work.author}
                 onClick={() => {
                   setSelectedWork(work);
-                  setSelectedUser(author);
+                  setSelectedUser(work.author);
                   setOpen(true);
                 }}
               />
