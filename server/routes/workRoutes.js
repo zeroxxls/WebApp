@@ -4,7 +4,8 @@ import {
     getWorks,
     getWorkById,
     updateWork,
-    deleteWork
+    deleteWork,
+    getUserWorks,
 } from '../controllers/workController.js';
 import  {authMiddleware }  from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/uploadMiddleware.js';
@@ -14,6 +15,7 @@ const router = express.Router();
 router.post('/upload', authMiddleware , upload.array('files'), uploadWork);
 router.get('/', getWorks);
 router.get('/:id', getWorkById);
+router.get('/user/:userId', getUserWorks);
 router.put('/:id', authMiddleware , upload.array('files'), updateWork);
 router.delete('/:id', authMiddleware , deleteWork);
 

@@ -29,31 +29,72 @@ const saveFilesToS3 = async (files, workId) => {
 
   return savedFiles;
 };
+export const getUserWorks = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const works = await Work.find({ author: userId }).populate('author', 'name avatar');
 
+    const worksWithUrls = await Promise.all(works.map(async work => {
+      const filesWithUrls = await Promise.all(work.files.map(async file => {
+        const url = await getFileUrl(file.path);
+        return { ...file.toObject(), url };
+      }));
+      return { ...work.toObject(), files: filesWithUrls };
+    }));
+
+    res.json({ success: true, works: worksWithUrls });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch user works',
+      error: error.message
+    });
+  }
+};
 export const uploadWork = async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ message: 'No files uploaded' });
     }
-    
-    // Process files and upload to S3
-    const uploadResults = await Promise.all(
-      req.files.map(file => uploadFile(file.buffer, file.originalname, file.mimetype))
-    );
-    
-    // Save to database, etc.
-    
-    res.status(200).json({
+
+    const { description, price, technologies, filters } = req.body;
+    const authorId = req.user._id; // Получаем ID пользователя из middleware
+
+    // Загружаем файлы в S3
+    const savedFiles = await saveFilesToS3(req.files, authorId.toString());
+
+    // Создаем новую запись о работе в базе данных
+    const newWork = new Work({
+      description,
+      price: parseFloat(price),
+      technologies: JSON.parse(technologies || '[]'),
+      filters: JSON.parse(filters || '[]'),
+      files: savedFiles,
+      author: authorId,
+    });
+
+    const savedWork = await newWork.save();
+
+    // Обновляем пользователя, добавляя ссылку на работу
+    await User.findByIdAndUpdate(authorId, { $push: { works: savedWork._id } });
+
+    // Получаем URL-адреса файлов для ответа
+    const filesWithUrls = await Promise.all(savedWork.files.map(async file => {
+      const url = await getFileUrl(file.path);
+      return { ...file.toObject(), url };
+    }));
+
+    res.status(201).json({
       success: true,
-      message: 'Files uploaded successfully',
-      files: uploadResults
+      message: 'Work uploaded successfully',
+      work: { ...savedWork.toObject(), files: filesWithUrls },
     });
   } catch (error) {
     console.error('Upload error:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to upload files',
-      error: error.message
+      message: 'Failed to upload work',
+      error: error.message,
     });
   }
 };
