@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import avatarRoutes from './routes/avatarRoutes.js'
 import workRoutes from './routes/workRoutes.js'
+import commentRoutes from './routes/commentRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,7 +29,7 @@ mongoose.connect(uri, {
     process.exit(1);
   });
 
-  const corsOptions = {
+const corsOptions = {
   origin: 'http://localhost:5173', // Укажите конкретный origin
   credentials: true, // Разрешаем передачу credentials
   optionsSuccessStatus: 200 // Для старых браузеров
@@ -44,6 +45,7 @@ app.use('/avatars', avatarRoutes);
 app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
 app.use('/works', workRoutes);
 app.use('/works', express.static(path.join(__dirname, 'uploads', 'works')));
+app.use('/works/:workId/comments', commentRoutes); // <--- Перемещено вниз
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {

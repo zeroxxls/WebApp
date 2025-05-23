@@ -8,11 +8,11 @@ import { LikeSaveButtons } from './LikeSaveButtons';
 import { PriceBlock } from './PriceBlock';
 import { DescriptionBlock } from './DescriptionBlock';
 import { TagsBlock } from './TagsBlock';
-import { TechnologiesBlock } from './TechnologiesBlock'; // Импортируем новый компонент
-import { CommentsBlock } from './CommentsBlock';
+import { TechnologiesBlock } from './TechnologiesBlock';
+import { CommentsBlock } from './CommentsBlock'; // Убедитесь, что импорт есть
 
 export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
-   console.log('selectedWork in ModalWindow:', selectedWork);
+  console.log('selectedWork in ModalWindow:', selectedWork);
   const user = useSelector((state) => state.auth.user);
   const allWorks = useSelector((state) => state.works.userWorks);
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
   const { id = 'unknown' } = selectedWork;
   const technologies = selectedWork.technologies || [];
   const filters = selectedWork.filters || [];
+  const workId = selectedWork._id; // Получаем ID работы
 
   const { likeKey, saveKey, addingKey } = useMemo(() => ({
     likeKey: `post_${id}_liked`,
@@ -78,11 +79,12 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
             title={selectedWork.title}
             description={selectedWork.description}
           />
-          <TechnologiesBlock technologies={technologies} /> {/* Используем TechnologiesBlock */}
-          <TagsBlock tags={filters} /> {/* Используем TagsBlock для фильтров */}
+          <TechnologiesBlock technologies={technologies} />
+          <TagsBlock tags={filters} />
           <CommentsBlock
             comments={selectedWork.comments || []}
             selectedUser={selectedUser}
+            selectedWorkId={workId} // Передаем ID работы
           />
         </div>
       </div>
