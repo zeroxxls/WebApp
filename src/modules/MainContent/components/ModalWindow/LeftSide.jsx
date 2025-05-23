@@ -1,26 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../../../shared/styles/hideScrollBar.css';
+import ThreeDModelViewer from '../Viewer/ThreeDModelViewer'; // Убедитесь, что путь верный
 
 export const LeftSide = ({ selectedWork, allWorks }) => {
   const authorId = selectedWork?.author?._id;
   const relatedWorks = allWorks.filter(work => work.author?._id === authorId && work._id !== selectedWork._id);
+
+  useEffect(() => {
+    console.log('selectedWork.files:', selectedWork.files);
+    selectedWork.files?.forEach(file => {
+      const pathParts = file.path?.split('.');
+      const extension = pathParts ? pathParts[pathParts.length - 1]?.toLowerCase() : '';
+      const isModel = ['glb', 'gltf'].includes(extension);
+      const isImage = file.mimeType?.startsWith('image/');
+      console.log(`File: ${file.path}, ext: ${extension}, isModel: ${isModel}, isImage: ${isImage}`);
+    });
+  }, [selectedWork.files]);
+
   return (
     <div className="p-4 w-3/4 h-full overflow-y-auto scroll-smooth pr-2 hide-scrollbar">
       <div className="flex flex-col items-center justify-start space-y-4 mb-8">
-        {/* Все изображения выбранной работы */}
-        {selectedWork.files && selectedWork.files.length > 0 && (
-          selectedWork.files.map((file, index) => (
-            <img
-              key={index}
-              src={file.url}
-              alt={`${selectedWork.title} - Image ${index + 1}`}
-              className="w-full rounded object-contain shadow-md"
-            />
-          ))
+        {/* Все файлы выбранной работы (изображения и 3D-модели) */}
+{selectedWork.files && selectedWork.files.length > 0 && (
+          selectedWork.files.map((file, index) => {
+            const pathParts = file.path?.split('.');
+            const extension = pathParts ? pathParts[pathParts.length - 1]?.toLowerCase() : '';
+            const isModel = ['glb', 'gltf'].includes(extension);
+            const isImage = file.mimeType?.startsWith('image/');
+
+            if (isModel) {
+              return (
+                <div key={`model-${file.path}`} className="w-full aspect-square rounded shadow-md overflow-hidden">
+                  <ThreeDModelViewer modelUrl={file.url} />
+                </div>
+              );
+            } else if (isImage) {
+              return (
+                <img
+                  key={`image-${file.path}`}
+                  src={file.url}
+                  alt={`${selectedWork.title} - File ${index + 1}`}
+                  className="w-full rounded object-contain shadow-md"
+                />
+              );
+            }
+            return null; // Пропускаем неопознанные файлы
+          })
         )}
-        {!selectedWork.files || selectedWork.files.length === 0 && (
+        {(!selectedWork.files || selectedWork.files.length === 0) && (
           <div className="w-full h-64 flex items-center justify-center rounded bg-gray-800 text-gray-400">
-            No images for this work
+            No files for this work
           </div>
         )}
       </div>

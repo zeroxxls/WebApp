@@ -4,9 +4,11 @@ import path from 'path';
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png|gif|mp4|mov|avi|zip|rar|obj|fbx|blend/;
+    const filetypes = /jpeg|jpg|png|gif|mp4|mov|avi|zip|rar|obj|fbx|blend|glb|gltf|application\/octet-stream/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
+
+    console.log('MIME Type:', file.mimetype);
 
     if (extname && mimetype) {
         return cb(null, true);
@@ -19,8 +21,8 @@ const upload = multer({
     storage,
     fileFilter,
     limits: {
-        fileSize: 100 * 1024 * 1024, // 100MB per file
-        files: 10 // Max 10 files
+        fileSize: 100 * 1024 * 1024, 
+        files: 10 
     }
 });
 

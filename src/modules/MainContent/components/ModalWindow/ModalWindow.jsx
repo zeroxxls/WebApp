@@ -9,7 +9,7 @@ import { PriceBlock } from './PriceBlock';
 import { DescriptionBlock } from './DescriptionBlock';
 import { TagsBlock } from './TagsBlock';
 import { TechnologiesBlock } from './TechnologiesBlock';
-import { CommentsBlock } from './CommentsBlock'; // Убедитесь, что импорт есть
+import { CommentsBlock } from './CommentsBlock';
 
 export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
   console.log('selectedWork in ModalWindow:', selectedWork);
@@ -84,7 +84,7 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
           <CommentsBlock
             comments={selectedWork.comments || []}
             selectedUser={selectedUser}
-            selectedWorkId={workId} // Передаем ID работы
+            selectedWorkId={workId}
           />
         </div>
       </div>
