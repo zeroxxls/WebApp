@@ -7,11 +7,13 @@ export const useProfileUpdate = (userId, formData, onUpdate, onClose) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
+    console.log('formData being sent:', formData); // Добавьте эту строку
+
     try {
       const token = localStorage.getItem('token');
       const response = await axios.patch(
-        `http://localhost:4444/auth/update-profile/${userId}`,
+        `http://localhost:4444/users/${userId}`,
         formData,
         {
           headers: {
@@ -19,7 +21,7 @@ export const useProfileUpdate = (userId, formData, onUpdate, onClose) => {
           }
         }
       );
-      
+
       onUpdate(response.data.user);
       onClose();
     } catch (error) {
