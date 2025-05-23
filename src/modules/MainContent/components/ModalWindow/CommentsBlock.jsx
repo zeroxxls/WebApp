@@ -1,29 +1,91 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import '../../../../shared/styles/hideScrollBar.css';
 
-export const CommentsBlock = ({ comments, selectedUser }) => (
-  <div className="flex flex-col gap-4 p-4 rounded-2xl border border-gray-700 bg-gray-800 shadow-md mb-8">
-    <h3 className="text-lg font-semibold text-white">Comments({comments?.length || 0})</h3>
+export const CommentsBlock = ({ comments: initialComments = [], selectedUser, selectedWorkId }) => {
+  const [commentText, setCommentText] = useState('');
+  const [comments, setComments] = useState(initialComments);
 
-    <div className="flex flex-col gap-3 max-h-60 overflow-y-auto pr-2 hide-scrollbar">
-      {comments && comments.length > 0 ? (
-        comments.map((comment) => (
-          <div key={comment.id} className="bg-gray-700 p-3 rounded-lg">
-            <p className="text-sm text-gray-300">
-              <span className="font-semibold text-white">{selectedUser.name}:</span> {comment.text}
-            </p>
-          </div>
-        ))
-      ) : (
-        <p className="text-gray-400 italic">No comments yet.</p>
-      )}
+  useEffect(() => {
+    const fetchComments = async () => {
+      if (selectedWorkId) {
+        try {
+          const response = await fetch(`/works/${selectedWorkId}/comments`);
+          if (response.ok) {
+            const data = await response.json();
+            setComments(data.comments || []);
+          } else {
+            console.error('Failed to fetch comments:', response.status);
+          }
+        } catch (error) {
+          console.error('Error fetching comments:', error);
+        }
+      }
+    };
+
+    fetchComments();
+  }, [selectedWorkId]);
+
+  const handleSubmitComment = async () => {
+    if (commentText.trim() && selectedWorkId) {
+      try {
+        const response = await fetch(`/works/${selectedWorkId}/comments`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+          body: JSON.stringify({ text: commentText }),
+        });
+
+        if (response.ok) {
+          const newComment = await response.json();
+          setComments(prevComments => [...prevComments, newComment]);
+          setCommentText('');
+          // Возможно, стоит запросить все комментарии заново, чтобы обновить UI
+          const commentsResponse = await fetch(`/works/${selectedWorkId}/comments`);
+          if (commentsResponse.ok) {
+            const commentsData = await commentsResponse.json();
+            setComments(commentsData.comments || []);
+          }
+        } else {
+          console.error('Failed to post comment:', response.status);
+        }
+      } catch (error) {
+        console.error('Error posting comment:', error);
+      }
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-4 p-4 rounded-2xl border border-gray-700 bg-gray-800 shadow-md mb-8">
+      <h3 className="text-lg font-semibold text-white">Comments({comments?.length || 0})</h3>
+
+      <div className="flex flex-col gap-3 max-h-60 overflow-y-auto pr-2 hide-scrollbar">
+        {comments && comments.length > 0 ? (
+          comments.map((comment) => (
+            <div key={comment._id || Math.random()} className="bg-gray-700 p-3 rounded-lg">
+              <p className="text-sm text-gray-300">
+                <span className="font-semibold text-white">{comment.author?.name || selectedUser?.name || 'User'}:</span> {comment.text}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-400 italic">No comments yet.</p>
+        )}
+      </div>
+
+      <textarea
+        placeholder="Write your comment here..."
+        className="w-full min-h-[100px] p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+        value={commentText}
+        onChange={(e) => setCommentText(e.target.value)}
+      />
+      <button
+        onClick={handleSubmitComment}
+        className="self-end px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white font-medium shadow-sm"
+      >
+        Submit
+      </button>
     </div>
-
-    <textarea
-      placeholder="Write your comment here..."
-      className="w-full min-h-[100px] p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-    />
-    <button className="self-end px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white font-medium shadow-sm">
-      Submit
-    </button>
-  </div>
-)
+  );
+};
