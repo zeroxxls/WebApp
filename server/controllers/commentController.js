@@ -2,8 +2,6 @@ import Comment from '../models/Comment.js';
 import Work from '../models/Work.js';
 
 export const addComment = async (req, res) => {
-     console.log('Params:', req.params);
-  console.log('Body:', req.body);
   try {
     const workId = req.params.workId;
     const { text } = req.body;
