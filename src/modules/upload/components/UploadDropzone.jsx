@@ -20,7 +20,11 @@ const onDrop = useCallback((acceptedFiles) => {
       'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp'],
       'video/*': ['.mp4', '.mov', '.avi'],
       'application/zip': ['.zip', '.rar'],
-      'model/*': ['.obj', '.fbx', '.blend', '.gltf']
+      'model/gltf-binary': ['.glb'],
+      'model/gltf+json': ['.gltf'],
+      'model/obj': ['.obj'],
+      'model/fbx': ['.fbx'],
+      'application/x-blender': ['.blend'],
     },
     maxFiles: 10
   });
