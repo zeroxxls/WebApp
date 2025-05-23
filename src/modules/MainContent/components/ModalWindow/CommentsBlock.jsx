@@ -5,25 +5,28 @@ export const CommentsBlock = ({ comments: initialComments = [], selectedUser, se
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState(initialComments);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      if (selectedWorkId) {
-        try {
-          const response = await fetch(`/works/${selectedWorkId}/comments`);
-          if (response.ok) {
-            const data = await response.json();
-            setComments(data.comments || []);
-          } else {
-            console.error('Failed to fetch comments:', response.status);
+useEffect(() => {
+  const fetchComments = async () => {
+    if (selectedWorkId) {
+      try {
+        const response = await fetch(`/works/${selectedWorkId}/comments`);
+        if (response.ok) {
+          const data = await response.json();
+          setComments(data.comments || []);
+          if (data.comments && data.comments.length > 0) {
+            console.log('First comment data:', data.comments[0]);
           }
-        } catch (error) {
-          console.error('Error fetching comments:', error);
+        } else {
+          console.error('Failed to fetch comments:', response.status);
         }
+      } catch (error) {
+        console.error('Error fetching comments:', error);
       }
-    };
+    }
+  };
 
-    fetchComments();
-  }, [selectedWorkId]);
+  fetchComments();
+}, [selectedWorkId]);
 
   const handleSubmitComment = async () => {
     if (commentText.trim() && selectedWorkId) {
@@ -64,22 +67,25 @@ export const CommentsBlock = ({ comments: initialComments = [], selectedUser, se
         {comments && comments.length > 0 ? (
           comments.map((comment) => (
             <div key={comment._id || Math.random()} className="bg-gray-700 p-3 rounded-lg flex items-start gap-2">
-              {comment.author?._id ? (
-                <img
-                  src={`http://localhost:4444/avatars/${comment.author._id}/avatar?${Date.now()}`}
-                  alt={comment.author?.fullName || comment.author?.name || 'User'}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-gray-600"></div>
-              )}
-              <div className="flex flex-col">
-                <p className="text-sm text-gray-300">
-                  <span className="font-semibold text-white">{comment.author?.fullName || selectedUser?.fullName || 'User'}:</span> {comment.text}
-                </p>
-                {/* Здесь может быть дополнительная информация */}
-              </div>
+            {comment.author?._id ? (
+              <img
+                src={`http://localhost:4444/avatars/${comment.author._id}/avatar?${Date.now()}`}
+                alt={comment.author?.fullName || comment.author?.name || 'User'}
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-gray-600"></div>
+            )}
+            <div className="flex flex-col">
+              <p className="text-sm text-gray-300">
+                <span className="font-semibold text-white">
+                 {comment.author?.fullName || comment.author?.name || 'User'}:
+                </span>
+                {comment.text}
+              </p>
+              {/* Здесь может быть дополнительная информация */}
             </div>
+          </div>
           ))
         ) : (
           <p className="text-gray-400 italic">No comments yet.</p>

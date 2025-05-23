@@ -3,7 +3,7 @@ import { fetchUserWorks, uploadWork } from "../../api/worksApi";
 
 const initialState = {
   userWorks: [],
-  isLoading: false,
+  isLoading: true,
   error: null
 };
 
@@ -27,35 +27,32 @@ export const workSlice = createSlice({
     extraReducers: (builder) => {
     builder
       .addCase(fetchWorks.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchWorks.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.userWorks = action.payload;
-      })
-      .addCase(fetchWorks.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(uploadNewWork.fulfilled, (state, action) => {
-        state.userWorks.unshift(action.payload);
-      })
-      .addCase(fetchAllWorks.pending, (state) => { // Обработка загрузки всех работ
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchAllWorks.fulfilled, (state, action) => { // Обработка успешной загрузки всех работ
-        state.isLoading = false;
-        // Возможно, вам захочется создать отдельное состояние для всех работ,
-        // чтобы не путать с работами пользователя.
-        // Например: state.allWorks = action.payload;
-        state.userWorks = action.payload; // Временно используем userWorks
-      })
-      .addCase(fetchAllWorks.rejected, (state, action) => { // Обработка ошибки загрузки всех работ
-        state.isLoading = false;
-        state.error = action.payload;
-      });
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(fetchWorks.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.userWorks = action.payload;
+    })
+    .addCase(fetchWorks.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    })
+    .addCase(uploadNewWork.fulfilled, (state, action) => {
+      state.userWorks.unshift(action.payload);
+    })
+    .addCase(fetchAllWorks.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(fetchAllWorks.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.userWorks = action.payload;
+    })
+    .addCase(fetchAllWorks.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
   }
 });
 
@@ -75,11 +72,7 @@ export const fetchAllWorks = createAsyncThunk(
   'works/fetchAllWorks',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:4444/works', { // Запрос на эндпоинт для всех работ
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await fetch('http://localhost:4444/works'); // Убрали headers с Authorization
       if (!response.ok) {
         const error = await response.json();
         return rejectWithValue(error.message || 'Failed to fetch all works');

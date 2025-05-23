@@ -21,7 +21,7 @@ export const addComment = async (req, res) => {
     const savedComment = await newComment.save();
 
     // Populate author details for the response
-    const populatedComment = await savedComment.populate('author', 'name avatar');
+    const populatedComment = await savedComment.populate('author', 'fullName avatar');
 
     res.status(201).json(populatedComment);
   } catch (error) {
@@ -33,7 +33,7 @@ export const addComment = async (req, res) => {
 export const getCommentsForWork = async (req, res) => {
   try {
     const workId = req.params.workId;
-    const comments = await Comment.find({ work: workId }).populate('author', 'name avatar').sort({ createdAt: -1 });
+    const comments = await Comment.find({ work: workId }).populate('author', 'fullName avatar').sort({ createdAt: -1 });
     res.json({ success: true, comments });
   } catch (error) {
     console.error('Error getting comments:', error);

@@ -13,8 +13,8 @@ export const useFilteredWorks = (works, activeFilter, search) => {
     // Поиск по технологиям
     const matchesTechnology = work.technologies?.some(tech => tech?.toLowerCase().includes(lowerCaseSearch));
 
-    const matchesTrending = activeFilter.includes(FILTER_TYPES.TRENDING) ? work.isTrending : true;
-    const matchesFollowing = activeFilter.includes(FILTER_TYPES.FOLLOWING) ? work.isFollowing : true;
+    const matchesTrending = activeFilter.includes(FILTER_TYPES.TRENDING) ? (work.isTrending || false) : true;
+    const matchesFollowing = activeFilter.includes(FILTER_TYPES.FOLLOWING) ? (work.isFollowing || false) : true;
     const matchesNoAI = activeFilter.includes(FILTER_TYPES.NO_AI) ? !work.isAI : true;
 
     const tagFilters = [
