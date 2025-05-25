@@ -1,93 +1,37 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { OnCloseBtn } from '../../ui/OnCloseBtn';
-import { LeftSide } from './LeftSide';
-import { UserInfoBlock } from './UserInfoBlock';
-import { LikeSaveButtons } from './LikeSaveButtons';
-import { PriceBlock } from './PriceBlock';
-import { DescriptionBlock } from './DescriptionBlock';
-import { TagsBlock } from './TagsBlock';
-import { TechnologiesBlock } from './TechnologiesBlock';
-import { CommentsBlock } from './CommentsBlock';
+import { ModalContent } from './ModalContent';
+import { useModal } from '../../hooks/useModal';
 
 export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
-  console.log('selectedWork in ModalWindow:', selectedWork);
-  const user = useSelector((state) => state.auth.user);
   const allWorks = useSelector((state) => state.works.userWorks);
-  const navigate = useNavigate();
-
-  const { id = 'unknown' } = selectedWork;
-  const technologies = selectedWork.technologies || [];
-  const filters = selectedWork.filters || [];
-  const workId = selectedWork._id; // Получаем ID работы
-
-  const { likeKey, saveKey, addingKey } = useMemo(() => ({
-    likeKey: `post_${id}_liked`,
-    saveKey: `post_${id}_saved`,
-    addingKey: `post_${id}_adding`
-  }), [id]);
-
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-
-  useEffect(() => {
-    setIsAddingToCart(localStorage.getItem(addingKey) === 'true');
-    setIsLiked(localStorage.getItem(likeKey) === 'true');
-    setIsSaved(localStorage.getItem(saveKey) === 'true');
-  }, [addingKey, likeKey, saveKey]);
-
-  useEffect(() => {
-    localStorage.setItem(likeKey, isLiked);
-    localStorage.setItem(saveKey, isSaved);
-  }, [isLiked, isSaved, likeKey, saveKey]);
-
-  const handleProfileClick = (userId) => {
-    onClose();
-    navigate(`/profile/${userId}`);
-  };
+  const { _id: workId } = selectedWork;
+  const {
+    isAddingToCart,
+    isLiked,
+    isSaved,
+    handleAddToCart,
+    handleLike,
+    handleSave,
+    handleProfileClick,
+  } = useModal(workId);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-
-      <div className="flex z-10 w-full max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
-        <LeftSide selectedWork={selectedWork} allWorks={allWorks} />
-        <div className="flex flex-col w-1/4 p-6 border-l border-gray-800 relative overflow-y-auto">
-          <OnCloseBtn onClose={onClose} />
-          <UserInfoBlock
-            selectedUser={selectedUser}
-            onProfileClick={handleProfileClick}
-          />
-          <LikeSaveButtons
-            isLiked={isLiked}
-            isSaved={isSaved}
-            handleLike={() => setIsLiked(!isLiked)}
-            handleSave={() => setIsSaved(!isSaved)}
-          />
-          <PriceBlock
-            price={selectedWork.price}
-            isAddingToCart={isAddingToCart}
-            handleAddToCart={() => {
-              const newState = !isAddingToCart;
-              setIsAddingToCart(newState);
-              localStorage.setItem(addingKey, newState);
-            }}
-          />
-          <DescriptionBlock
-            title={selectedWork.title}
-            description={selectedWork.description}
-          />
-          <TechnologiesBlock technologies={technologies} />
-          <TagsBlock tags={filters} />
-          <CommentsBlock
-            comments={selectedWork.comments || []}
-            selectedUser={selectedUser}
-            selectedWorkId={workId}
-          />
-        </div>
-      </div>
+      <ModalContent
+        onClose={onClose}
+        selectedWork={selectedWork}
+        selectedUser={selectedUser}
+        allWorks={allWorks}
+        isLiked={isLiked}
+        isSaved={isSaved}
+        isAddingToCart={isAddingToCart}
+        handleLike={handleLike}
+        handleSave={handleSave}
+        handleAddToCart={handleAddToCart}
+        handleProfileClick={handleProfileClick}
+      />
     </div>
   );
 };
