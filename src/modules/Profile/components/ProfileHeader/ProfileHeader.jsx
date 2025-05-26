@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { AvatarSection } from "./AvatarSection";
-import { BasicInfoSection } from "./BasicInfoSection";
-import { TechStackSection } from "./TechStackSection";
-import { ContactStatsSection } from "./ContactsStatsSection";
-import { EditProfileModalWrapper } from "./EditProfileModalWrapper";
+import React from "react";
+import { useProfileHeader } from "../../hooks/useProfileHeader";
+import { ProfileHeaderUI } from "./ProfileHeaderUI";
 
 export const ProfileHeader = ({
   user,
@@ -13,7 +10,7 @@ export const ProfileHeader = ({
   isAvatarLoading,
   onProfileUpdate,
 }) => {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const { isEditModalOpen, openEditModal, closeEditModal } = useProfileHeader();
 
   if (isLoading || !user) {
     return (
@@ -29,30 +26,15 @@ export const ProfileHeader = ({
   }
 
   return (
-    <div className="mb-8 pb-8 border-b border-gray-700/50">
-      <div className="flex flex-col md:flex-row items-center gap-6">
-        <AvatarSection 
-          user={user}
-          isOwnProfile={isOwnProfile}
-          isAvatarLoading={isAvatarLoading}
-          onAvatarUpload={onAvatarUpload}
-        />
-        <div className="text-center md:text-left flex-1">
-          <BasicInfoSection 
-            user={user}
-            isOwnProfile={isOwnProfile}
-            setIsEditModalOpen={setIsEditModalOpen}
-          />
-          <TechStackSection techStack={user.techStack} />
-          <ContactStatsSection contacts={user.contacts} worksCount={user.worksCount} />
-        </div>
-      </div>
-      <EditProfileModalWrapper
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        onUpdate={onProfileUpdate}
-        user={user}
-      />
-    </div>
+    <ProfileHeaderUI
+      user={user}
+      isOwnProfile={isOwnProfile}
+      isAvatarLoading={isAvatarLoading}
+      onAvatarUpload={onAvatarUpload}
+      onProfileUpdate={onProfileUpdate}
+      isEditModalOpen={isEditModalOpen}
+      openEditModal={openEditModal}
+      closeEditModal={closeEditModal}
+    />
   );
 };
