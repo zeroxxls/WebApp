@@ -9,6 +9,7 @@ import { VscSettings } from "react-icons/vsc";
 import { useSelector } from "react-redux";
 import { useUserDropdown } from "../../hooks/useUserDropdown";
 import { UserDropdown } from "../HeaderFeatures/UserDropdown";
+import { MdFileUpload } from "react-icons/md";
 
 export const Header = () => {
   const { user, token } = useSelector((state) => state.auth);
@@ -16,8 +17,7 @@ export const Header = () => {
 
   return (
     <header className="flex justify-between items-center border-b border-gray-200/10
-                    transition-all duration-600
-                    hover:border-blue-400 hover:shadow-[0_4px_12px_-1px_rgba(59,130,246,0.5)]">
+    transition-all duration-600 hover:border-blue-400 hover:shadow-[0_4px_12px_-1px_rgba(59,130,246,0.5)]">
       <div className="flex">
         <Logo />
         <Brand />
@@ -26,14 +26,21 @@ export const Header = () => {
       <SearchInput />
       <div className="flex items-center">
         {user && token ? (
-          <UserDropdown
-            user={user}
-            isDropdownOpen={isDropdownOpen}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onLogout={handleLogout}
-            navigate={navigate}
-          />
+          <>
+            <Link to="/UploadPage">
+              <div className="bg-gray-700 mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+                <MdFileUpload className="w-6 h-6 text-white transition hover:scale-110" />
+              </div>
+            </Link>
+            <UserDropdown
+              user={user}
+              isDropdownOpen={isDropdownOpen}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onLogout={handleLogout}
+              navigate={navigate}
+            />
+          </>
         ) : (
           <div className="flex gap-7 mr-6">
             <Link to="/RegisterPage">
