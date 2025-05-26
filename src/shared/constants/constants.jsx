@@ -1,31 +1,27 @@
-import { 
-  FaReact, FaNodeJs, FaJs, FaPython, FaJava, 
-  FaHtml5, FaCss3Alt, FaDatabase, FaGitAlt, FaCode 
-} from 'react-icons/fa';
-import { 
-  SiTypescript, SiMongodb, SiPostgresql, 
-  SiDocker, SiKubernetes, SiGraphql, SiRedis, SiFirebase, SiTailwindcss
-} from 'react-icons/si';
+import { FaPaintBrush,FaCameraRetro, FaCube, FaRocket, FaSkull, FaCode } from 'react-icons/fa';
+import { SiUnity, SiBlender , SiAdobephotoshop,SiHoudini  ,SiDavinciresolve , SiAdobeillustrator , SiUnrealengine, } from 'react-icons/si';
+import { TbCubeSend } from 'react-icons/tb';
+import { GiRolledCloth } from "react-icons/gi";
+import { GiMuscularTorso } from "react-icons/gi";
 
 export const availableTechOptions = [
-  { name: 'React', icon: <FaReact className="text-blue-500" /> },
-  { name: 'Node.js', icon: <FaNodeJs className="text-green-500" /> },
-  { name: 'JavaScript', icon: <FaJs className="text-yellow-500" /> },
-  { name: 'TypeScript', icon: <SiTypescript className="text-blue-600" /> },
-  { name: 'Python', icon: <FaPython className="text-blue-400" /> },
-  { name: 'Java', icon: <FaJava className="text-red-500" /> },
-  { name: 'HTML', icon: <FaHtml5 className="text-orange-500" /> },
-  { name: 'CSS', icon: <FaCss3Alt className="text-blue-300" /> },
-  { name: 'MongoDB', icon: <SiMongodb className="text-green-600" /> },
-  { name: 'PostgreSQL', icon: <SiPostgresql className="text-blue-700" /> },
-  { name: 'Docker', icon: <SiDocker className="text-blue-400" /> },
-  { name: 'Kubernetes', icon: <SiKubernetes className="text-blue-600" /> },
-  { name: 'GraphQL', icon: <SiGraphql className="text-pink-600" /> },
-  { name: 'Redis', icon: <SiRedis className="text-red-600" /> },
-  { name: 'Firebase', icon: <SiFirebase className="text-yellow-500" /> },
-  { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-cyan-400" /> },
-  { name: 'Git', icon: <FaGitAlt className="text-orange-600" /> },
-  { name: 'SQL', icon: <FaDatabase className="text-gray-400" /> },
+  { name: 'Blender', icon: <SiBlender className="text-orange-400 text-xl" /> },
+  { name: 'Photoshop', icon: <SiAdobephotoshop className="text-blue-400 text-xl" /> },
+  { name: 'Illustrator', icon: <SiAdobeillustrator className="text-yellow-500 text-xl" /> },
+  { name: 'Unity', icon: <SiUnity className="text-blue-600 text-xl" /> },
+  { name: 'Unreal Engine', icon: <SiUnrealengine className="text-black text-xl" /> },
+  { name: 'Substance Painter', icon: <FaPaintBrush className="text-lime-500 text-xl" /> },
+  { name: 'Maya', icon: <TbCubeSend className="text-teal-500 text-xl" /> },
+  { name: 'Cinema 4D', icon: <FaCube className="text-red-500 text-xl" /> },
+  { name: 'Marmoset Toolbag', icon: <FaRocket className="text-gray-400 text-xl" /> },
+  { name: 'Krita', icon: <FaPaintBrush className="text-purple-500 text-xl" /> },
+  { name: 'Armor Paint', icon: <FaSkull className="text-yellow-700 text-xl" /> },
+  { name: 'PureRef', icon: <FaCode className="text-indigo-500 text-xl" /> },
+  { name: 'Photography', icon: <FaCameraRetro className="text-green-600 text-xl" /> },
+  { name: 'Marvelous Designer', icon: <GiRolledCloth className="text-cyan-500 text-xl" /> },
+  { name: 'ZBrush', icon: <GiMuscularTorso className="text-pink-600 text-xl" /> },
+  { name: 'Houdini', icon: <SiHoudini className="text-orange-300 text-xl" /> },
+  { name: 'DaVinci Resolve', icon: <SiDavinciresolve className="text-blue-300 text-xl" /> },
 ];
 
 export const contactTypes = [

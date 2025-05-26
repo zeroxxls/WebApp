@@ -22,7 +22,7 @@ export const useEditProfileModal = (user, onUpdate, onClose) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleProfileSubmit();
+    handleProfileSubmit(e);
   };
 
   return {
