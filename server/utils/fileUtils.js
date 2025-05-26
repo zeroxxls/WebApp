@@ -10,8 +10,8 @@ export const saveFileToS3 = async (file, workId) => {
     await uploadFile(file.buffer, fileName, file.mimetype);
     return {
       path: fileName,
-      originalname: file.originalname,
-      mimetype: file.mimetype,
+      originalName: file.originalname,
+      mimeType: file.mimetype,
       size: file.size,
     };
   } catch (err) {

@@ -1,79 +1,71 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React  from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useProfileData } from "../../hooks/useProfileData.js";
-import { handleAvatarUpload as uploadAvatar } from "../../utils/handleAvatarUpload.js";
-import { ProfileContent } from "./ProfileContent.jsx";
-import { LoadingSkeleton } from "../../ui/LoadingSkeleton.jsx";
+import { useProfileData } from "../../hooks/useProfileData";
+import { useProfile } from "../../hooks/useProfile";
+import { ProfileUI } from "./ProfileUI.jsx";
 import { NoUserFound } from "../Errors/NoUserFound.jsx";
 import { Footer } from "../../../Footer/index.js";
-import { setUser } from "../../../../store/slices/authSlice.js";
 
 export const Profile = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
-  const [open, setOpen] = useState(false);
-  const [selectedWork, setSelectedWork] = useState(null);
-  const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+  const [profileUser, setProfileUser] = useState(null);
 
   const {
-    profileUser,
-    setProfileUser,
-    isOwnProfile,
+    profileUser: fetchedProfileUser,
     userWorks,
+    isOwnProfile,
     isLoading,
   } = useProfileData(id, currentUser);
 
-  const handleAvatarUpload = (file) => {
-    uploadAvatar({
-      file,
-      currentUser,
-      dispatch,
-      setProfileUser,
-      setIsAvatarLoading,
-    });
-  };
+  // Update local profileUser state when fetched data arrives
+  if (fetchedProfileUser && !profileUser) {
+    setProfileUser(fetchedProfileUser);
+  }
 
-  const handleProfileUpdate = (updatedUser) => {
-    setProfileUser(updatedUser);
-    if (isOwnProfile) {
-      dispatch(
-        setUser({
-          user: updatedUser,
-          token: localStorage.getItem("token"),
-        })
-      );
-    }
-  };
+  const {
+    open,
+    selectedWork,
+    isAvatarLoading,
+    handleAvatarUpload,
+    handleProfileUpdate,
+    openWorkModal,
+    closeWorkModal,
+  } = useProfile(currentUser, setProfileUser, isOwnProfile);
 
-  if (isLoading) {
+  if (isLoading && !profileUser) {
     return (
       <>
-        <LoadingSkeleton
-          isAvatarLoading={isAvatarLoading}
-          isOwnProfile={isOwnProfile}
-        />
+        <ProfileUI isLoading={true} isAvatarLoading={isAvatarLoading} isOwnProfile={isOwnProfile} />
         <Footer />
       </>
     );
   }
 
-  if (!profileUser) return <NoUserFound />;
+  if (!profileUser) {
+    return (
+      <>
+        <NoUserFound />
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
-      <ProfileContent
+      <ProfileUI
         profileUser={profileUser}
         userWorks={userWorks}
         isOwnProfile={isOwnProfile}
         handleAvatarUpload={handleAvatarUpload}
         isAvatarLoading={isAvatarLoading}
         handleProfileUpdate={handleProfileUpdate}
-        selectedWork={selectedWork}
-        setSelectedWork={setSelectedWork}
         open={open}
-        setOpen={setOpen}
+        selectedWork={selectedWork}
+        closeWorkModal={closeWorkModal}
+        openWorkModal={openWorkModal}
         isLoading={isLoading}
       />
       <Footer />
