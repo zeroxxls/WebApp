@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { DescriptionInput } from './DescriptionInput';
-import { PriceInput } from './PriceInput';
-import { TechnologiesInput } from './TechnologiesInput';
-import { CategoryFilters } from './CategoryFilters';
 import { SubmitButton } from './SubmitButton';
+import { CategoryFilters } from './CategoryFilters';
+import { PriceSelector } from './PriceSelector'; // Импортируем PriceSelector
+import { TechnologySelector } from './TechnologySelector'; // Импортируем TechnologySelector
 
 export const UploadForm = ({
   files,
@@ -11,13 +11,21 @@ export const UploadForm = ({
   onUploadSuccess,
   onUploadError
 }) => {
-  const [title, setTitle] = useState(''); // <--- Новое состояние для названия
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0); // Состояние для выбранной цены
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [selectedTechnologies, setSelectedTechnologies] = useState([]);
+  const [selectedTechnologies, setSelectedTechnologies] = useState([]); // Состояние для выбранных технологий
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState(null);
+
+  const handleToggleTechnology = (technology) => {
+    setSelectedTechnologies(prev =>
+      prev.includes(technology)
+        ? prev.filter(t => t !== technology)
+        : [...prev, technology]
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +35,7 @@ export const UploadForm = ({
       setLocalError('Please select at least one file');
       return;
     }
-    if (!title.trim()) { // <--- Проверка на заполненность названия
+    if (!title.trim()) {
       setLocalError('Please enter a title for your work');
       return;
     }
@@ -36,7 +44,7 @@ export const UploadForm = ({
     files.forEach(file => {
       formData.append('files', file);
     });
-    formData.append('title', title); // <--- Добавляем название в FormData
+    formData.append('title', title);
     formData.append('description', description);
     formData.append('price', price.toString());
     formData.append('technologies', JSON.stringify(selectedTechnologies));
@@ -60,23 +68,19 @@ export const UploadForm = ({
       const data = await response.json();
       console.log('Upload success:', data);
 
-      // Reset form
       setFiles([]);
-      setTitle(''); // <--- Сбрасываем название
+      setTitle('');
       setDescription('');
       setPrice(0);
       setSelectedTechnologies([]);
       setSelectedFilters([]);
 
-      // Notify parent component
       if (onUploadSuccess) {
         onUploadSuccess(data);
       }
     } catch (err) {
       console.error('Upload error:', err);
       setLocalError(err.message || 'Failed to upload files');
-
-      // Notify parent component
       if (onUploadError) {
         onUploadError(err);
       }
@@ -93,7 +97,6 @@ export const UploadForm = ({
         </div>
       )}
 
-      {/* Новое поле для названия */}
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-2">
           Title
@@ -114,15 +117,14 @@ export const UploadForm = ({
         onChange={setDescription}
       />
 
-      <PriceInput
+      <PriceSelector
         value={price}
         onChange={setPrice}
       />
 
-      <TechnologiesInput
-        technologies={selectedTechnologies}
-        onAddTech={(tech) => setSelectedTechnologies([...selectedTechnologies, tech])}
-        onRemoveTech={(tech) => setSelectedTechnologies(selectedTechnologies.filter(t => t !== tech))}
+      <TechnologySelector
+        selectedTechnologies={selectedTechnologies}
+        onToggleTechnology={handleToggleTechnology}
       />
 
       <CategoryFilters
@@ -138,7 +140,7 @@ export const UploadForm = ({
 
       <SubmitButton
         isLoading={isLoading}
-        disabled={isLoading || !files || files.length === 0 || !title.trim()} // Добавлена проверка на название
+        disabled={isLoading || !files || files.length === 0 || !title.trim()}
       />
     </form>
   );
