@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import { contactTypes } from '../../constants/constants';
+import { contactTypes } from '../../../../shared/constants/constants';
 
 export const ContactForm = ({ contacts, setContacts }) => {
   const [newContact, setNewContact] = useState({ 

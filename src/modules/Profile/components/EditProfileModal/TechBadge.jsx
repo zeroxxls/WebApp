@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaMinus } from 'react-icons/fa';
 import { FaCode } from 'react-icons/fa';
-import { availableTechOptions } from '../../constants/constants';
+import { availableTechOptions } from '../../../../shared/constants/constants';
 
 export const TechBadge = ({ tech, onRemove }) => {
   const techOption = availableTechOptions.find(t => 
