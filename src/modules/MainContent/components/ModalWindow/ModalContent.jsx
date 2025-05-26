@@ -8,6 +8,7 @@ import { DescriptionBlock } from './DescriptionBlock';
 import { TagsBlock } from './TagsBlock';
 import { TechnologiesBlock } from './TechnologiesBlock';
 import { CommentsBlock } from './CommentsBlock';
+import { AVAILABLE_TECHNOLOGIES } from '../../../../shared/constants/uploadFilters';
 
 export const ModalContent = ({
   onClose,
@@ -24,13 +25,21 @@ export const ModalContent = ({
 }) => {
   const {
     _id: workId,
-    technologies = [],
+    technologies: workTechnologies = [],
     filters = [],
     title,
     description,
     price,
     comments = [],
   } = selectedWork;
+
+  const technologiesWithIcons = workTechnologies.map(techName => {
+    const techInfo = AVAILABLE_TECHNOLOGIES.find(t => t.label.toLowerCase() === techName.toLowerCase());
+    return {
+      name: techName,
+      icon: techInfo ? techInfo.icon : null,
+    };
+  });
 
   return (
     <div className="flex z-10 w-full max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
@@ -53,7 +62,7 @@ export const ModalContent = ({
           handleAddToCart={handleAddToCart}
         />
         <DescriptionBlock title={title} description={description} />
-        <TechnologiesBlock technologies={technologies} />
+        <TechnologiesBlock technologies={technologiesWithIcons} />
         <TagsBlock tags={filters} />
         <CommentsBlock comments={comments} selectedUser={selectedUser} selectedWorkId={workId} />
       </div>

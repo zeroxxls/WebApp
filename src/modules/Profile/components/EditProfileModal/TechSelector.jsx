@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaCheck } from 'react-icons/fa';
-import { availableTechOptions } from '../../constants/constants';
+import { availableTechOptions } from '../../../../shared/constants/constants';
 
 export const TechSelector = ({ techStack, setTechStack }) => {
   const toggleTech = (tech) => {

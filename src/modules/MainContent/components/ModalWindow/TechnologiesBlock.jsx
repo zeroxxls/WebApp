@@ -8,8 +8,9 @@ export const TechnologiesBlock = ({ technologies }) => {
       <h5 className="text-white font-semibold mb-2">Technologies</h5>
       <div className='flex flex-wrap gap-2'>
         {technologies.map(tech => (
-          <span key={tech} className="px-3 py-1 rounded-full bg-gray-700 text-sm text-indigo-300 border border-indigo-400/30">
-            {tech}
+          <span key={tech.name} className="px-3 py-1 rounded-full bg-gray-700 text-sm text-indigo-300 border border-indigo-400/30 flex items-center gap-1">
+            {tech.icon && <span className="text-indigo-300">{React.cloneElement(tech.icon, { size: 16 })}</span>} {/* Отображаем иконку */}
+            {tech.name}
           </span>
         ))}
       </div>
