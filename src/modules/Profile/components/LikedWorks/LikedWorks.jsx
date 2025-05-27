@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { WorkCard } from '../../../MainContent/components/Channels/WorkCard';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../../../../shared/ui/Loader';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 export const LikedWorks = () => {
   const navigate = useNavigate();
@@ -38,33 +39,50 @@ export const LikedWorks = () => {
     }
   }, [userId]);
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <Loader />
-      </div>
+          <Loader />
     );
   }
 
   if (!likedWorks.length) {
     return (
-      <div className="container mx-auto mt-8 text-center text-gray-500">
-        You haven't liked any works yet.
+      <div className="flex flex-col">
+        <div className="flex items-center p-4">
+          <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition duration-300">
+            <ArrowLeftIcon className="h-6 w-6" />
+          </button>
+          <h2 className="text-2xl mx-5 mt-5 font-semibold mb-4">Your Liked Works</h2>
+        </div>
+        <div className="container mx-auto mt-8 text-center text-gray-500 flex-grow">
+          You haven't liked any works yet.
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {likedWorks.map((work) => (
-        <WorkCard
-          key={work._id}
-          work={work}
-          user={work.author}  
-          onClick={() => navigate(`/work/${work._id}`)}
-        />
-      ))}
+    <div className="flex flex-col">
+      <div className="flex items-center p-4">
+        <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition duration-300">
+          <ArrowLeftIcon className="h-6 w-6" />
+        </button>
+        <h2 className="text-2xl mx-5 mt-5 font-semibold mb-4">Your Liked Works</h2>
+      </div>
+      <div className="container mx-5 mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 flex-grow">
+        {likedWorks.map((work) => (
+          <WorkCard
+            key={work._id}
+            work={work}
+            user={work.author}
+            onClick={() => navigate(`/work/${work._id}`)}
+          />
+        ))}
+      </div>
     </div>
   );
 };
-
