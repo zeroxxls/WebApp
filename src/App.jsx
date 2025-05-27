@@ -11,6 +11,8 @@ import { ArticlePage } from "./pages/ArticlePage/ArticlePage"
 import { NewsPage } from "./pages/NewsPage/NewsPage"
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage"
 import { UploadPage } from "./pages/UploadPage/UploadPage";
+import { LikedPage } from "./pages/LikedPage/LikedPage";
+import { SavedPage } from "./pages/SavedPage/SavedPage";
 
 
 export const App =()=>{
@@ -24,6 +26,8 @@ export const App =()=>{
                 <Route path="/SettingsPage" element={<SettingsPage/>}/>
                 <Route path="/NewsPage" element={<NewsPage/>}/>
                 <Route path="/UploadPage" element={<UploadPage/>}/>
+                <Route path="/LikedPage" element={<LikedPage/>}/>
+                <Route path="/SavedPage" element={<SavedPage/>}/>
                 <Route path="article/:id" element={<ArticlePage/>}/>
                 <Route path="profile/:id" element={
                     <WithHeader>
