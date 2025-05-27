@@ -11,6 +11,25 @@ export const fetchUserWorks = async (userId) => {
   })));
 };
 
+export const fetchLikedWorksForUser = async (userId) => {
+  try {
+    const user = await User.findById(userId).populate({
+      path: 'likedWorks',
+      populate: [
+        { path: 'author', select: 'fullName avatar' },
+        { path: 'files' },
+      ],
+    });
+    return Promise.all(user.likedWorks.map(async work => ({
+      ...work.toObject(),
+      files: await getFileUrls(work.files),
+    })));
+  } catch (error) {
+    console.error('Error fetching liked works for user:', error);
+    throw error;
+  }
+};
+
 export const createWork = async (reqFiles, body, authorId) => {
   const { title, description, price, technologies, filters } = body;
   const savedFiles = await saveFilesToS3(reqFiles, authorId.toString());

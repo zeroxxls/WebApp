@@ -1,56 +1,80 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { setLikedWorks, setSavedWorks } from '../../../store/slices/userSlice';
 
-export const useModal = (selectedWorkId = 'unknown') => {
+export const useModal = (selectedWorkId) => {
   const navigate = useNavigate();
-
-  const { likeKey, saveKey, addingKey } = useMemo(() => ({
-    likeKey: `work_${selectedWorkId}_liked`,
-    saveKey: `work_${selectedWorkId}_saved`,
-    addingKey: `work_${selectedWorkId}_adding`,
-  }), [selectedWorkId]);
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.auth.user?._id);
+  const likedWorks = useSelector((state) => state.user.likedWorks || []);
+  const savedWorks = useSelector((state) => state.user.savedWorks || []);
 
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const [isLikingRequest, setIsLikingRequest] = useState(false);
+  const [isSavingRequest, setIsSavingRequest] = useState(false);
+  const [isLikedLocal, setIsLikedLocal] = useState(likedWorks.includes(selectedWorkId));
+  const [isSavedLocal, setIsSavedLocal] = useState(savedWorks.includes(selectedWorkId));
 
-  useEffect(() => {
-    setIsAddingToCart(localStorage.getItem(addingKey) === 'true');
-    setIsLiked(localStorage.getItem(likeKey) === 'true');
-    setIsSaved(localStorage.getItem(saveKey) === 'true');
-  }, [addingKey, likeKey, saveKey]);
+  const updateLike = async () => {
+    if (!userId || !selectedWorkId || isLikingRequest) return;
 
-  useEffect(() => {
-    localStorage.setItem(likeKey, isLiked);
-    localStorage.setItem(saveKey, isSaved);
-  }, [isLiked, isSaved, likeKey, saveKey]);
+    setIsLikingRequest(true);
+    const action = isLikedLocal ? 'unlike' : 'like';
 
-  const handleAddToCart = () => {
-    const newState = !isAddingToCart;
-    setIsAddingToCart(newState);
-    localStorage.setItem(addingKey, newState);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.patch(
+        `http://localhost:4444/users/${userId}/${action}/${selectedWorkId}`, // Обновленный базовый URL
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      dispatch(setLikedWorks(response.data.likedWorks));
+      setIsLikedLocal(!isLikedLocal);
+    } catch (error) {
+      console.error('Error updating like:', error);
+      setIsLikedLocal(prevState => !prevState);
+    } finally {
+      setIsLikingRequest(false);
+    }
   };
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  };
+  const updateSave = async () => {
+    if (!userId || !selectedWorkId || isSavingRequest) return;
 
-  const handleSave = () => {
-    setIsSaved(!isSaved);
-  };
+    setIsSavingRequest(true);
+    const action = isSavedLocal ? 'unsave' : 'save';
 
-  const handleProfileClick = (onClose, userId) => {
-    onClose();
-    navigate(`/profile/${userId}`);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.patch(
+        `http://localhost:4444/users/${userId}/${action}/${selectedWorkId}`, // Обновленный базовый URL
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      dispatch(setSavedWorks(response.data.savedWorks));
+      setIsSavedLocal(!isSavedLocal);
+    } catch (error) {
+      console.error('Error updating save:', error);
+      setIsSavedLocal(prevState => !prevState);
+    } finally {
+      setIsSavingRequest(false);
+    }
   };
 
   return {
+    isLiked: isLikedLocal,
+    isSaved: isSavedLocal,
     isAddingToCart,
-    isLiked,
-    isSaved,
-    handleAddToCart,
-    handleLike,
-    handleSave,
-    handleProfileClick,
+    handleLike: updateLike,
+    handleSave: updateSave,
+    handleAddToCart: () => setIsAddingToCart(!isAddingToCart),
+    handleProfileClick: (onClose, userId) => {
+      onClose();
+      navigate(`/profile/${userId}`);
+    },
+    isLikingRequest,
+    isSavingRequest
   };
 };

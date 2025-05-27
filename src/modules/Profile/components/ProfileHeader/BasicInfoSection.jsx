@@ -1,7 +1,7 @@
 import React from "react";
 import { MdModeEdit } from "react-icons/md";
 import { FollowBtn } from "../../ui/FollowBtn";
-import { LikeSaveBtns } from "../../ui/LikeSaveBtns";
+import { LikeSaveProfileBtns } from "../../ui/LikeSaveProfileBtns";
 
 export const BasicInfoSection = ({ user, isOwnProfile, setIsEditModalOpen }) => (
   <div className="flex items-center flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -24,7 +24,7 @@ export const BasicInfoSection = ({ user, isOwnProfile, setIsEditModalOpen }) => 
         )}
       </div>
       <div className="">
-          {isOwnProfile && <LikeSaveBtns />}
+          {isOwnProfile && <LikeSaveProfileBtns />}
       </div>
     </div>
   </div>

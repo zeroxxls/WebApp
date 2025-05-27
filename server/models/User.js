@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
     contentType: String
   },
   works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
-  avatarUrl: String
+  likedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }], // Добавлено поле
+  savedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }]
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

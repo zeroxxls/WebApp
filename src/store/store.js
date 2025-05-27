@@ -2,7 +2,8 @@ import {configureStore} from '@reduxjs/toolkit';
 import searchReducer from './slices/searchSlice';
 import loadingReducer from './slices/loadingSlice';
 import authReducer from './slices/authSlice';
-import workReducer from './slices/workSlice'
+import workReducer from './slices/workSlice';
+import userReducer from './slices/userSlice'
 
 export const store = configureStore({
     reducer:{
@@ -10,5 +11,6 @@ export const store = configureStore({
         loading: loadingReducer,
         auth: authReducer,
         works: workReducer,
+        user: userReducer,
     }
 })
