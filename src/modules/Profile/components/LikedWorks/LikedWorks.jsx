@@ -4,12 +4,17 @@ import { WorkCard } from '../../../MainContent/components/Channels/WorkCard';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../../../../shared/ui/Loader';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ModalWindow } from '../../../MainContent/index';
 
 export const LikedWorks = () => {
   const navigate = useNavigate();
   const userId = useSelector((state) => state.auth.user?._id);
   const [likedWorks, setLikedWorks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedWork, setSelectedWork] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  
 
   useEffect(() => {
     const fetchLikedWorks = async () => {
@@ -42,6 +47,19 @@ export const LikedWorks = () => {
   const handleGoBack = () => {
     navigate(-1);
   };
+
+   const openWorkModal = (work, user) => {
+    setSelectedWork(work);
+    setSelectedUser(user);
+    setOpenModal(true);
+  };
+
+  const closeWorkModal = () => {
+    setOpenModal(false);
+    setSelectedWork(null);
+    setSelectedUser(null);
+  };
+
 
   if (loading) {
     return (
@@ -79,10 +97,17 @@ export const LikedWorks = () => {
             key={work._id}
             work={work}
             user={work.author}
-            onClick={() => navigate(`/work/${work._id}`)}
+            onClick={() => openWorkModal(work, work.author)}
           />
         ))}
       </div>
+      {openModal && selectedWork && (
+              <ModalWindow
+                onClose={closeWorkModal}
+                selectedWork={selectedWork}
+                selectedUser={selectedUser}
+              />
+            )}
     </div>
   );
 };
