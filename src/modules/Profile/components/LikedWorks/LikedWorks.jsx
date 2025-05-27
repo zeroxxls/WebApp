@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { WorkCard } from '../../../MainContent/components/Channels/WorkCard';
+import { WorkCard } from '../../../MainContent/index';
 import { useNavigate } from 'react-router-dom';
 import { Loader } from '../../../../shared/ui/Loader';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
