@@ -1,5 +1,5 @@
 import React from "react";
-import { WorkCard } from "../../../MainContent/components/Channels/WorkCard";
+import { WorkCard } from "../../../MainContent/index";
 import { Loader } from "../../../../shared/ui/Loader";
 
 export const ProfileWorksGrid = ({ isLoading, userWorks, user, onWorkClick }) => {
