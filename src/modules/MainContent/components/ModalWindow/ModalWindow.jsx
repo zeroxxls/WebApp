@@ -4,7 +4,6 @@ import { ModalContent } from './ModalContent';
 import { useModal } from '../../hooks/useModal';
 
 export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
-  const allWorks = useSelector((state) => state.works.userWorks);
   const { _id: workId } = selectedWork;
   const {
     isAddingToCart,
@@ -14,7 +13,10 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
     handleLike,
     handleSave,
     handleProfileClick,
+    isLikingRequest,
+    isSavingRequest,
   } = useModal(workId);
+  const allWorks = useSelector((state) => state.works.userWorks);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -31,6 +33,8 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
         handleSave={handleSave}
         handleAddToCart={handleAddToCart}
         handleProfileClick={handleProfileClick}
+        isLikingRequest={isLikingRequest}
+        isSavingRequest={isSavingRequest}
       />
     </div>
   );
