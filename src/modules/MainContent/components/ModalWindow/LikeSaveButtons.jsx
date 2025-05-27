@@ -11,9 +11,8 @@ export const LikeSaveButtons = ({
   handleSave,
   isLikingRequest,
   isSavingRequest,
-  className = ''
 }) => (
-  <div className={`flex space-x-4 ${className}`}>
+  <div className="flex space-x-4 mb-8">
     <ActionBtn
       variant="like"
       isActive={isLiked}
