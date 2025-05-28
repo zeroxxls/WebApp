@@ -14,6 +14,6 @@ export const UsagePolicy = () => (
     <p>
       For any queries regarding commercial use or licensing, please contact the artist directly.
     </p>
-    <Link to="/privacy" className="text-blue-400 hover:underline mt-4 block">Privacy Policy</Link>
+      <Link to="/privacy" className="text-blue-400 hover:underline mt-4 block">Privacy Policy</Link>
   </div>
 );

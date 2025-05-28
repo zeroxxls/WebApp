@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { WorkCard } from '../../../MainContent/index';
 import { useNavigate } from 'react-router-dom';
-import { Loader } from '../../../../shared/ui/Loader';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { ModalWindow } from '../../../MainContent/index';
+import { WorkCardSkeleton } from '../../ui/WorkCardSkeleton';
 
 export const SavedWorks = () => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ export const SavedWorks = () => {
     navigate(-1);
   };
 
-    const openWorkModal = (work, user) => {
+  const openWorkModal = (work, user) => {
     setSelectedWork(work);
     setSelectedUser(user);
     setOpenModal(true);
@@ -61,35 +61,40 @@ export const SavedWorks = () => {
 
   if (loading) {
     return (
-          <Loader />
+      <div className="px-6 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <WorkCardSkeleton key={index} />
+        ))}
+      </div>
     );
   }
 
   if (!savedWorks.length) {
     return (
-      <div className="flex flex-col">
-        <div className="flex items-center p-4">
-          <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition duration-300">
+      <div className="flex flex-col h-full px-4">
+        <div className="flex items-center gap-4 py-6">
+          <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition-all duration-200">
             <ArrowLeftIcon className="h-6 w-6" />
           </button>
-          <h2 className="text-2xl mx-5 mt-5 font-semibold mb-4">Your Saved Works</h2>
+          <h2 className="text-2xl font-semibold text-white">Your Saved Works</h2>
         </div>
-        <div className="container mx-auto mt-8 text-center text-gray-500 flex-grow">
-          You haven't saved any works yet.
+        <div className="flex-grow flex items-center justify-center text-center text-gray-400">
+          <p className="text-lg">You haven't saved any works yet.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center p-4">
-        <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition duration-300">
+    <div className="flex flex-col h-full px-4">
+      <div className="flex items-center gap-4 py-6">
+        <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition-all duration-200">
           <ArrowLeftIcon className="h-6 w-6" />
         </button>
-        <h2 className="text-2xl mx-5 mt-5 font-semibold mb-4">Your Saved Works</h2>
+        <h2 className="text-2xl font-semibold text-white">Your Saved Works</h2>
       </div>
-      <div className="container mx-5 mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 flex-grow">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {savedWorks.map((work) => (
           <WorkCard
             key={work._id}
@@ -99,6 +104,7 @@ export const SavedWorks = () => {
           />
         ))}
       </div>
+
       {openModal && selectedWork && (
         <ModalWindow
           onClose={closeWorkModal}

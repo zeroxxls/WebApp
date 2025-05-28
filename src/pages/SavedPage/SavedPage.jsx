@@ -3,7 +3,7 @@ import { SavedWorks } from '../../modules/Profile/components/SavedWorks/SavedWor
 
 export const SavedPage = () => {
   return (
-    <div>
+    <div className="bg-gray-900">
         <SavedWorks/>
     </div>
   )

@@ -3,7 +3,7 @@ import { AuthSection } from '../../modules/auth'
 
 export const AuthPage = () => {
   return (
-    <div>
+    <div className='bg-gray-900'>
         <AuthSection/>
     </div>
   )

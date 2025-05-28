@@ -6,10 +6,10 @@ import { Channels } from "../../modules/MainContent";
 
 const MainPage = () => {
     return (
-        <FilterProvider>
-            <div>
+        <FilterProvider >
+            <div className="bg-gray-900">
                 <NewsSlider/>
-                <div className="sticky top-0 z-30 bg-[#1c1c25]">
+                <div className="sticky top-0 z-30 bg-gray-900">
                     <FilterSection/>
                 </div>
                 <Channels/>

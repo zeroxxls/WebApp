@@ -84,9 +84,7 @@ export const Cart = () => {
             onOpenModal={openWorkModal}
           />
         )}
-
         <UsagePolicy />
-
         {openModal && selectedWork && (
           <ModalWindow
             onClose={closeWorkModal}
