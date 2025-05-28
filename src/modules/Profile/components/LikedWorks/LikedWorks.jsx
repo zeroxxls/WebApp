@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { WorkCard } from '../../../MainContent/index';
 import { useNavigate } from 'react-router-dom';
-import { Loader } from '../../../../shared/ui/Loader';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { ModalWindow } from '../../../MainContent/index';
+import { WorkCardSkeleton } from '../../ui/WorkCardSkeleton';
 
 export const LikedWorks = () => {
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ export const LikedWorks = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedWork, setSelectedWork] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
-  
 
   useEffect(() => {
     const fetchLikedWorks = async () => {
@@ -48,7 +47,7 @@ export const LikedWorks = () => {
     navigate(-1);
   };
 
-   const openWorkModal = (work, user) => {
+  const openWorkModal = (work, user) => {
     setSelectedWork(work);
     setSelectedUser(user);
     setOpenModal(true);
@@ -60,23 +59,26 @@ export const LikedWorks = () => {
     setSelectedUser(null);
   };
 
-
   if (loading) {
     return (
-          <Loader />
+      <div className="px-5 mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <WorkCardSkeleton key={index} />
+        ))}
+      </div>
     );
   }
 
   if (!likedWorks.length) {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full">
         <div className="flex items-center p-4">
           <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition duration-300">
             <ArrowLeftIcon className="h-6 w-6" />
           </button>
           <h2 className="text-2xl mx-5 mt-5 font-semibold mb-4">Your Liked Works</h2>
         </div>
-        <div className="container mx-auto mt-8 text-center text-gray-500 flex-grow">
+        <div className="flex-grow flex items-center justify-center text-gray-500 text-lg">
           You haven't liked any works yet.
         </div>
       </div>
@@ -84,14 +86,14 @@ export const LikedWorks = () => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <div className="flex items-center p-4">
         <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition duration-300">
           <ArrowLeftIcon className="h-6 w-6" />
         </button>
         <h2 className="text-2xl mx-5 mt-5 font-semibold mb-4">Your Liked Works</h2>
       </div>
-      <div className="container mx-5 mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 flex-grow">
+      <div className="px-5 mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {likedWorks.map((work) => (
           <WorkCard
             key={work._id}
@@ -102,12 +104,12 @@ export const LikedWorks = () => {
         ))}
       </div>
       {openModal && selectedWork && (
-              <ModalWindow
-                onClose={closeWorkModal}
-                selectedWork={selectedWork}
-                selectedUser={selectedUser}
-              />
-            )}
+        <ModalWindow
+          onClose={closeWorkModal}
+          selectedWork={selectedWork}
+          selectedUser={selectedUser}
+        />
+      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { RegisterSection } from '../../modules/auth';
 
 export const RegisterPage = () => {
     return (
-        <div>
+        <div className='bg-gray-900'>
             <RegisterSection/>
         </div>
     );

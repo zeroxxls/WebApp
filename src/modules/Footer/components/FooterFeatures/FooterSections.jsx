@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const FooterSections =()=>{
   const Links = [
     {name: 'Explore' , path:'/'},
-    {name: 'News' , path:'NewsPage'},
+    {name: 'News' , path:'/NewsPage'},
     {name: 'Shop', path: '/shop' },
     {name: 'Registration', path: '/RegisterPage' },
   ]

@@ -3,7 +3,7 @@
     box-sizing: border-box;
   }
 body{
-    background-color: #1c1c25;
+    background: linear-gradient(to bottom, #111827, #1a2330);
     color: white;
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ p{
 }
 
 #root {
-    max-width: 100%; /* Фиксированная ширина приложения */
-    margin: 0 auto; /* Центрируем по горизонтали */
+    max-width: 100%;
+    margin: 0 auto; 
     width: 100%;
   }

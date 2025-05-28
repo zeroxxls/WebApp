@@ -3,7 +3,7 @@ import { LikedWorks } from '../../modules/Profile/components/LikedWorks/LikedWor
 
 export const LikedPage = () => {
   return (
-    <div>
+    <div className="bg-gray-900">
         <LikedWorks/>
     </div>
   )

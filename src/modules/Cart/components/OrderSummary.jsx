@@ -30,7 +30,7 @@ export const OrderSummary = ({ totalPrice, onCheckout }) => (
       By placing your order, you agree to our <Link to="/terms" className="text-blue-400 hover:underline">Terms of Service</Link>
     </p>
     <Link
-      to="/"
+      to="/MainPage"
       className="block text-center text-blue-400 hover:text-blue-300 mt-4 text-sm transition"
     >
       Continue Shopping
