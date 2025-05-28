@@ -22,6 +22,7 @@ export const ModalContent = ({
   handleSave,
   handleAddToCart,
   handleProfileClick,
+  userId,
 }) => {
   const {
     _id: workId,
@@ -60,6 +61,8 @@ export const ModalContent = ({
           price={price}
           isAddingToCart={isAddingToCart}
           handleAddToCart={handleAddToCart}
+          disabled={isAddingToCart}
+          isOwnWork={selectedWork?.author?._id === userId}
         />
         <DescriptionBlock title={title} description={description} />
         <TechnologiesBlock technologies={technologiesWithIcons} />

@@ -13,6 +13,7 @@ import { ProfilePage } from "./pages/ProfilePage/ProfilePage"
 import { UploadPage } from "./pages/UploadPage/UploadPage";
 import { LikedPage } from "./pages/LikedPage/LikedPage";
 import { SavedPage } from "./pages/SavedPage/SavedPage";
+import { CartPage } from "./pages/CartPage/CartPage";
 
 
 export const App =()=>{
@@ -28,6 +29,7 @@ export const App =()=>{
                 <Route path="/UploadPage" element={<UploadPage/>}/>
                 <Route path="/LikedPage" element={<LikedPage/>}/>
                 <Route path="/SavedPage" element={<SavedPage/>}/>
+                <Route path="/CartPage" element={<CartPage/>}/>
                 <Route path="article/:id" element={<ArticlePage/>}/>
                 <Route path="profile/:id" element={
                     <WithHeader>
