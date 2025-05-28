@@ -1,4 +1,4 @@
-import { createSlice,} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   likedWorks: [],
@@ -24,15 +24,27 @@ export const userSlice = createSlice({
         state.likedWorks.push(action.payload);
       }
     },
+    removeLikedWork: (state, action) => {
+      state.likedWorks = state.likedWorks.filter(id => id !== action.payload);
+    },
+    addSavedWork: (state, action) => {
+      if (!state.savedWorks.includes(action.payload)) {
+        state.savedWorks.push(action.payload);
+      }
+    },
+    removeSavedWork: (state, action) => {
+      state.savedWorks = state.savedWorks.filter(id => id !== action.payload);
+    },
   },
-  },
-);
+});
 
 export const {
   setLikedWorks,
   setSavedWorks,
   addLikedWork,
+  removeLikedWork,
   addSavedWork,
+  removeSavedWork,
 } = userSlice.actions;
 
 export default userSlice.reducer;
