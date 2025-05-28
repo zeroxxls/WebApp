@@ -17,6 +17,7 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
     isSavingRequest,
   } = useModal(workId);
   const allWorks = useSelector((state) => state.works.userWorks);
+  const userId = useSelector((state) => state.auth.user?._id); // Получаем userId из Redux
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -35,6 +36,7 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
         handleProfileClick={handleProfileClick}
         isLikingRequest={isLikingRequest}
         isSavingRequest={isSavingRequest}
+        userId={userId} // Передаем userId
       />
     </div>
   );

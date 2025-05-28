@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useUserDropdown } from "../../hooks/useUserDropdown";
 import { UserDropdown } from "../HeaderFeatures/UserDropdown";
 import { MdFileUpload } from "react-icons/md";
+import { GiShoppingCart } from "react-icons/gi";
 
 export const Header = () => {
   const { user, token } = useSelector((state) => state.auth);
@@ -27,6 +28,11 @@ export const Header = () => {
       <div className="flex items-center">
         {user && token ? (
           <>
+            <Link to="/CartPage">
+              <div className="bg-gray-700 mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+                <GiShoppingCart className="w-6 h-6 text-white transition hover:scale-110" />
+              </div>
+            </Link>
             <Link to="/UploadPage">
               <div className="bg-gray-700 mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
                 <MdFileUpload className="w-6 h-6 text-white transition hover:scale-110" />

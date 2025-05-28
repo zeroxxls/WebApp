@@ -3,7 +3,8 @@ import searchReducer from './slices/searchSlice';
 import loadingReducer from './slices/loadingSlice';
 import authReducer from './slices/authSlice';
 import workReducer from './slices/workSlice';
-import userReducer from './slices/userSlice'
+import userReducer from './slices/userSlice';
+import cartReducer from './slices/cartSlice'
 
 export const store = configureStore({
     reducer:{
@@ -12,5 +13,6 @@ export const store = configureStore({
         auth: authReducer,
         works: workReducer,
         user: userReducer,
+        cart: cartReducer,
     }
 })
