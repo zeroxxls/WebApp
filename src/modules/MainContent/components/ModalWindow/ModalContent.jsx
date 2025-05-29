@@ -1,13 +1,13 @@
 import React from 'react';
 import { OnCloseBtn } from '../../ui/OnCloseBtn';
-import { LeftSide } from './LeftSide';
+import { LeftSide } from './LeftSide/LeftSide';
 import { UserInfoBlock } from './UserInfoBlock';
 import { LikeSaveButtons } from './LikeSaveButtons';
 import { PriceBlock } from './PriceBlock';
 import { DescriptionBlock } from './DescriptionBlock';
 import { TagsBlock } from './TagsBlock';
 import { TechnologiesBlock } from './TechnologiesBlock';
-import { CommentsBlock } from './CommentsBlock';
+import { CommentsBlock } from './CommentsBlock/CommentsBlock';
 import { AVAILABLE_TECHNOLOGIES } from '../../../../shared/constants/uploadFilters';
 
 export const ModalContent = ({
