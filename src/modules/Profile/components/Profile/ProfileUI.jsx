@@ -17,6 +17,7 @@ export const ProfileUI = ({
   closeWorkModal,
   openWorkModal,
   isLoading,
+  worksCount,
 }) => {
   if (isLoading) {
     return <LoadingSkeleton isAvatarLoading={isAvatarLoading} isOwnProfile={isOwnProfile} />;
@@ -30,6 +31,7 @@ export const ProfileUI = ({
         onAvatarUpload={handleAvatarUpload}
         isAvatarLoading={isAvatarLoading}
         onProfileUpdate={handleProfileUpdate}
+        worksCount={worksCount}
       />
 
       {userWorks.length > 0 ? (
