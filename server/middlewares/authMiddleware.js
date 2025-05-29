@@ -24,7 +24,8 @@ export const authMiddleware = async (req, res, next) => {
         }
 
         req.user = user;
-        req.token = token; // Добавляем токен в request
+        req.userId = user._id;
+        req.token = token;
         next();
     } catch (error) {
         res.status(401).json({ 
