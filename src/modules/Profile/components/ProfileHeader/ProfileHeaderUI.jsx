@@ -14,6 +14,7 @@ export const ProfileHeaderUI = ({
   isEditModalOpen,
   openEditModal,
   closeEditModal,
+  worksCount,
 }) => {
   return (
     <div className="mb-8 pb-8 border-b border-gray-700/50">
@@ -31,7 +32,7 @@ export const ProfileHeaderUI = ({
             setIsEditModalOpen={openEditModal}
           />
           <TechStackSection techStack={user.techStack} />
-          <ContactStatsSection contacts={user.contacts} worksCount={user.worksCount} />
+          <ContactStatsSection contacts={user.contacts} worksCount={worksCount} />
         </div>
       </div>
       <EditProfileModalWrapper

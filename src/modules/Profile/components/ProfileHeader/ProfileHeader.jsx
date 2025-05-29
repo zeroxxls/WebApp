@@ -9,6 +9,7 @@ export const ProfileHeader = ({
   onAvatarUpload,
   isAvatarLoading,
   onProfileUpdate,
+  worksCount,
 }) => {
   const { isEditModalOpen, openEditModal, closeEditModal } = useProfileHeader();
 
@@ -35,6 +36,7 @@ export const ProfileHeader = ({
       isEditModalOpen={isEditModalOpen}
       openEditModal={openEditModal}
       closeEditModal={closeEditModal}
+      worksCount={worksCount}
     />
   );
 };

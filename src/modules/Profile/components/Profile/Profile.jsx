@@ -58,6 +58,7 @@ export const Profile = () => {
       <ProfileUI
         profileUser={profileUser}
         userWorks={userWorks}
+        worksCount={userWorks.length}
         isOwnProfile={isOwnProfile}
         handleAvatarUpload={handleAvatarUpload}
         isAvatarLoading={isAvatarLoading}
