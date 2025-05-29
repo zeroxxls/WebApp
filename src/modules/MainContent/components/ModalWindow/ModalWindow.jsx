@@ -36,7 +36,7 @@ export const ModalWindow = ({ onClose, selectedWork = {}, selectedUser }) => {
         handleProfileClick={handleProfileClick}
         isLikingRequest={isLikingRequest}
         isSavingRequest={isSavingRequest}
-        userId={userId} // Передаем userId
+        userId={userId} 
       />
     </div>
   );
