@@ -9,6 +9,7 @@ import {
 
 export const getUserWorks = async (req, res) => {
   try {
+    console.log("Fetching user works for user ID:", req.params.userId);
     const works = await fetchUserWorks(req.params.userId);
     res.json({ success: true, works });
   } catch (error) {
