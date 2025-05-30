@@ -5,7 +5,13 @@ export const getUserById = async (id) => {
   if (!user) {
     throw new Error('User not found');
   }
-  return user;
+  // Преобразуем массив работ в массив их ID
+  const workIds = user.works.map(work => work._id);
+
+  // Создаем новый объект пользователя, где поле 'works' содержит только ID
+  const userWithWorkIds = { ...user.toObject(), works: workIds };
+
+  return userWithWorkIds;
 };
 
 export const updateUserProfile = async (userId, updateData) => {

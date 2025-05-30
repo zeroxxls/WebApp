@@ -4,6 +4,7 @@ import { saveFilesToS3, getFileUrls } from '../utils/fileUtils.js';
 import { deleteFile } from '../services/s3Service.js';
 
 export const fetchUserWorks = async (userId) => {
+  console.log("Inside fetchUserWorks for user ID:", userId);
   const works = await Work.find({ author: userId }).populate('author', 'name avatar');
   return Promise.all(works.map(async work => ({
     ...work.toObject(),

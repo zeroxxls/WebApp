@@ -9,7 +9,6 @@ export const useProfileData = (id, currentUser) => {
   const [userWorks, setUserWorks] = useState([]);
   const isOwnProfile = currentUser && currentUser._id === id;
 
-  // 💡 Оборачиваем в useCallback, чтобы не пересоздавалась функция
   const fetchUserData = useCallback(async () => {
     try {
       dispatch(setIsPostLoading(true));
@@ -24,8 +23,24 @@ export const useProfileData = (id, currentUser) => {
 
       setProfileUser(userData);
 
-      const worksResponse = { data: { works: userData.works || [] } };
-      setUserWorks(worksResponse.data.works || []);
+      // Получаем ID работ пользователя
+      const workIds = userData.works || [];
+
+      // Внутри fetchUserData в useProfileData.js
+      if (workIds.length > 0) {
+        const worksPromises = workIds
+          .filter(workId => typeof workId === 'string') // Фильтруем, оставляя только строки (ID)
+          .map(workId => {
+            return axios.get(`http://localhost:4444/works/${workId}`);
+          });
+
+        const worksResponses = await Promise.all(worksPromises);
+        const fetchedWorks = worksResponses.map(res => res.data.work);
+        setUserWorks(fetchedWorks);
+      } else {
+        setUserWorks([]);
+      }
+
     } catch (error) {
       console.error("Error fetching user data:", error);
     } finally {

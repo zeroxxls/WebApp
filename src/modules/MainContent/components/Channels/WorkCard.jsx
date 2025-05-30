@@ -1,7 +1,11 @@
 import React from "react";
 
 export const WorkCard = ({ work, user, onClick }) => {
-  const imageUrl = work.files && work.files.length > 0 ? work.files[0].url : 'URL_ЗАГЛУШКИ'; // Замените на URL по умолчанию, если нужно
+  let imageUrl = 'URL_ЗАГЛУШКИ'; // Значение по умолчанию
+
+  if (work.files && Array.isArray(work.files) && work.files.length > 0 && work.files[0]?.url) {
+    imageUrl = work.files[0].url;
+  }
 
   return (
     <div
@@ -16,7 +20,7 @@ export const WorkCard = ({ work, user, onClick }) => {
       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-30 transition duration-300 z-10" />
       <div className="absolute inset-0 flex flex-col items-start justify-end p-4 space-y-1 bg-gradient-to-t from-black/50 to-transparent">
         <h3 className="text-white text-lg font-semibold transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-          {work.title} 
+          {work.title}
         </h3>
         <div className="flex items-center space-x-2 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-50">
           {user && (
