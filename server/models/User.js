@@ -20,9 +20,11 @@ const userSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
-  works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
-  likedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }], // Добавлено поле
-  savedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }]
+works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
+  likedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }],
+  savedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }],
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);
