@@ -25,7 +25,7 @@ export const purchaseWorks = async (req, res) => {
 
     const [user, works] = await Promise.all([
       User.findById(userId),
-      Work.find({ _id: { $in: workIds } })
+      Work.find({ _id: { $in: workIds } }).populate('author'),
     ]);
 
     if (!user) {
@@ -61,6 +61,25 @@ if (newWorks.length === 0) {
 // Добавляем новые работы
 user.works.push(...newWorks.map(work => work._id));
 await user.save();
+
+// Удаляем купленные работы из профилей продавцов
+    const sellersToUpdate = {};
+    newWorks.forEach(work => {
+      const sellerId = work.author._id.toString();
+      if (!sellersToUpdate[sellerId]) {
+        sellersToUpdate[sellerId] = [];
+      }
+      sellersToUpdate[sellerId].push(work._id);
+    });
+
+    // Обновляем профили продавцов
+    await Promise.all(
+      Object.keys(sellersToUpdate).map(async sellerId => {
+        await User.findByIdAndUpdate(sellerId, {
+          $pull: { works: { $in: sellersToUpdate[sellerId] } }
+        });
+      })
+    );
 
 return res.status(200).json({
   success: true,
