@@ -4,8 +4,8 @@ import { BasicInfoSection } from "./BasicInfoSection";
 import { TechStackSection } from "./TechStackSection";
 import { ContactStatsSection } from "./ContactsStatsSection";
 import { EditProfileModalWrapper } from "./EditProfileModalWrapper";
-import { FollowBtn } from "../../ui/FollowBtn";
-import { useFollow } from "../../hooks/useFollow";
+import { FollowBtn } from "../../ui/btns/FollowBtn";
+import { useFollow } from "../../hooks/follow/useFollow";
 
 export const ProfileHeaderUI = ({
     user,

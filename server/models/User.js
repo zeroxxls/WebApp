@@ -28,15 +28,27 @@ works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User', 
     default: [],
-    index: true 
+    index: true,
+    validate: {
+      validator: function(v) {
+        return mongoose.Types.ObjectId.isValid(v);
+      },
+      message: props => `${props.value} is not a valid user ID!`
+    }
   }],
   following: [{ 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User', 
     default: [],
-    index: true 
-  }],
-}, { timestamps: true });
+    index: true,
+    validate: {
+      validator: function(v) {
+        return mongoose.Types.ObjectId.isValid(v);
+      },
+      message: props => `${props.value} is not a valid user ID!`
+    }
+  }]
+ }, { timestamps: true });
 
 userSchema.plugin(mongoosePaginate);
 userSchema.index({ followers: 1, following: 1 });

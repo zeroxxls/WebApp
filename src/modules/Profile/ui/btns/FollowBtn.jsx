@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFollow } from '../hooks/useFollow';
+import { useFollow } from '../../hooks/follow/useFollow';
 
 export const FollowBtn = ({ profileUserId }) => {
   const { isFollowing, isLoading, toggleFollow, } = useFollow(profileUserId);

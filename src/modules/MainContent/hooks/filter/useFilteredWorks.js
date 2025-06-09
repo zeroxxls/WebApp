@@ -1,4 +1,4 @@
-import { FILTER_TYPES } from "../../filter/constant/filters";
+import { FILTER_TYPES } from "../../../filter/constant/filters";
 
 export const useFilteredWorks = (works, activeFilter, search) => {
   return works.filter((work) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { MdModeEdit } from "react-icons/md";
-import { LikeSaveProfileBtns } from "../../ui/LikeSaveProfileBtns";
+import { LikeSaveProfileBtns } from "../../ui/btns/LikeSaveProfileBtns";
 
 export const BasicInfoSection = ({ user, isOwnProfile, setIsEditModalOpen }) => (
     <div className="flex items-center flex-col md:flex-row md:items-end md:justify-between gap-4 w-full">

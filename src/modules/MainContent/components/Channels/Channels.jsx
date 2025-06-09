@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useFilters } from "../../../filter/hooks/useFilters.js";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
 import { Loader } from "../../../../shared/ui/Loader.jsx";
-import { useFilteredWorks } from "../../hooks/useFilteredWorks.js";
+import { useFilteredWorks } from "../../hooks/filter/useFilteredWorks.js";
 import { WorkCard } from "./WorkCard.jsx";
 import { fetchAllWorks } from "../../../../store/slices/workSlice.js";
 

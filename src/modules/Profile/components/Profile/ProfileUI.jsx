@@ -3,7 +3,7 @@ import { ProfileHeader } from "../ProfileHeader/ProfileHeader";
 import { ProfileWorksGrid } from "./ProfileWorksGrid";
 import { NoWorksFound } from "../Errors/NoWorksFound";
 import { ModalWindow } from "../../../MainContent/components/ModalWindow/ModalWindow";
-import { LoadingSkeleton } from "../../ui/LoadingSkeleton";
+import { LoadingSkeleton } from "../../ui/skeletons/LoadingSkeleton";
 
 export const ProfileUI = ({
   profileUser,
