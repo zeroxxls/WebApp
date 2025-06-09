@@ -15,6 +15,14 @@ export const ContactStatsSection = ({
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
 
+    const handleCloseFollowersModal = () => {
+    setShowFollowers(false);
+  };
+
+  const handleCloseFollowingModal = () => {
+    setShowFollowing(false);
+  };
+
   return (
     <>
       <div className="mt-6">
@@ -45,6 +53,7 @@ export const ContactStatsSection = ({
         <UserList 
           title="Followers" 
           fetchUsers={() => getFollowers(profileUserId)} 
+          onClose={handleCloseFollowersModal}
         />
       </Modal>
 
@@ -52,6 +61,7 @@ export const ContactStatsSection = ({
         <UserList 
           title="Following" 
           fetchUsers={() => getFollowing(profileUserId)} 
+          onClose={handleCloseFollowingModal}
         />
       </Modal>
     </>

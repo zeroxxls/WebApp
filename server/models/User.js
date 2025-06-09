@@ -1,5 +1,6 @@
 /* global Buffer */
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 const contactSchema = new mongoose.Schema({
   type: { type: String, enum: ['github', 'facebook', 'instagram', 'website', 'other'] },
@@ -23,8 +24,21 @@ const userSchema = new mongoose.Schema({
 works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
   likedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }],
   savedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }],
-  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User', default: [] }],
+  followers: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User', 
+    default: [],
+    index: true 
+  }],
+  following: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User', 
+    default: [],
+    index: true 
+  }],
 }, { timestamps: true });
+
+userSchema.plugin(mongoosePaginate);
+userSchema.index({ followers: 1, following: 1 });
 
 export default mongoose.model('User', userSchema);
