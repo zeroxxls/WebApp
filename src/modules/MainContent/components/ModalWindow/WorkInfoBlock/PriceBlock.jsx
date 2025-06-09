@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionBtn } from '../../ui/ActionBtn';
+import { ActionBtn } from '../../../ui/ActionBtn';
 import { IoMdAddCircle, IoMdAddCircleOutline } from "react-icons/io";
 
 export const PriceBlock = ({ price, isAddingToCart, handleAddToCart,disabled, isOwnWork  }) => {

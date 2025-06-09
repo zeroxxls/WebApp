@@ -2,11 +2,11 @@ import React from 'react';
 import { OnCloseBtn } from '../../ui/OnCloseBtn';
 import { LeftSide } from './LeftSide/LeftSide';
 import { UserInfoBlock } from './UserInfoBlock';
-import { LikeSaveButtons } from './LikeSaveButtons';
-import { PriceBlock } from './PriceBlock';
-import { DescriptionBlock } from './DescriptionBlock';
-import { TagsBlock } from './TagsBlock';
-import { TechnologiesBlock } from './TechnologiesBlock';
+import { LikeSaveButtons } from './WorkInfoBlock/LikeSaveButtons';
+import { PriceBlock } from './WorkInfoBlock/PriceBlock';
+import { DescriptionBlock } from './WorkInfoBlock/DescriptionBlock';
+import { TagsBlock } from './WorkInfoBlock/TagsBlock';
+import { TechnologiesBlock } from './WorkInfoBlock/TechnologiesBlock';
 import { CommentsBlock } from './CommentsBlock/CommentsBlock';
 import { AVAILABLE_TECHNOLOGIES } from '../../../../shared/constants/uploadFilters';
 

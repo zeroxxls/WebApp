@@ -15,7 +15,6 @@ export const EditProfileModalContent = ({
 }) => {
   return (
     <div className="bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] flex flex-col">
-      {/* Header */}
       <div className="flex justify-between items-center p-6 border-b border-gray-700">
         <h2 className="text-2xl font-bold text-white">Edit Profile</h2>
         <button
@@ -25,8 +24,6 @@ export const EditProfileModalContent = ({
           <FaTimes size={20} />
         </button>
       </div>
-
-      {/* Tabs */}
       <div className="flex border-b border-gray-700">
         <button
           onClick={() => setActiveTab('bio')}
@@ -47,8 +44,6 @@ export const EditProfileModalContent = ({
           Contacts
         </button>
       </div>
-
-      {/* Content */}
       <div className="flex-1 overflow-y-auto p-6">
         <form onSubmit={handleSubmit}>
           {activeTab === 'bio' && (
@@ -68,8 +63,6 @@ export const EditProfileModalContent = ({
               setContacts={(contacts) => updateFormData('contacts', contacts)}
             />
           )}
-
-          {/* Footer buttons */}
           <div className="flex justify-end gap-3 pt-6 border-t border-gray-700 mt-6">
             <button
               type="button"

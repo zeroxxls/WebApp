@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useProfileUpdate } from './useProfileUpdate';
+import { useProfileUpdate } from '../useProfileUpdate';
 
 export const useEditProfileModal = (user, onUpdate, onClose) => {
   const [activeTab, setActiveTab] = useState('bio');

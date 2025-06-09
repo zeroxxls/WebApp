@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEditProfileModal } from '../../hooks/useEditProfileModal';
+import { useEditProfileModal } from '../../hooks/Edit/useEditProfileModal';
 import { EditProfileModalContent } from './EditProfileModalContent';
 
 export const EditProfileModal = ({ user, onClose, onUpdate }) => {

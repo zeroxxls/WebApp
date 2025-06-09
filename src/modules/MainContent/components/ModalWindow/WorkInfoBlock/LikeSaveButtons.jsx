@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import { FiBookmark } from 'react-icons/fi';
 import { FaBookmark } from 'react-icons/fa';
-import { ActionBtn } from '../../ui/ActionBtn';
+import { ActionBtn } from '../../../ui/ActionBtn';
 
 export const LikeSaveButtons = ({
   isLiked,

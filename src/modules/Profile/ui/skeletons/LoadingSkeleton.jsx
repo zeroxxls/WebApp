@@ -1,6 +1,6 @@
 import React from "react";
-import { ProfileHeader } from "../components/ProfileHeader/ProfileHeader";
-import { ProfileWorksGrid } from "../components/Profile/ProfileWorksGrid";
+import { ProfileHeader } from "../../components/ProfileHeader/ProfileHeader";
+import { ProfileWorksGrid } from "../../components/Profile/ProfileWorksGrid";
 
 export const LoadingSkeleton = ({ isAvatarLoading, isOwnProfile }) => {
   return (
