@@ -1,8 +1,15 @@
 import React from "react";
-import { WorkCard } from "../../../MainContent/index";
+import { WorkCard } from "../../../MainContent";
 import { Loader } from "../../../../shared/ui/Loader";
 
-export const ProfileWorksGrid = ({ isLoading, userWorks, user, onWorkClick }) => {
+export const ProfileWorksGrid = ({
+   isLoading,
+   userWorks,
+   user,
+   onWorkClick, 
+   isOwnProfile,
+   onDeleteWork,
+  }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -24,6 +31,8 @@ export const ProfileWorksGrid = ({ isLoading, userWorks, user, onWorkClick }) =>
               work={work}
               user={user}
               onClick={() => onWorkClick(work)}
+              isOwnProfile={isOwnProfile}
+              onDelete={()=> onDeleteWork(work._id)}
             />
           );
         })}

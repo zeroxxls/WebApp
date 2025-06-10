@@ -18,9 +18,9 @@ export const Profile = () => {
     userWorks,
     isOwnProfile,
     isLoading,
+    onDeleteWork,
   } = useProfileData(id, currentUser);
 
-  // Update local profileUser state when fetched data arrives
   if (fetchedProfileUser && !profileUser) {
     setProfileUser(fetchedProfileUser);
   }
@@ -68,6 +68,7 @@ export const Profile = () => {
         closeWorkModal={closeWorkModal}
         openWorkModal={openWorkModal}
         isLoading={isLoading}
+        onDeleteWork={onDeleteWork}
       />
       <Footer />
     </>

@@ -18,7 +18,13 @@ export const ProfileUI = ({
   openWorkModal,
   isLoading,
   worksCount,
+  onDeleteWork,
 }) => {
+    const handleDeleteWork = async (workId) => {
+      await onDeleteWork(workId);
+      closeWorkModal();
+    };
+
   if (isLoading) {
     return <LoadingSkeleton isAvatarLoading={isAvatarLoading} isOwnProfile={isOwnProfile} />;
   }
@@ -40,6 +46,7 @@ export const ProfileUI = ({
           user={profileUser}
           isOwnProfile={isOwnProfile}
           onWorkClick={openWorkModal}
+          onDeleteWork={handleDeleteWork}
         />
       ) : (
         <NoWorksFound isOwnProfile={isOwnProfile} />

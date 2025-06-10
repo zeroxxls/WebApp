@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { ConfirmationModal } from "../../../../shared/ui/ConfirmationModal";
 
-export const WorkCard = ({ work, user, onClick }) => {
-  let imageUrl = 'URL_ЗАГЛУШКИ'; // Значение по умолчанию
+export const WorkCard = ({ work, user, onClick, isOwnProfile, onDelete }) => { // <--- Добавляем isOwnProfile и onDelete в пропсы
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // <--- Состояние для модального окна подтверждения
+
+  let imageUrl = 'URL_ЗАГЛУШКИ';
 
   if (work.files && Array.isArray(work.files) && work.files.length > 0 && work.files[0]?.url) {
     imageUrl = work.files[0].url;
   }
+
+  const handleDeleteClick = (e) => {
+    e.stopPropagation(); 
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = () => {
+    onDelete(); 
+    setShowDeleteConfirm(false);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirm(false);
+  };
 
   return (
     <div
@@ -33,6 +51,25 @@ export const WorkCard = ({ work, user, onClick }) => {
           <span className="text-white text-sm">{user?.fullName || user?.name || 'User'}</span>
         </div>
       </div>
+
+      {/* Корзина для удаления, видна только для владельца профиля при наведении */}
+      {isOwnProfile && (
+        <button
+          onClick={handleDeleteClick}
+          className="absolute top-2 right-2 bg-red-600 p-2 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+        >
+          <RiDeleteBin6Line />
+        </button>
+      )}
+
+      {/* Модальное окно подтверждения удаления */}
+      {showDeleteConfirm && (
+        <ConfirmationModal
+          message="Вы уверены, что хотите удалить эту работу?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
     </div>
   );
 };
