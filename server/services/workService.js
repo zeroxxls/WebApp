@@ -67,16 +67,43 @@ export const fetchWorkById = async (id) => {
 };
 
 export const removeWork = async (id) => {
-  const work = await Work.findById(id);
-  if (!work) {
+  try {
+    const work = await Work.findById(id);
+    if (!work) {
+      console.log('Work not found');
+      return false;
+    }
+
+    // Удаляем файлы из S3
+    if (work.files && work.files.length > 0) {
+      await Promise.all(work.files.map(async (file) => {
+        try {
+          await deleteFile(file.path);
+          console.log(`File ${file.path} deleted from S3`);
+        } catch (err) {
+          console.error(`Error deleting file ${file.path}:`, err);
+        }
+      }));
+    }
+
+    // Удаляем работу из массива works пользователя
+    const userUpdate = await User.findByIdAndUpdate(
+      work.author,
+      { $pull: { works: work._id } },
+      { new: true }
+    );
+    
+    console.log('User after update:', userUpdate?.works?.length);
+
+    // Удаляем саму работу
+    await work.deleteOne();
+    
+    console.log(`Work ${id} deleted successfully`);
+    return true;
+  } catch (error) {
+    console.error('Error in removeWork:', error);
     return false;
   }
-  await Promise.all(work.files.map(file =>
-    deleteFile(file.path).catch(err => console.error('Error deleting file:', err))
-  ));
-  await User.findByIdAndUpdate(work.author, { $pull: { works: work._id } });
-  await work.deleteOne();
-  return true;
 };
 
 export const updateExistingWork = async (id, body, reqFiles, authorId) => {

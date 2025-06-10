@@ -47,6 +47,35 @@ export const useProfileData = (id, currentUser) => {
       dispatch(setIsPostLoading(false));
     }
   }, [dispatch, id, currentUser, isOwnProfile]);
+const deleteWork = async (workId) => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.delete(`http://localhost:4444/works/${workId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    
+    if (!response.data.success) {
+      throw new Error('Failed to delete work');
+    }
+    
+    // Принудительно обновляем данные пользователя
+    const userResponse = await axios.get(`http://localhost:4444/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    
+    setProfileUser(userResponse.data.user);
+    setUserWorks(prevWorks => prevWorks.filter(work => work._id !== workId));
+    
+    return true;
+  } catch (error) {
+    console.error('Error deleting work:', error);
+    return false;
+  }
+};
   useEffect(() => {
     fetchUserData();
   }, [fetchUserData]);
@@ -57,6 +86,7 @@ export const useProfileData = (id, currentUser) => {
     userWorks,
     setUserWorks,
     isOwnProfile,
-    reloadProfileData: fetchUserData
+    reloadProfileData: fetchUserData,
+    onDeleteWork: deleteWork
   };
 };
