@@ -13,7 +13,7 @@ export const purchaseWorksService = async (userId, workIds) => {
 
   const [user, works] = await Promise.all([
     User.findById(userId),
-    Work.find({ _id: { $in: workIds } }).populate('author'),
+    Work.find({ _id: { $in: workIds } }).populate('author owner'),
   ]);
 
   if (!user) throw new Error('User not found.');
@@ -27,7 +27,7 @@ export const purchaseWorksService = async (userId, workIds) => {
   }
 
   // Фильтруем работы, которых ещё нет у пользователя
-  const newWorks = works.filter(work =>
+  const newWorks = works.filter(work => 
     !user.works.some(userWorkId => userWorkId.equals(work._id))
   );
 
@@ -35,22 +35,36 @@ export const purchaseWorksService = async (userId, workIds) => {
     throw new Error('You already own all selected works.');
   }
 
-  user.works.push(...newWorks.map(work => work._id));
-  await user.save();
+  // 1. Обновляем владельца работ
+  await Work.updateMany(
+    { _id: { $in: newWorks.map(w => w._id) } },
+    { $set: { owner: userId } }
+  );
 
-  // Обновляем профили продавцов, удаляя проданные работы
+  // 2. Добавляем работы покупателю
+  await User.findByIdAndUpdate(
+    userId,
+    { $addToSet: { works: { $each: newWorks.map(w => w._id) } } },
+    { new: true }
+  );
+
+  // 3. Удаляем работы у продавцов
   const sellersToUpdate = {};
   newWorks.forEach(work => {
-    const sellerId = work.author._id.toString();
-    if (!sellersToUpdate[sellerId]) sellersToUpdate[sellerId] = [];
-    sellersToUpdate[sellerId].push(work._id);
+    if (work.author && work.author._id.toString() !== userId.toString()) {
+      const sellerId = work.author._id.toString();
+      if (!sellersToUpdate[sellerId]) sellersToUpdate[sellerId] = [];
+      sellersToUpdate[sellerId].push(work._id);
+    }
   });
 
   await Promise.all(
     Object.keys(sellersToUpdate).map(async sellerId => {
-      await User.findByIdAndUpdate(sellerId, {
-        $pull: { works: { $in: sellersToUpdate[sellerId] } }
-      });
+      await User.findByIdAndUpdate(
+        sellerId,
+        { $pull: { works: { $in: sellersToUpdate[sellerId] } } },
+        { new: true }
+      );
     })
   );
 

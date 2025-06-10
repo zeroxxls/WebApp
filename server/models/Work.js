@@ -19,6 +19,12 @@ const workSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        default: function() { return this.author; } // По умолчанию владелец - автор
+    },
     createdAt: {
         type: Date,
         default: Date.now

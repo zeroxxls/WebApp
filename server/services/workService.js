@@ -4,8 +4,9 @@ import { saveFilesToS3, getFileUrls } from '../utils/fileUtils.js';
 import { deleteFile } from '../services/s3Service.js';
 
 export const fetchUserWorks = async (userId) => {
-  console.log("Inside fetchUserWorks for user ID:", userId);
-  const works = await Work.find({ author: userId }).populate('author', 'name avatar');
+    const works = await Work.find({ owner: userId })
+    .populate('author', 'fullName avatar')
+    .populate('owner', 'fullName avatar');
   return Promise.all(works.map(async work => ({
     ...work.toObject(),
     files: await getFileUrls(work.files),
@@ -51,7 +52,9 @@ export const createWork = async (reqFiles, body, authorId) => {
 };
 
 export const fetchAllWorks = async () => {
-  const works = await Work.find().populate('author', 'fullName name avatar');
+  const works = await Work.find()
+    .populate('author', 'fullName name avatar')
+    .populate('owner', 'fullName name avatar');
   return Promise.all(works.map(async work => ({
     ...work.toObject(),
     files: await getFileUrls(work.files),
@@ -59,7 +62,9 @@ export const fetchAllWorks = async () => {
 };
 
 export const fetchWorkById = async (id) => {
-  const work = await Work.findById(id).populate('author', 'name avatar');
+  const work = await Work.findById(id)
+    .populate('author', 'fullName avatar') // Измените 'name' на 'fullName'
+    .populate('owner', 'fullName avatar'); // Добавьте это!
   if (!work) {
     return null;
   }
