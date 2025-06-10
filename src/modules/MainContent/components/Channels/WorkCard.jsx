@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { ConfirmationModal } from "../../../../shared/ui/ConfirmationModal";
 
-export const WorkCard = ({ work, user, onClick, isOwnProfile, onDelete }) => { // <--- Добавляем isOwnProfile и onDelete в пропсы
+export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => { // <--- Добавляем isOwnProfile и onDelete в пропсы
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // <--- Состояние для модального окна подтверждения
+  const displayUser = work.owner || work.author;
+  const ownerId = displayUser?._id;
+  const ownerName = displayUser?.fullName;
 
   let imageUrl = 'URL_ЗАГЛУШКИ';
 
@@ -41,14 +44,13 @@ export const WorkCard = ({ work, user, onClick, isOwnProfile, onDelete }) => { /
           {work.title}
         </h3>
         <div className="flex items-center space-x-2 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-50">
-          {user && (
+          {ownerId && (
             <img
-              src={`http://localhost:4444/avatars/${user._id}/avatar?${Date.now()}`}
-              alt={user.fullName || user.name || 'User'}
+              src={`http://localhost:4444/avatars/${ownerId}/avatar?${Date.now()}`}
               className="w-6 h-6 rounded-full object-cover cursor-pointer"
             />
           )}
-          <span className="text-white text-sm">{user?.fullName || user?.name || 'User'}</span>
+          <span className="text-white text-sm">{ownerName }</span>
         </div>
       </div>
 

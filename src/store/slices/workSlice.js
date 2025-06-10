@@ -72,11 +72,8 @@ export const fetchAllWorks = createAsyncThunk(
   'works/fetchAllWorks',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:4444/works'); // Убрали headers с Authorization
-      if (!response.ok) {
-        const error = await response.json();
-        return rejectWithValue(error.message || 'Failed to fetch all works');
-      }
+      const response = await fetch('http://localhost:4444/works');
+      if (!response.ok) throw new Error('Failed to fetch works');
       const data = await response.json();
       return data.works;
     } catch (error) {
