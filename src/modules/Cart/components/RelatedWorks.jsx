@@ -18,7 +18,7 @@ export const RelatedWorks = ({ relatedWorks, onOpenModal }) => (
             <button
               className="mt-3 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg text-sm transition duration-300"
               onClick={(e) => {
-                e.stopPropagation(); // Предотвращаем всплытие события клика на карточку
+                e.stopPropagation();
                 onOpenModal(work, work.author);
               }}
             >

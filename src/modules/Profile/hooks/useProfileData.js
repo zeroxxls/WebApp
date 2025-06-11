@@ -23,7 +23,6 @@ const fetchUserData = useCallback(async () => {
 
     setProfileUser(userData);
 
-    // Фильтруем только существующие работы
     const validWorkIds = await Promise.all(
       (userData.works || []).map(async workId => {
         try {
@@ -68,7 +67,6 @@ const deleteWork = async (workId) => {
       throw new Error('Failed to delete work');
     }
     
-    // Принудительно обновляем данные пользователя
     const userResponse = await axios.get(`http://localhost:4444/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { DescriptionInput } from './DescriptionInput';
 import { SubmitButton } from './SubmitButton';
 import { CategoryFilters } from './CategoryFilters';
-import { PriceSelector } from './PriceSelector'; // Импортируем PriceSelector
-import { TechnologySelector } from './TechnologySelector'; // Импортируем TechnologySelector
+import { PriceSelector } from './PriceSelector';
+import { TechnologySelector } from './TechnologySelector';
 
 export const UploadForm = ({
   files,
@@ -13,9 +13,9 @@ export const UploadForm = ({
 }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0); // Состояние для выбранной цены
+  const [price, setPrice] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [selectedTechnologies, setSelectedTechnologies] = useState([]); // Состояние для выбранных технологий
+  const [selectedTechnologies, setSelectedTechnologies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState(null);
 

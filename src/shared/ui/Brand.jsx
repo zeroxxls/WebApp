@@ -3,7 +3,6 @@ export const Brand = ({
     className = '' 
   }) => {
   
-    // Размеры для текста
     const textSizes = {
       sm: 'text-sm',
       md: 'text-lg',

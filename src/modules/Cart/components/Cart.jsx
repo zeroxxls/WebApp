@@ -45,7 +45,7 @@ export const Cart = () => {
   return (
      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center mb-8"> {/* Обертка для кнопки и заголовка */}
+        <div className="flex items-center mb-8">
           <button onClick={handleGoBack} className="text-white hover:text-gray-300 transition duration-300 mr-4">
             <ArrowLeftIcon className="h-6 w-6" />
           </button>

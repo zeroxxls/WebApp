@@ -10,8 +10,8 @@ const onDrop = useCallback((acceptedFiles) => {
         preview: URL.createObjectURL(file),
       })
     );
-    setLocalFiles(prevFiles => [...prevFiles, ...filesWithPreview]); // <--- Изменено здесь
-    onFilesAccepted(prevFiles => [...prevFiles, ...filesWithPreview]); // <--- И здесь
+    setLocalFiles(prevFiles => [...prevFiles, ...filesWithPreview]);
+    onFilesAccepted(prevFiles => [...prevFiles, ...filesWithPreview]);
   }, [onFilesAccepted]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

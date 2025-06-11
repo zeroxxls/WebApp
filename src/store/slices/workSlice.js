@@ -94,7 +94,6 @@ export const uploadNewWork = createAsyncThunk(
   }
 );
 
-// 👇 Экспорт экшенов
 export const { setLoading, setError, clearWorks, addNewWork } = workSlice.actions;
 
 export default workSlice.reducer;

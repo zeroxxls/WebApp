@@ -12,7 +12,7 @@ export const EmptyCart = () => (
     <div className="mx-auto w-16 h-16 text-blue-500 mb-6">
       <ShoppingBagIcon className="w-full h-full" />
     </div>
-    <h2 className="text-2xl font-semibold text-gray-300 mb-3">Your cart is empty</h2> {/* Сделаем текст чуть светлее */}
+    <h2 className="text-2xl font-semibold text-gray-300 mb-3">Your cart is empty</h2>
     <p className="text-gray-500 mb-8">
       Looks like you haven't added any amazing artworks yet.
     </p>

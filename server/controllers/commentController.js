@@ -20,7 +20,6 @@ export const addComment = async (req, res) => {
 
     const savedComment = await newComment.save();
 
-    // Populate author details for the response
     const populatedComment = await savedComment.populate('author', 'fullName avatar');
 
     res.status(201).json(populatedComment);

@@ -27,7 +27,6 @@ export const saveFilesToS3 = async (files, workId) => {
       const savedFile = await saveFileToS3(file, workId);
       savedFiles.push(savedFile);
     } catch (err) {
-      // Очистить уже загруженные файлы в случае ошибки
       await Promise.all(savedFiles.map(f => deleteFile(f.path).catch(e => console.error(e))));
       throw err;
     }

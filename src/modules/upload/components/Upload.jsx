@@ -10,7 +10,7 @@ import { addNewWork } from '../../../store/slices/workSlice';
 export const Upload = () => {
   const dispatch = useDispatch();
   const [files, setFiles] = useState([]);
-  const [uploadStatus, setUploadStatus] = useState(null); // 'success', 'error', null
+  const [uploadStatus, setUploadStatus] = useState(null);
   const [uploadError, setUploadError] = useState(null);
    const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);

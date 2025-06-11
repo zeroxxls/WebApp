@@ -15,7 +15,6 @@ import { CustomSwiperBtn } from '../../../../shared/ui/CustomSwiperBtn';
   
     return (
       <div className="relative m-5">
-        {/* Кастомные кнопки со ссылками */}
         <CustomSwiperBtn prevRef={prevRef} nextRef={nextRef} />
   
         <Swiper

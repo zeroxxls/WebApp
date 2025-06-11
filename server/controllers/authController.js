@@ -24,7 +24,6 @@ export const loginUser = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
   try {
-    // Теперь пользователь уже доступен через middleware
     const user = req.user;
     
     handleResponse(res, 200, { user }, 'Authentication check successful');
