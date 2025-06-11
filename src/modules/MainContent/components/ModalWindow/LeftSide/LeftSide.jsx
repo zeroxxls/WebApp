@@ -42,7 +42,7 @@ export const LeftSide = ({ selectedWork, allWorks }) => {
                   key={`image-${file.path}`}
                   src={file.url}
                   alt={`${selectedWork.title} - File ${file.path}`}
-                  className="w-full rounded object-contain shadow-md"
+                  className="w-full rounded object-contain shadow-md max-w-full md:max-w-8xl mx-auto"
                 />
               );
             } else if (isVideo) {
@@ -54,7 +54,7 @@ export const LeftSide = ({ selectedWork, allWorks }) => {
                   loop
                   autoPlay
                   muted 
-                   className="w-full rounded object-contain shadow-md max-w-full md:max-w-4xl mx-auto px-4"
+                   className="w-full rounded object-contain shadow-md max-w-full md:max-w-4xl mx-auto"
                 >
                   Your browser does not support the video tag.
                 </video>

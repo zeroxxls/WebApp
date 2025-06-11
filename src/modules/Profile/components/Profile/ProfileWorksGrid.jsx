@@ -23,7 +23,7 @@ export const ProfileWorksGrid = ({
         <span className="w-1 h-6 bg-indigo-500 rounded-full" />
         Latest Works
       </h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
         {userWorks.map((work) => {
           return (
             <WorkCard
