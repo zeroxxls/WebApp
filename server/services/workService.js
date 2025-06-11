@@ -63,8 +63,8 @@ export const fetchAllWorks = async () => {
 
 export const fetchWorkById = async (id) => {
   const work = await Work.findById(id)
-    .populate('author', 'fullName avatar') // Измените 'name' на 'fullName'
-    .populate('owner', 'fullName avatar'); // Добавьте это!
+    .populate('author', 'fullName avatar')
+    .populate('owner', 'fullName avatar');
   if (!work) {
     return null;
   }
@@ -79,7 +79,6 @@ export const removeWork = async (id) => {
       return false;
     }
 
-    // Удаляем файлы из S3
     if (work.files && work.files.length > 0) {
       await Promise.all(work.files.map(async (file) => {
         try {
@@ -91,7 +90,6 @@ export const removeWork = async (id) => {
       }));
     }
 
-    // Удаляем работу из массива works пользователя
     const userUpdate = await User.findByIdAndUpdate(
       work.author,
       { $pull: { works: work._id } },
@@ -100,7 +98,6 @@ export const removeWork = async (id) => {
     
     console.log('User after update:', userUpdate?.works?.length);
 
-    // Удаляем саму работу
     await work.deleteOne();
     
     console.log(`Work ${id} deleted successfully`);

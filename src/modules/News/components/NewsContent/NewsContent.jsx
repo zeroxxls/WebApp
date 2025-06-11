@@ -7,7 +7,7 @@ export const NewsContent = () => {
   const article = news.find(item => item.id === Number(id));
 
   if (!article) {
-    return <div>Статья не найдена</div>;
+    return <div>Articles not found</div>;
   }
 
   return (
@@ -22,7 +22,6 @@ export const NewsContent = () => {
     />
   </div>
 
-  {/* Центрируем контент статьи */}
   <div className="prose prose-lg px-4 sm:px-8 mx-auto max-w-5xl text-gray-200">
     <div className="whitespace-pre-line leading-relaxed">
       <h3 className="text-xl font-medium text-gray-400 mb-6">{article.description}</h3>
@@ -31,7 +30,6 @@ export const NewsContent = () => {
       </p>
     </div>
 
-    {/* Галерея изображений */}
     <div className="mt-10 space-y-8">
       {Array.isArray(article.articleImages) && article.articleImages.map((img, i) => (
         <div key={i} className='overflow-hidden shadow-md'>

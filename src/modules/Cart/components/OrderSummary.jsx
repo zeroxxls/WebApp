@@ -1,4 +1,3 @@
-// components/cart/OrderSummary.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -22,7 +21,7 @@ export const OrderSummary = ({ totalPrice, onCheckout }) => (
       </div>
     </div>
     <button
-      onClick={onCheckout} // <---- Используем переданный onCheckout
+      onClick={onCheckout}
       className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300 transform hover:scale-[1.02]"
     >
       Proceed to Checkout

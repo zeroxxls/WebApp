@@ -23,7 +23,7 @@ const workSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-        default: function() { return this.author; } // По умолчанию владелец - автор
+        default: function() { return this.author; }
     },
     createdAt: {
         type: Date,

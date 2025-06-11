@@ -26,7 +26,6 @@ export const purchaseWorksService = async (userId, workIds) => {
     throw err;
   }
 
-  // Фильтруем работы, которых ещё нет у пользователя
   const newWorks = works.filter(work => 
     !user.works.some(userWorkId => userWorkId.equals(work._id))
   );
@@ -35,20 +34,17 @@ export const purchaseWorksService = async (userId, workIds) => {
     throw new Error('You already own all selected works.');
   }
 
-  // 1. Обновляем владельца работ
   await Work.updateMany(
     { _id: { $in: newWorks.map(w => w._id) } },
     { $set: { owner: userId } }
   );
 
-  // 2. Добавляем работы покупателю
   await User.findByIdAndUpdate(
     userId,
     { $addToSet: { works: { $each: newWorks.map(w => w._id) } } },
     { new: true }
   );
 
-  // 3. Удаляем работы у продавцов
   const sellersToUpdate = {};
   newWorks.forEach(work => {
     if (work.author && work.author._id.toString() !== userId.toString()) {

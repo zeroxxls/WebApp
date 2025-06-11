@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { ConfirmationModal } from "../../../../shared/ui/ConfirmationModal";
 
-export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => { // <--- Добавляем isOwnProfile и onDelete в пропсы
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // <--- Состояние для модального окна подтверждения
+export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => {
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const displayUser = work.owner || work.author;
   const ownerId = displayUser?._id;
   const ownerName = displayUser?.fullName;
@@ -53,8 +53,6 @@ export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => { // <--
           <span className="text-white text-sm">{ownerName }</span>
         </div>
       </div>
-
-      {/* Корзина для удаления, видна только для владельца профиля при наведении */}
       {isOwnProfile && (
         <button
           onClick={handleDeleteClick}
@@ -63,11 +61,9 @@ export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => { // <--
           <RiDeleteBin6Line />
         </button>
       )}
-
-      {/* Модальное окно подтверждения удаления */}
       {showDeleteConfirm && (
         <ConfirmationModal
-          message="Вы уверены, что хотите удалить эту работу?"
+          message="Are you sure you want to delete this work?"
           onConfirm={confirmDelete}
           onCancel={cancelDelete}
         />

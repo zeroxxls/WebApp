@@ -53,7 +53,6 @@ export const unfollowUserService = async (currentUserId, targetUserId) => {
     throw new Error('Invalid user ID');
   }
 
-  // Очищаем массивы от некорректных значений перед операцией
   await Promise.all([
     User.updateOne(
       { _id: currentUserId },

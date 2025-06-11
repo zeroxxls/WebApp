@@ -8,7 +8,7 @@ export const useProfileUpdate = (userId, formData, onUpdate, onClose) => {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log('formData being sent:', formData); // Добавьте эту строку
+    console.log('formData being sent:', formData);
 
     try {
       const token = localStorage.getItem('token');

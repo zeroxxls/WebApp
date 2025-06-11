@@ -3,7 +3,6 @@ import process from 'node:process';
 
 export const uploadAvatar = async (req, res) => {
   try {
-    // Логирование для отладки
     res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
     res.header('Access-Control-Allow-Credentials', 'true');
     console.log('Uploading avatar for user:', req.params.id);
@@ -16,7 +15,7 @@ export const uploadAvatar = async (req, res) => {
 
     const updatedUser = await avatarService.uploadAvatar(
       req.params.id,
-      req.user._id.toString(), // передаем строку, а не ObjectId
+      req.user._id.toString(),
       req.file
     );
 

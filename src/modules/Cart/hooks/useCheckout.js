@@ -27,8 +27,7 @@ export const useCheckout = () => {
         const data = await response.json();
         console.log('Purchase successful:', data);
         alert('Purchase successful! The works have been added to your profile.');
-        dispatch(clearCart()); // Очищаем корзину после успешной покупки
-        // TODO: Перенаправить пользователя на страницу профиля?
+        dispatch(clearCart());
       } else {
         const errorData = await response.json();
         console.error('Checkout failed:', errorData);

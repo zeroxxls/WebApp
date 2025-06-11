@@ -69,8 +69,6 @@ export const UserList = ({ title, fetchUsers, onClose }) => {
           <p className="mt-2 text-gray-400">No users found</p>
         </div>
       ) : (
-        // Увеличили max-h для большей видимой области списка пользователей
-        // Добавили 'custom-scrollbar' класс для стилизации скроллбара
         <div className="space-y-2 max-h-[400px] md:max-h-[500px] overflow-y-auto pr-2 custom-scrollbar"> 
           {users.map(user => (
             <div 

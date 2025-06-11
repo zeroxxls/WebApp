@@ -6,7 +6,7 @@ import { ModalWindow } from "../../../MainContent/components/ModalWindow/ModalWi
 
 export const ProfileContent = ({
     profileUser,
-    userWorks, // Получаем userWorks как пропс
+    userWorks,
     isOwnProfile,
     handleAvatarUpload,
     isAvatarLoading,
@@ -15,7 +15,7 @@ export const ProfileContent = ({
     setSelectedWork,
     open,
     setOpen,
-    isLoading // Добавляем пропс isLoading
+    isLoading
 }) => {
 
     return (

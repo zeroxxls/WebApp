@@ -23,12 +23,10 @@ export const NewsGridSection = () => {
             />
             <div className="p-5">
 
-              {/* Заголовок */}
               <h2 className="text-white text-lg font-semibold leading-snug">
                 {item.title}
               </h2>
 
-              {/* Автор и дата */}
               <p className="text-sm text-gray-400 mt-3">
                 By <span className="text-blue-400">{item.author}</span> – {item.date}
               </p>

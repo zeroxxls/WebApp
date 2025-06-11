@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Async thunk для загрузки данных профиля
 export const fetchProfileData = createAsyncThunk(
   'profile/fetchData',
   async (userId,) => {

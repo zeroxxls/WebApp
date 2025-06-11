@@ -53,7 +53,6 @@ export const getFileUrl = async (fileName) => {
   };
 
   try {
-    // Generate a presigned URL that's valid for 1 hour
     const url = await getSignedUrl(s3Client, new GetObjectCommand(getObjectParams), {
       expiresIn: 3600,
     });

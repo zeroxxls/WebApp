@@ -49,7 +49,7 @@ export const useProfile = (currentUser, setProfileUser, isOwnProfile) => {
     handleProfileUpdate,
     openWorkModal,
     closeWorkModal,
-    setSelectedWork, // Expose if needed in UI
-    setOpen, // Expose if needed in UI
+    setSelectedWork,
+    setOpen, 
   };
 };
