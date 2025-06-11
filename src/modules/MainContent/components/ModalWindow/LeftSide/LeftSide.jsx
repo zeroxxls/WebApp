@@ -22,6 +22,7 @@ export const LeftSide = ({ selectedWork, allWorks }) => {
             const extension = pathParts ? pathParts[pathParts.length - 1]?.toLowerCase() : '';
             const isModel = ['glb', 'gltf'].includes(extension);
             const isImage = file.mimeType?.startsWith('image/');
+            const isVideo = file.mimeType?.startsWith('video/');
 
             if (isModel) {
               return (
@@ -43,6 +44,20 @@ export const LeftSide = ({ selectedWork, allWorks }) => {
                   alt={`${selectedWork.title} - File ${file.path}`}
                   className="w-full rounded object-contain shadow-md"
                 />
+              );
+            } else if (isVideo) {
+              return (
+                <video
+                  key={`video-${file.path}`}
+                  src={file.url}
+                  controls 
+                  loop
+                  autoPlay
+                  muted 
+                   className="w-full rounded object-contain shadow-md max-w-full md:max-w-4xl mx-auto px-4"
+                >
+                  Your browser does not support the video tag.
+                </video>
               );
             }
             return null;
