@@ -43,7 +43,7 @@ export const ModalContent = ({
   });
 
   return (
-    <div className="flex z-10 w-full max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
+    <div className="flex z-10 max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
       <LeftSide selectedWork={selectedWork} allWorks={allWorks} />
       <div className="flex flex-col w-1/4 p-6 border-l border-gray-800 relative overflow-y-auto">
         <OnCloseBtn onClose={onClose} />
