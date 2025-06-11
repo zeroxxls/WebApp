@@ -1,6 +1,5 @@
 import * as authService from '../services/authService.js';
 import { handleResponse, handleError } from '../utils/responseHandler.js';
-import User from '../models/User.js'
 
 export const registerUser = async (req, res) => {
     try {
