@@ -1,5 +1,5 @@
 import React from 'react';
-import { AVAILABLE_TECHNOLOGIES } from '../../../../shared/constants/uploadFilters';
+import { AVAILABLE_TECHNOLOGIES } from '../../../../../shared/constants/uploadFilters';
 
 export const TechnologySelector = ({ selectedTechnologies, onToggleTechnology }) => {
   return (

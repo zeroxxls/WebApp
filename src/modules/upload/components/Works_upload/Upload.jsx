@@ -5,7 +5,7 @@ import { UploadForm } from './UploadForm/UploadForm';
 import { UploadPreview } from './UploadPreview';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { addNewWork } from '../../../store/slices/workSlice';
+import { addNewWork } from '../../../../store/slices/workSlice';
 
 export const Upload = () => {
   const dispatch = useDispatch();
