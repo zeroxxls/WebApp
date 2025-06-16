@@ -4,7 +4,8 @@ import loadingReducer from './slices/loadingSlice';
 import authReducer from './slices/authSlice';
 import workReducer from './slices/workSlice';
 import userReducer from './slices/userSlice';
-import cartReducer from './slices/cartSlice'
+import cartReducer from './slices/cartSlice';
+import articleReducer from './slices/articleSlice'
 
 export const store = configureStore({
     reducer:{
@@ -14,5 +15,6 @@ export const store = configureStore({
         works: workReducer,
         user: userReducer,
         cart: cartReducer,
+        articles: articleReducer,
     }
 })

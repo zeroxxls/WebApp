@@ -21,9 +21,12 @@ const userSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
-works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
+  works: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work' }],
   likedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }],
   savedWorks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Work', default: [] }],
+  articles: [{type: mongoose.Schema.Types.ObjectId, ref: 'Article'}],
+  likedArticles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article', default: [] }],
+  savedArticles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article', default: [] }],
   followers: [{ 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User', 

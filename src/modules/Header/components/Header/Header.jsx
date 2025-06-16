@@ -33,7 +33,7 @@ export const Header = () => {
                 <GiShoppingCart className="w-6 h-6 text-white transition hover:scale-110" />
               </div>
             </Link>
-            <Link to="/UploadPage">
+            <Link to="/UploadSelection">
               <div className="bg-gray-700 mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
                 <MdFileUpload className="w-6 h-6 text-white transition hover:scale-110" />
               </div>

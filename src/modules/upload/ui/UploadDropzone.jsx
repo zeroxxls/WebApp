@@ -1,22 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-export const UploadDropzone = ({ onFilesAccepted }) => {
+export const UploadDropzone = ({ onFilesAccepted, accept }) => { // Ожидаем onFilesAccepted и accept
   const [localFiles, setLocalFiles] = useState([]);
 
-const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles) => {
     const filesWithPreview = acceptedFiles.map(file =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
       })
     );
     setLocalFiles(prevFiles => [...prevFiles, ...filesWithPreview]);
-    onFilesAccepted(prevFiles => [...prevFiles, ...filesWithPreview]);
+    if (onFilesAccepted) {
+      onFilesAccepted(filesWithPreview);
+    }
   }, [onFilesAccepted]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
+    accept: accept || {
       'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp'],
       'video/*': ['.mp4', '.mov', '.avi'],
       'application/zip': ['.zip', '.rar'],
@@ -49,7 +51,7 @@ const onDrop = useCallback((acceptedFiles) => {
         {isDragActive ? (
           <div className="space-y-2">
             <div className="text-blue-400 text-5xl animate-bounce">↑</div>
-            <h3 className="text-xl font-medium text-blue-400">Drop files to upload</h3>
+            <h3 className="text-xl font-medium text-blue-400">Drag & drop files</h3>
           </div>
         ) : (
           <>

@@ -14,6 +14,9 @@ import { UploadPage } from "./pages/UploadPage/UploadPage";
 import { LikedPage } from "./pages/LikedPage/LikedPage";
 import { SavedPage } from "./pages/SavedPage/SavedPage";
 import { CartPage } from "./pages/CartPage/CartPage";
+import { UploadSelection } from "./pages/UploadPage/UploadSelection";
+import { ArticleUploadPage } from "./pages/UploadPage/ArticleUploadPage";
+import { NewsContent } from "./modules/News";
 
 
 export const App =()=>{
@@ -30,7 +33,10 @@ export const App =()=>{
                 <Route path="/LikedPage" element={<LikedPage/>}/>
                 <Route path="/SavedPage" element={<SavedPage/>}/>
                 <Route path="/CartPage" element={<CartPage/>}/>
-                <Route path="article/:id" element={<ArticlePage/>}/>
+                <Route path="/UploadSelection" element={<UploadSelection/>}/>
+                <Route path="/ArticleUploadPage" element={<ArticleUploadPage/>}/>
+                <Route path="/NewsPage" element={<NewsPage/>}/>
+                <Route path="article/:id" element={<NewsContent/>}/>
                 <Route path="profile/:id" element={
                     <WithHeader>
                         <ProfilePage/>
