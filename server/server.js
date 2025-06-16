@@ -11,6 +11,7 @@ import avatarRoutes from './routes/avatarRoutes.js'
 import workRoutes from './routes/workRoutes.js'
 import commentRoutes from './routes/commentRoutes.js';
 import likeSaveRoutes from './routes/likeSaveRoutes.js';
+import articleRoutes from './routes/articleRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,6 +49,7 @@ app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
 app.use('/works', workRoutes);
 app.use('/works', express.static(path.join(__dirname, 'uploads', 'works')));
 app.use('/works/:workId/comments', commentRoutes);
+app.use('/articles', articleRoutes);
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {

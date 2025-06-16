@@ -1,5 +1,5 @@
 import { DescriptionInput } from './DescriptionInput';
-import { SubmitButton } from './SubmitButton';
+import { SubmitButton } from '../../../ui/SubmitButton';
 import { CategoryFilters } from './CategoryFilters';
 import { PriceSelector } from './PriceSelector';
 import { TechnologySelector } from './TechnologySelector';
@@ -74,7 +74,7 @@ export const UploadForm = ({ files, setFiles, onUploadSuccess, onUploadError }) 
       <PriceSelector value={price} onChange={setPrice} />
       <TechnologySelector selectedTechnologies={selectedTechnologies} onToggleTechnology={handleToggleTechnology} />
       <CategoryFilters selectedFilters={selectedFilters} onToggleFilter={handleToggleFilter} />
-      <SubmitButton isLoading={isLoading} disabled={isLoading || !files || files.length === 0 || !title.trim()} />
+      <SubmitButton onClick={handleSubmit} isLoading={isLoading} disabled={isLoading || !files || files.length === 0 || !title.trim()} />
     </form>
   );
 };
