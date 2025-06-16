@@ -1,5 +1,5 @@
 import React from 'react';
-import { SLIDER_FILTERS } from '../../../filter/constant/filters';
+import { SLIDER_FILTERS } from '../../../../filter/constant/filters';
 
 export const CategoryFilters = ({ selectedFilters, onToggleFilter }) => {
   return (

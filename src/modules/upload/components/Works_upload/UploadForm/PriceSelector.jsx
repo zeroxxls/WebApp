@@ -1,5 +1,5 @@
 import React from 'react';
-import { AVAILABLE_PRICES } from '../../../../shared/constants/uploadFilters';
+import { AVAILABLE_PRICES } from '../../../../../shared/constants/uploadFilters';
 
 export const PriceSelector = ({ value, onChange }) => {
   return (

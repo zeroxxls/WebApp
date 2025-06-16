@@ -1,1 +1,1 @@
-export{Upload} from './components/Upload'
+export{Upload} from './components/Works_upload/Upload'
