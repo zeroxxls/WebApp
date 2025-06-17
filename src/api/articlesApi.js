@@ -41,9 +41,12 @@ export const fetchAllArticles = async () => {
 
 export const fetchArticleById = async (id) => {
   try {
+    console.log(`Fetching article with ID: ${id}`); // Log the ID being requested
     const response = await axios.get(`${API_URL}/${id}`);
-    return response.data.article;
+    console.log('Article response:', response.data); // Log the response
+    return response.data;
   } catch (error) {
+    console.error('Error fetching article:', error.response?.data || error.message);
     throw error.response?.data?.message || error.message;
   }
 };
