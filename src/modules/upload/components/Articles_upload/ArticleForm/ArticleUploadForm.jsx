@@ -8,7 +8,7 @@ import { ImagePreview } from './ImagePreview';
 import { useDispatch } from 'react-redux';
 import { addNewArticle } from '../../../../../store/slices/articleSlice';
 
-export const ArticleUploadForm = () => {
+export const ArticleUploadForm = ({ onUploadSuccess, onUploadError }) => {
     const dispatch = useDispatch();
     const { files, onDrop, removeFile } = useArticleImages();
     const { 
@@ -19,9 +19,31 @@ export const ArticleUploadForm = () => {
         localError
     } = useArticleForm(files);
 
-    const handleArticleUploadSuccess = (articleData) => {
-        dispatch(addNewArticle(articleData.article));
-    };
+    const handleSubmit = async () => {
+    try {
+        const articleData = await submitForm();
+        console.log('Upload response:', articleData); // Лог ответа
+        
+        if (!articleData?.article) {
+            throw new Error('Неверный формат ответа сервера');
+        }
+
+        // Явно вызовите onUploadSuccess
+        if (onUploadSuccess) {
+            onUploadSuccess({
+                article: articleData.article,
+                status: 'success'
+            });
+        } else {
+            console.warn('onUploadSuccess callback is not defined');
+        }
+    } catch (error) {
+        console.error('Upload error:', error);
+        if (onUploadError) {
+            onUploadError(error);
+        }
+    }
+};
 
     return (
         <div className="max-w-4xl mx-auto p-4 sm:p-6">
@@ -53,7 +75,7 @@ export const ArticleUploadForm = () => {
 
                 <SubmitButton
                     isLoading={isLoading}
-                    onClick={() => submitForm(handleArticleUploadSuccess)}
+                    onClick={handleSubmit}
                     label="Опубликовать статью"
                     loadingLabel="Публикация..."
                     disabled={isLoading || files.length === 0 || !formData.title.trim() || !formData.description.trim() || !formData.content.trim()}

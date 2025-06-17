@@ -35,7 +35,6 @@ export const App =()=>{
                 <Route path="/CartPage" element={<CartPage/>}/>
                 <Route path="/UploadSelection" element={<UploadSelection/>}/>
                 <Route path="/ArticleUploadPage" element={<ArticleUploadPage/>}/>
-                <Route path="/NewsPage" element={<NewsPage/>}/>
                 <Route path="article/:id" element={<NewsContent/>}/>
                 <Route path="profile/:id" element={
                     <WithHeader>

@@ -12,7 +12,11 @@ export const uploadArticle = async (formData) => {
       },
       withCredentials: true,
     });
-    return response.data;
+    
+    // Возвращаем данные в ожидаемом формате
+    return {
+      article: response.data // Оберните ответ в объект с полем article
+    };
   } catch (error) {
     throw error.response?.data?.message || error.message;
   }

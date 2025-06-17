@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { uploadArticle } from '../../../../api/articlesApi';
 
 export const useArticleForm = (files) => {
@@ -12,7 +10,6 @@ export const useArticleForm = (files) => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [localError, setLocalError] = useState(null);
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,36 +30,35 @@ export const useArticleForm = (files) => {
         return true;
     };
 
-    const submitForm = async (onSuccess) => {
-        if (!validateForm()) return;
+    const submitForm = async () => {
+    if (!validateForm()) {
+        throw new Error('Форма не валидна');
+    }
 
-        try {
-            setIsLoading(true);
-            setLocalError(null);
+    try {
+        setIsLoading(true);
+        setLocalError(null);
 
-            const formDataToSend = new FormData();
-            files.forEach(file => {
-                formDataToSend.append('images', file);
-            });
+        const formDataToSend = new FormData();
+        files.forEach(file => {
+            formDataToSend.append('images', file);
+        });
 
-            formDataToSend.append('title', formData.title);
-            formDataToSend.append('description', formData.description);
-            formDataToSend.append('content', formData.content);
-            formDataToSend.append('tags', formData.tags);
+        formDataToSend.append('title', formData.title);
+        formDataToSend.append('description', formData.description);
+        formDataToSend.append('content', formData.content);
+        formDataToSend.append('tags', formData.tags);
 
-            const response = await uploadArticle(formDataToSend);
-            
-            toast.success('Статья успешно опубликована!');
-            if (onSuccess) onSuccess(response);
-            navigate('/NewsPage'); // Перенаправляем на страницу со статьями
-        } catch (error) {
-            console.error('Ошибка:', error);
-            setLocalError(error.message || 'Не удалось опубликовать статью');
-            toast.error(error.message || 'Не удалось опубликовать статью');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        const response = await uploadArticle(formDataToSend);
+        return response; // Убедитесь, что response содержит article
+    } catch (error) {
+        console.error('Ошибка:', error);
+        setLocalError(error.message || 'Не удалось опубликовать статью');
+        throw error;
+    } finally {
+        setIsLoading(false);
+    }
+};
 
     return {
         formData,
