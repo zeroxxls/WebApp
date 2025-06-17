@@ -3,10 +3,17 @@ import { useState } from 'react';
 export const useArticleFormState = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [content, setContent] = useState(''); // Для статьи
-  const [tags, setTags] = useState('');     // Для статьи (строка через запятую)
+  const [content, setContent] = useState('');
+  const [tags, setTags] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [localError, setLocalError] = useState(null);
+
+  const resetFormFields = () => {
+    setTitle('');
+    setDescription('');
+    setContent('');
+    setTags('');
+  };
 
   return {
     title, setTitle,
@@ -14,6 +21,7 @@ export const useArticleFormState = () => {
     content, setContent,
     tags, setTags,
     isLoading, setIsLoading,
-    localError, setLocalError
+    localError, setLocalError,
+    resetFormFields
   };
 };

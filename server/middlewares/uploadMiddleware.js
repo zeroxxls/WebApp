@@ -4,7 +4,7 @@ import path from 'path';
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png|gif|mp4|mov|avi|zip|rar|obj|fbx|blend|glb|gltf|application\/octet-stream/;
+    const filetypes = /jpeg|jpg|png|webp|gif|mp4|mov|avi|zip|rar|obj|fbx|blend|glb|gltf|application\/octet-stream/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
 
