@@ -6,7 +6,7 @@ export const ImagePreview = ({ files, removeFile, previewIndex = 0 }) => {
   return (
     <div className="mb-8">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-medium text-white">Выбранные изображения</h2>
+        <h2 className="text-xl font-medium text-white">Selected Files</h2>
         <span className="text-sm text-gray-400">
           {files.length} {files.length === 1 ? 'изображение' : 'изображений'}
         </span>
@@ -35,7 +35,7 @@ export const ImagePreview = ({ files, removeFile, previewIndex = 0 }) => {
             </div>
             {index === previewIndex && (
               <span className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded">
-                Превью
+                Preview
               </span>
             )}
           </div>

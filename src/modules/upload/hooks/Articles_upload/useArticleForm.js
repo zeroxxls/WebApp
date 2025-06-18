@@ -18,12 +18,12 @@ export const useArticleForm = (files) => {
 
     const validateForm = () => {
         if (!files.length) {
-            setLocalError('Загрузите хотя бы одно изображение');
+            setLocalError('Upload at least one image');
             return false;
         }
 
         if (!formData.title.trim() || !formData.description.trim() || !formData.content.trim()) {
-            setLocalError('Заполните все обязательные поля');
+            setLocalError('Fill all required fields');
             return false;
         }
 
@@ -31,40 +31,29 @@ export const useArticleForm = (files) => {
     };
 
     const submitForm = async () => {
-    if (!validateForm()) {
-        throw new Error('Форма не валидна');
-    }
+        if (!validateForm()) {
+            throw new Error('Invalid form data');
+        }
 
-    try {
-        setIsLoading(true);
-        setLocalError(null);
+        try {
+            setIsLoading(true);
+            setLocalError(null);
 
-        const formDataToSend = new FormData();
-        files.forEach(file => {
-            formDataToSend.append('images', file);
-        });
+            const formDataToSend = new FormData();
+            files.forEach(file => formDataToSend.append('images', file));
+            
+            Object.entries(formData).forEach(([key, value]) => {
+                formDataToSend.append(key, value);
+            });
 
-        formDataToSend.append('title', formData.title);
-        formDataToSend.append('description', formData.description);
-        formDataToSend.append('content', formData.content);
-        formDataToSend.append('tags', formData.tags);
-
-        const response = await uploadArticle(formDataToSend);
-        return response; // Убедитесь, что response содержит article
-    } catch (error) {
-        console.error('Ошибка:', error);
-        setLocalError(error.message || 'Не удалось опубликовать статью');
-        throw error;
-    } finally {
-        setIsLoading(false);
-    }
-};
-
-    return {
-        formData,
-        handleChange,
-        isLoading,
-        submitForm,
-        localError
+            return await uploadArticle(formDataToSend);
+        } catch (error) {
+            setLocalError(error.message || 'Failed to publish article');
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+    return { formData, handleChange, isLoading, submitForm, localError };
 };
