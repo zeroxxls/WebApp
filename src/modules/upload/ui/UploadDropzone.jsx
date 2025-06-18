@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
-export const UploadDropzone = ({ onFilesAccepted, accept }) => { // Ожидаем onFilesAccepted и accept
-  const [localFiles, setLocalFiles] = useState([]);
+export const UploadDropzone = ({ onFilesAccepted, accept, existingFiles = [] }) => {
+  const [localFiles, setLocalFiles] = useState(existingFiles);
 
   const onDrop = useCallback((acceptedFiles) => {
     const filesWithPreview = acceptedFiles.map(file =>
@@ -10,11 +10,15 @@ export const UploadDropzone = ({ onFilesAccepted, accept }) => { // Ожидае
         preview: URL.createObjectURL(file),
       })
     );
-    setLocalFiles(prevFiles => [...prevFiles, ...filesWithPreview]);
+    
+    // Сохраняем предыдущие файлы и добавляем новые
+    const updatedFiles = [...localFiles, ...filesWithPreview];
+    setLocalFiles(updatedFiles);
+    
     if (onFilesAccepted) {
-      onFilesAccepted(filesWithPreview);
+      onFilesAccepted(updatedFiles);
     }
-  }, [onFilesAccepted]);
+  }, [localFiles, onFilesAccepted]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
