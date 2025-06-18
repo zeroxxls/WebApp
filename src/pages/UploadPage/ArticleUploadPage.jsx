@@ -1,10 +1,10 @@
 import React from 'react'
-import {ArticleUploadForm} from '../../modules/upload/components/Articles_upload/ArticleForm/ArticleUploadForm'
+import { ArticleUpload } from '../../modules/upload'
 
 export const ArticleUploadPage = () => {
   return (
     <div>
-      <ArticleUploadForm/>
+      <ArticleUpload/>
     </div>
   )
 }

@@ -41,7 +41,6 @@ const articleSlice = createSlice({
     name: 'articles',
     initialState,
     reducers: {
-        // Добавляем редьюсер для добавления статьи без API запроса
         addNewArticle: (state, action) => {
             state.list.unshift(action.payload);
         }
