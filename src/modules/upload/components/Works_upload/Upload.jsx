@@ -61,7 +61,7 @@ export const Upload = () => {
       <div className="lg:w-1/2 p-6 border-b lg:border-b-0 lg:border-r border-gray-700">
         <UploadDropzone
           onFilesAccepted={setFiles}
-          existingFiles={files} 
+          currentFiles={files} 
         />
       </div>
       
