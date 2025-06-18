@@ -4,18 +4,21 @@ import { NewsGridSection } from '../../modules/News';
 import { Footer } from '../../modules/Footer';
 import { setIsPostLoading } from '../../store/slices/loadingSlice';
 import { Loader } from '../../shared/ui/Loader';
-import { fetchArticles } from '../../store/slices/articleSlice'; // Импортируем action
+import { fetchArticles } from '../../store/slices/articleSlice'; 
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
 export const NewsPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const isPostLoading = useSelector((state) => state.loading.isPostLoading);
-    const articles = useSelector((state) => state.articles.list); // Получаем статьи из Redux
-    const articlesLoading = useSelector((state) => state.articles.loading); // Получаем статус загрузки
+    const articles = useSelector((state) => state.articles.list); 
+    const articlesLoading = useSelector((state) => state.articles.loading);
     console.log('Redux articles:', articles);
 
     useEffect(() => {
         dispatch(setIsPostLoading(true));
-        dispatch(fetchArticles()); // Загружаем статьи
+        dispatch(fetchArticles());
         
         const timer = setTimeout(() => {
             dispatch(setIsPostLoading(false));
@@ -34,6 +37,13 @@ export const NewsPage = () => {
 
     return (
         <div className="bg-gray-900 min-h-screen text-white">
+            <button 
+                onClick={() => navigate(-1)} 
+                className="absolute top-4 left-4 z-10 p-2 text-white hover:text-gray-300 transition duration-300"
+                aria-label="Go back"
+            >
+                <ArrowLeftIcon className="h-6 w-6" />
+            </button>
             <header className="py-16 px-4 text-center bg-gradient-to-b from-gray-800 to-gray-900">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-4xl mx-auto">
                     Explore New Articles About the World of CGI, 3D Modelling & Digital Art
