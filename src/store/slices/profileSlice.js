@@ -6,12 +6,12 @@ export const fetchProfileData = createAsyncThunk(
   async (userId,) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.get(`http://localhost:4444/users/${userId}`, {
+       const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      const worksResponse = await axios.get(`http://localhost:4444/works/user/${userId}`, {
+      const worksResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/works/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

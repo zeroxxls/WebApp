@@ -8,7 +8,7 @@ export const useSavedWorks = (userId) => {
     const fetchSavedWorks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:4444/users/${userId}/saved`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/${userId}/saved`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

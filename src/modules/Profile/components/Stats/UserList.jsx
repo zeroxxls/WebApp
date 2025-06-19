@@ -79,7 +79,7 @@ export const UserList = ({ title, fetchUsers, onClose }) => {
               <div className="relative flex-shrink-0">
                 {user.avatar ? (
                   <img 
-                    src={`http://localhost:4444/avatars/${user._id}/avatar?${Date.now()}`}
+                   src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${user._id}/avatar?${Date.now()}`}
                     alt={user.fullName}
                     className="w-12 h-12 rounded-full object-cover border-2 border-gray-600 group-hover:border-blue-500 transition-colors"
                     onError={(e) => {

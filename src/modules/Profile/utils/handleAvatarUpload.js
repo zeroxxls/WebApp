@@ -18,7 +18,7 @@ export const handleAvatarUpload = async ({
     const token = localStorage.getItem("token");
 
     const response = await axios.patch(
-      `http://localhost:4444/avatars/${currentUser._id}/avatar`,
+      `${import.meta.env.VITE_BACKEND_URL}/avatars/${currentUser._id}/avatar`,
       formData,
       {
         headers: {

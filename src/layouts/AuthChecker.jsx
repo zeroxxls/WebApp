@@ -12,7 +12,7 @@ export const AuthChecker = ({ children }) => {
       
       if (token) {
         try {
-          const response = await axios.get("http://localhost:4444/auth/check", {
+          const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/check`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

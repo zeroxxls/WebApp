@@ -21,7 +21,7 @@ export const useLikeSaveWork = (workId) => {
       const token = localStorage.getItem('token');
       const action = isLiked ? 'unlike' : 'like';
       const response = await axios.patch(
-        `http://localhost:4444/users/${userId}/${action}/${workId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/users/${userId}/${action}/${workId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -40,7 +40,7 @@ export const useLikeSaveWork = (workId) => {
       const token = localStorage.getItem('token');
       const action = isSaved ? 'unsave' : 'save';
       const response = await axios.patch(
-        `http://localhost:4444/users/${userId}/${action}/${workId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/users/${userId}/${action}/${workId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

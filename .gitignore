@@ -9,6 +9,7 @@ build/
 
 # dotenv
 .env
+.env.development
 
 # Logs
 logs/

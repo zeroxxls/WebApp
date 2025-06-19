@@ -11,8 +11,8 @@ export const AvatarSection = ({ user, isOwnProfile, isAvatarLoading, onAvatarUpl
 
   return (
     <div className="relative group">
-      <img 
-        src={`http://localhost:4444/avatars/${user._id}/avatar?${Date.now()}`}
+      <img
+        src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${user._id}/avatar?${Date.now()}`}
         className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-indigo-500/30 shadow-lg transition-all duration-300 group-hover:border-indigo-500/60"
         alt={`${user.fullName}'s avatar`}
       />

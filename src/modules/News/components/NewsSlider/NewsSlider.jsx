@@ -16,9 +16,7 @@ export const NewsSlider = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:4444' 
-    : 'https://your-production-api.com';
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const extractImageKey = (url) => {
     try {
@@ -31,7 +29,7 @@ export const NewsSlider = () => {
 
   const getProxiedImageUrl = (originalUrl) => {
     const imageKey = extractImageKey(originalUrl);
-    return `${API_BASE_URL}/articles/image/${encodeURIComponent(imageKey)}`;
+    return `${API_BASE_URL}/articles/image/${encodeURIComponent(imageKey)}`
   };
 
   useEffect(() => {

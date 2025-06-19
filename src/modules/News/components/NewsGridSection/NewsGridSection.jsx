@@ -5,17 +5,13 @@ import { formatDate } from '../../../../shared/utils/dateUtils';
 export const NewsGridSection = ({ articles }) => {
     const navigate = useNavigate();
     
-    const API_BASE_URL = window.location.hostname === 'localhost' 
-        ? 'http://localhost:4444' 
-        : 'https://your-production-api.com';
+    const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
     const extractImageKey = (url) => {
       try {
-        // Извлекаем путь после имени бакета
         const urlObj = new URL(url);
-        return urlObj.pathname.substring(1); // Убираем первый слеш
+        return urlObj.pathname.substring(1); 
       } catch {
-        // Если URL невалидный, возвращаем как есть (для fallback)
         return url;
       }
     };

@@ -13,7 +13,7 @@ export const UserInfoBlock = ({ selectedUser, onProfileClick }) => {
         onClick={() => userId && onProfileClick(userId)}
       >
         <img
-          src={userId ? `http://localhost:4444/avatars/${userId}/avatar?${Date.now()}` : '/default-avatar.png'}
+          src={userId ? `${import.meta.env.VITE_BACKEND_URL}/avatars/${userId}/avatar?${Date.now()}` : '/default-avatar.png'}
           alt={displayName}
           className="absolute inset-0 w-full h-full object-cover"
           onError={(e) => { e.target.src = '/default-avatar.png'; }}

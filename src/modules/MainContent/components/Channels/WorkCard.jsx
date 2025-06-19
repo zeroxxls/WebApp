@@ -46,7 +46,7 @@ export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => {
         <div className="flex items-center space-x-2 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-50">
           {ownerId && (
             <img
-              src={`http://localhost:4444/avatars/${ownerId}/avatar?${Date.now()}`}
+              src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${ownerId}/avatar?${Date.now()}`}
               className="w-6 h-6 rounded-full object-cover cursor-pointer"
             />
           )}
