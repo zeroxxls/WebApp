@@ -30,7 +30,7 @@ export const useUploadSubmit = ({
 
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:4444/works/upload', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works/upload`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

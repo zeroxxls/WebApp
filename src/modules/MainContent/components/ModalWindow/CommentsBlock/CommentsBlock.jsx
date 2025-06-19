@@ -11,7 +11,7 @@ export const CommentsBlock = ({ comments: initialComments = [], selectedWorkId }
     const fetchComments = async () => {
       if (selectedWorkId) {
         try {
-          const response = await fetch(`/works/${selectedWorkId}/comments`);
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works/${selectedWorkId}/comments`);
           if (response.ok) {
             const data = await response.json();
             setComments(data.comments || []);
@@ -30,7 +30,7 @@ export const CommentsBlock = ({ comments: initialComments = [], selectedWorkId }
   const handleSubmitComment = async () => {
     if (commentText.trim() && selectedWorkId) {
       try {
-        const response = await fetch(`/works/${selectedWorkId}/comments`, {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works/${selectedWorkId}/comments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const CommentsBlock = ({ comments: initialComments = [], selectedWorkId }
           setComments(prevComments => [...prevComments, newComment]);
           setCommentText('');
           // Re-fetch comments to update UI
-          const commentsResponse = await fetch(`/works/${selectedWorkId}/comments`);
+          const commentsResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works/${selectedWorkId}/comments`);
           if (commentsResponse.ok) {
             const commentsData = await commentsResponse.json();
             setComments(commentsData.comments || []);

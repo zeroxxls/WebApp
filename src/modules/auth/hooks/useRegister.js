@@ -19,7 +19,7 @@ export const useRegister = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4444/auth/register', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

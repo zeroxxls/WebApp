@@ -72,7 +72,7 @@ export const fetchAllWorks = createAsyncThunk(
   'works/fetchAllWorks',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:4444/works');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works`);
       if (!response.ok) throw new Error('Failed to fetch works');
       const data = await response.json();
       return data.works;

@@ -13,7 +13,7 @@ export const useProfileUpdate = (userId, formData, onUpdate, onClose) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.patch(
-        `http://localhost:4444/users/${userId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/users/${userId}`,
         formData,
         {
           headers: {

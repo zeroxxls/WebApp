@@ -4,7 +4,7 @@ export const Comment = ({ comment }) => (
   <div className="bg-gray-700 p-3 rounded-lg flex items-start gap-2">
     {comment.author?._id ? (
       <img
-        src={`http://localhost:4444/avatars/${comment.author._id}/avatar?${Date.now()}`}
+        src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${comment.author._id}/avatar?${Date.now()}`}
         alt={comment.author?.fullName || comment.author?.name || 'User'}
         className="w-8 h-8 rounded-full object-cover"
       />

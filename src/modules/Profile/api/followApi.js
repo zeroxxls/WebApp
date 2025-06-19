@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:4444/users';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL + '/users';
 
 export const followUserApi = async (userId) => {
   const token = localStorage.getItem('token');
@@ -55,4 +55,11 @@ export const fetchFollowCountsApi = async (userId) => {
     followers: followersData.total,
     following: followingData.total,
   };
+};
+
+export const checkMutualFollowApi = async (targetUserId, currentUserId) => {
+  const res = await fetch(`${BASE_URL}/${targetUserId}/following`);
+  if (!res.ok) throw new Error('Failed to check mutual follow');
+  const data = await res.json();
+  return data.following.some(user => user._id === currentUserId);
 };

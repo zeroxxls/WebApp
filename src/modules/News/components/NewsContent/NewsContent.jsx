@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchArticleById } from '../../../../api/articlesApi';
 import { formatDate } from '../../../../shared/utils/dateUtils';
 import { Loader } from '../../../../shared/ui/Loader';
-import {Footer} from '../../../Footer'
+import { Footer } from '../../../Footer';
 
 export const NewsContent = () => {
   const { id } = useParams();
@@ -11,9 +11,7 @@ export const NewsContent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:4444' 
-    : 'https://your-production-api.com';
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const extractImageKey = (url) => {
     try {

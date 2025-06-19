@@ -32,7 +32,7 @@ export const useArticleSubmit = ({
 
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:4444/articles', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/articles`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

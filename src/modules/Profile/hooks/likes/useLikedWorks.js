@@ -8,7 +8,7 @@ export const useLikedWorks = (userId) => {
     const fetchLikedWorks = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:4444/users/${userId}/liked`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/${userId}/liked`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

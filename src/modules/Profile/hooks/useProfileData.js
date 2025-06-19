@@ -17,7 +17,7 @@ const fetchUserData = useCallback(async () => {
     if (isOwnProfile) {
       userData = currentUser;
     } else {
-      const response = await axios.get(`http://localhost:4444/users/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`);
       userData = response.data.user;
     }
 
@@ -26,7 +26,7 @@ const fetchUserData = useCallback(async () => {
     const validWorkIds = await Promise.all(
       (userData.works || []).map(async workId => {
         try {
-          await axios.get(`http://localhost:4444/works/${workId}`);
+          await axios.get(`${import.meta.env.VITE_BACKEND_URL}/works/${workId}`);
           return workId;
         } catch {
           return null;
@@ -39,7 +39,7 @@ const fetchUserData = useCallback(async () => {
     if (existingWorkIds.length > 0) {
       const worksResponses = await Promise.all(
         existingWorkIds.map(workId => 
-          axios.get(`http://localhost:4444/works/${workId}`)
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/works/${workId}`)
         )
       );
       const fetchedWorks = worksResponses.map(res => res.data.work);
@@ -57,7 +57,7 @@ const fetchUserData = useCallback(async () => {
 const deleteWork = async (workId) => {
   try {
     const token = localStorage.getItem('token');
-    const response = await axios.delete(`http://localhost:4444/works/${workId}`, {
+    const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/works/${workId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -67,7 +67,7 @@ const deleteWork = async (workId) => {
       throw new Error('Failed to delete work');
     }
     
-    const userResponse = await axios.get(`http://localhost:4444/users/${id}`, {
+    const userResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

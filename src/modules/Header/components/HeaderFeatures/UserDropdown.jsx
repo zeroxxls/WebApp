@@ -14,7 +14,7 @@ export const UserDropdown = ({ user, isDropdownOpen, onMouseEnter, onMouseLeave,
 
       <div className="flex items-center gap-2 cursor-pointer">
         <img
-          src={`http://localhost:4444/avatars/${user._id}/avatar?${Date.now()}}`}
+          src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${user._id}/avatar?${Date.now()}`}
           alt={user.fullName || user.name || 'User'}
           className="w-8 h-8 rounded-full object-cover"
           onClick={() => handleProfileClick(navigate, user._id || user.id)}
