@@ -31,11 +31,23 @@ mongoose.connect(uri, {
     process.exit(1);
   });
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://luminio-project.netlify.app'
+];
+
 const corsOptions = {
-  origin: 'http://localhost:5173', 
-  credentials: true, 
-  optionsSuccessStatus: 200 
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
 };
+app.use(cors(corsOptions));
 
 app.use(cors(corsOptions));
 app.use(express.json());

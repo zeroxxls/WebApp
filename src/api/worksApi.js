@@ -1,5 +1,5 @@
 export const fetchUserWorks = async (userId) => {
-  const response = await fetch(`http://localhost:4444/works/user/${userId}`, {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works/user/${userId}`, {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     }
@@ -9,7 +9,7 @@ export const fetchUserWorks = async (userId) => {
 };
 
 export const uploadWork = async (formData) => {
-  const response = await fetch('http://localhost:4444/works/upload', {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works/upload`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`
