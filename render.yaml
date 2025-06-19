@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: Luminio
+    env: node
+    rootDir: . 
+    buildCommand: cd server && npm install
+    startCommand: cd server && node server.js
+    port: 4444
