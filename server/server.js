@@ -5,10 +5,10 @@ import mongoose from 'mongoose';
 import process from 'node:process';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import authRoutes from './routes/authRoutes.js'
-import userRoutes from './routes/userRoutes.js'
-import avatarRoutes from './routes/avatarRoutes.js'
-import workRoutes from './routes/workRoutes.js'
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import avatarRoutes from './routes/avatarRoutes.js';
+import workRoutes from './routes/workRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import likeSaveRoutes from './routes/likeSaveRoutes.js';
 import articleRoutes from './routes/articleRoutes.js';
@@ -22,6 +22,31 @@ const app = express();
 const PORT = process.env.PORT || 4444;
 const uri = process.env.MONGO_URI;
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://luminio-project.netlify.app',
+  'https://webapp-production-ba4a.up.railway.app'
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.warn('CORS blocked for origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
 mongoose.connect(uri, {
   dbName: 'app',
 })
@@ -31,28 +56,8 @@ mongoose.connect(uri, {
     process.exit(1);
   });
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://luminio-project.netlify.app'
-];
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
-
-app.use(cors(corsOptions));
 app.use(express.json());
 
-// Routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/users', likeSaveRoutes);
@@ -73,12 +78,21 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((err, req, res,next) => {
-  console.error('error:', err.stack);
+app.use((err, req, res, next) => {
+  console.error('Error:', err.stack);
+  
+  // Обработка CORS ошибок
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({
+      success: false,
+      message: 'CORS policy: Access denied',
+    });
+  }
+  
   res.status(500).json({
     success: false,
     message: 'Something broke!',
-    error: err.message,
+    error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error',
   });
 });
 
