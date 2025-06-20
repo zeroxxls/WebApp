@@ -50,7 +50,10 @@ router.get('/image/:key', async (req, res) => {
   }
 });
 router.post('/', authMiddleware, upload.array('images'), createArticle);
-router.get('/', getArticles);
+router.get('/', (req, res, next) => {
+  console.log('GET /articles triggered');
+  next();
+}, getArticles);
 router.get('/:id', getArticleById);
 router.get('/user/:userId', getUserArticles);
 router.put('/:id', authMiddleware, upload.array('images'), updateArticle);
