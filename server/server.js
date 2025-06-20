@@ -23,9 +23,17 @@ const PORT = process.env.PORT || 4444;
 const uri = process.env.MONGO_URI;
 
 app.use(cors({
-  origin: [
-    'https://luminio-project.netlify.app',
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'https://luminio-project.netlify.app'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
@@ -44,11 +52,11 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/users', likeSaveRoutes);
 app.use('/avatars', avatarRoutes);
-app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
 app.use('/works', workRoutes);
-app.use('/works', express.static(path.join(__dirname, 'uploads', 'works')));
 app.use('/works/:workId/comments', commentRoutes);
 app.use('/articles', articleRoutes);
+app.use('/static/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
+app.use('/static/works', express.static(path.join(__dirname, 'uploads', 'works')));
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
