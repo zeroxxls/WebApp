@@ -62,11 +62,11 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/users', likeSaveRoutes);
 app.use('/avatars', avatarRoutes);
-app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
 app.use('/works', workRoutes);
+app.use('/articles', articleRoutes);
+app.use('/avatars', express.static(path.join(__dirname, 'uploads', 'avatars')));
 app.use('/works', express.static(path.join(__dirname, 'uploads', 'works')));
 app.use('/works/:workId/comments', commentRoutes);
-app.use('/articles', articleRoutes);
 
 app.use((req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
@@ -80,6 +80,8 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   console.error('Error:', err.stack);
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
   
   // Обработка CORS ошибок
   if (err.message === 'Not allowed by CORS') {
