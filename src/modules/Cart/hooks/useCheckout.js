@@ -14,7 +14,7 @@ export const useCheckout = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:4444/users/me/purchase', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/me/purchase`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
