@@ -21,13 +21,15 @@ const app = express();
 const PORT = process.env.PORT || 4444;
 const uri = process.env.MONGO_URI;
 
+const allowedOrigins = [
+      'http://localhost:5173',
+      'https://luminio-project.netlify.app',
+      'https://web-app-beryl-gamma.vercel.app',
+    ];
+
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'https://luminio-project.netlify.app'
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
