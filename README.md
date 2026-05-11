@@ -1,15 +1,183 @@
-# React + Vite
+# Luminio — Online CGI Marketplace & Viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="data:image/svg+xml;base64,PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3Mv" width="200" />
 
-Currently, two official plugins are available:
+## 🌐 Deployment
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[https://web-app-beryl-gamma.vercel.app/](https://web-app-beryl-gamma.vercel.app/)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📌 Overview
 
+**Luminio** — это онлайн‑платформа для просмотра и продажи CGI‑контента: 3D‑моделей, 2D‑работ, а также лента новостей о мире CGI. Пользователи могут просматривать цифровые объекты, покупать и загружать работы, сохранять понравившиеся материалы и управлять своим профилем.
 
-Deployment - https://web-app-beryl-gamma.vercel.app/
+Платформа разработана как современное веб‑приложение с модульной архитектурой и сильным акцентом на интерактивность.
+
+---
+
+## ✨ Key Features
+
+* 🔸 Просмотр **3D‑моделей** через встроенный `model-viewer`
+* 🔸 Просмотр **2D‑работ** (изображения, арты)
+* 🔸 **Покупка** и **продажа** CGI‑контента
+* 🔸 Лента **новостей CGI‑индустрии**
+* 🔸 **Загрузка** собственных работ или статей
+* 🔸 **Профиль пользователя** с настройками и персональными данными
+* 🔸 Добавление работ в **понравившиеся** и **сохранённые**
+* 🔸 **Комментарии** под постами
+* 🔸 Регистрация и авторизация (JWT)
+
+---
+
+## 🧩 Tech Stack
+
+### Frontend
+
+* React.js
+* Redux
+* React Router
+* TailwindCSS
+* Swiper
+* model-viewer
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT
+* Bcrypt
+* AWS S3 Bucket (хранение медиа)
+
+---
+
+## 🏗 Архитектурный подход
+
+Проект строится на **модульной архитектуре**, где каждый крупный раздел (например, Profile) представляет собой независимый модуль с собственными:
+
+* компонентами
+* хуками
+* локальными API
+* UI‑элементами (уникальными для модуля)
+* утилитами
+
+Каждый модуль имеет собственный `index.js`, через который наружу экспортируются только необходимые элементы. Это обеспечивает:
+
+* **сильную связанность внутри модуля**
+* **слабую связанность между модулями**
+* высокую масштабируемость и удобную поддержку
+
+Компоненты внутри модулей группируются по функциональным разделам (например, `Stats` внутри `Profile`), что создаёт ясную структуру и повышает читаемость.
+
+---
+
+## 🎥 Demo / Screenshots
+
+*(Здесь будут GIF‑демонстрации или скриншоты — добавь позже)*
+
+---
+
+## 🚀 Future Roadmap
+
+*(по желанию можно заполнить позже)*
+
+---
+
+## 👤 Author
+
+**Kirill Khoroshun**
+
+GitHub: *сюда вставить ссылку*
+
+LinkedIn: *сюда вставить ссылку*
+
+---
+
+# 📄 English Version
+
+# Luminio — Online CGI Marketplace & Viewer
+
+<img src="data:image/svg+xml;base64,PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3Mv" width="200" />
+
+## 🌐 Deployment
+
+[https://web-app-beryl-gamma.vercel.app/](https://web-app-beryl-gamma.vercel.app/)
+
+---
+
+## 📌 Overview
+
+**Luminio** is an online platform for viewing and selling CGI content — 3D models, 2D artworks, and CGI‑related news. Users can browse assets, purchase works, upload their own content, manage profiles, save favorites, and interact via comments.
+
+---
+
+## ✨ Features
+
+* 3D model viewer (`model-viewer`)
+* 2D artwork preview
+* Buying & selling CGI works
+* CGI news feed
+* Uploading posts or artworks
+* User profile with settings
+* Favorites & Saved items
+* Comment system
+* JWT authentication
+
+---
+
+## 🧩 Tech Stack
+
+### Frontend
+
+* React.js
+* Redux
+* TailwindCSS
+* React Router
+* Swiper
+* model-viewer
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* JWT
+* Bcrypt
+* AWS S3 Bucket
+
+---
+
+## 🏗 Architecture
+
+Luminio uses a **modular architecture** with isolated feature‑modules (e.g., Profile). Each module contains its own:
+
+* components
+* hooks
+* API logic
+* module‑unique UI elements
+* utilities
+
+Modules expose only what’s required through their `index.js`, enabling:
+
+* strong internal cohesion
+* weak external coupling
+* easier scaling and long‑term maintenance
+
+---
+
+## 🎥 Demo / Screenshots
+
+*(Add visuals later)*
+
+---
+
+## 👤 Author
+
+**Kirill Khoroshun**
+
+GitHub: *placeholder*
+LinkedIn: *placeholder*
+
