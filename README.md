@@ -75,7 +75,8 @@
 
 ## 🎥 Demo / Screenshots
 
-*(Здесь будут GIF‑демонстрации или скриншоты — добавь позже)*
+<img width="1896" height="930" alt="Screenshot_1" src="https://github.com/user-attachments/assets/da5c1b97-c748-4053-8bf2-2a9787cf4b1f" />
+
 
 ---
 
@@ -89,9 +90,9 @@
 
 **Kirill Khoroshun**
 
-GitHub: *сюда вставить ссылку*
+GitHub: [https://github.com/zeroxxls](https://github.com/zeroxxls)
 
-LinkedIn: *сюда вставить ссылку*
+LinkedIn: [https://de.linkedin.com/in/kyrylo-khoroshun-3a2417375](https://de.linkedin.com/in/kyrylo-khoroshun-3a2417375)
 
 ---
 
@@ -178,6 +179,7 @@ Modules expose only what’s required through their `index.js`, enabling:
 
 **Kirill Khoroshun**
 
-GitHub: *placeholder*
-LinkedIn: *placeholder*
+GitHub: [https://github.com/zeroxxls](https://github.com/zeroxxls)
+
+LinkedIn: [https://de.linkedin.com/in/kyrylo-khoroshun-3a2417375](https://de.linkedin.com/in/kyrylo-khoroshun-3a2417375)
 
