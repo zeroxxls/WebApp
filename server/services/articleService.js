@@ -2,17 +2,6 @@ import Article from '../models/Article.js';
 import User from '../models/User.js';
 import { uploadFile, deleteFile, getFileUrl } from './s3Service.js';
 
-const saveArticleFilesToS3 = async (files, authorId) => {
-  const fileDetails = [];
-  for (const file of files) {
-    const fileName = `articles/${authorId}/${Date.now()}-${file.originalname}`;
-    await uploadFile(file.buffer, fileName, file.mimetype);
-    const url = await getFileUrl(fileName);
-    fileDetails.push(url);
-  }
-  return fileDetails;
-};
-
 export const createArticleService = async (articleData, files, authorId) => {
   const { title, description, content, tags } = articleData;
 

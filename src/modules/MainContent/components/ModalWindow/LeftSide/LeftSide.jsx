@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import '../../../../../shared/styles/hideScrollBar.css';
 import {ModelViewerWithLoader} from './ModelViewerWithLoader';
 import {RelatedWorksList} from './RelatedWorks';
@@ -9,7 +9,6 @@ export const LeftSide = ({ selectedWork, allWorks }) => {
   const relatedWorks = allWorks.filter(
     (work) => work.author?._id === authorId && work._id !== selectedWork._id
   );
-  const [isModelLoading, setIsModelLoading] = useState(true);
   const viewerRef = useRef(null);
   const { isFullscreen, toggleFullscreen } = useFullscreen();
 
@@ -32,8 +31,6 @@ export const LeftSide = ({ selectedWork, allWorks }) => {
                   isFullscreen={isFullscreen}
                   toggleFullscreen={toggleFullscreen}
                   viewerRef={viewerRef}
-                  isModelLoading={isModelLoading}
-                  setIsModelLoading={setIsModelLoading}
                 />
               );
             } else if (isImage) {

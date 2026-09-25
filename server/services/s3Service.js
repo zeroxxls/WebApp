@@ -60,3 +60,10 @@ export const getFileUrl = async (fileName) => {
     throw err;
   }
 };
+
+export const getFileStream = async (fileName) => {
+  return s3Client.send(new GetObjectCommand({
+    Bucket: bucketName,
+    Key: fileName,
+  }));
+};

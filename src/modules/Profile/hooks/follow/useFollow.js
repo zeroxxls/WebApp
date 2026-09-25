@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
   followUserApi,
@@ -17,25 +17,18 @@ export const useFollow = (profileUserId) => {
   const [followingCount, setFollowingCount] = useState(0);
   const [isMutualFollow, setIsMutualFollow] = useState(false);
 
-  useEffect(() => {
-    if (currentUser && profileUserId) {
-      const following = currentUser.following?.includes(profileUserId) || false;
-      setIsFollowing(following);
-      if (following) checkMutualFollow();
-      fetchFollowCounts();
-    }
-  }, [currentUser, profileUserId]);
-
-  const checkMutualFollow = async () => {
+  const checkMutualFollow = useCallback(async () => {
+    if (!currentUser || !profileUserId) return;
     try {
       const isMutual = await checkMutualFollowApi(profileUserId, currentUser._id);
       setIsMutualFollow(isMutual);
     } catch (error) {
       console.error("Error checking mutual follow:", error);
     }
-  };
+  }, [currentUser, profileUserId]);
 
-  const fetchFollowCounts = async () => {
+  const fetchFollowCounts = useCallback(async () => {
+    if (!profileUserId) return;
     try {
       const { followers, following } = await fetchFollowCountsApi(profileUserId);
       setFollowersCount(followers);
@@ -43,7 +36,16 @@ export const useFollow = (profileUserId) => {
     } catch (error) {
       console.error("Error fetching follow counts:", error);
     }
-  };
+  }, [profileUserId]);
+
+  useEffect(() => {
+    if (currentUser && profileUserId) {
+      const following = currentUser.following?.includes(profileUserId) || false;
+      setIsFollowing(following);
+      if (following) checkMutualFollow();
+      fetchFollowCounts();
+    }
+  }, [currentUser, profileUserId, checkMutualFollow, fetchFollowCounts]);
 
   const toggleFollow = async () => {
     if (!currentUser || !profileUserId || isLoading) return;

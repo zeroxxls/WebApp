@@ -2,6 +2,7 @@ import './env.js';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import dns from 'node:dns';
 import process from 'node:process';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -22,10 +23,18 @@ const PORT = process.env.PORT || 4444;
 const uri = process.env.MONGO_URI;
 
 const allowedOrigins = [
-      'http://localhost:5173',
-      'https://luminio-project.netlify.app',
-      'https://web-app-beryl-gamma.vercel.app',
-    ];
+  'http://localhost:5173',
+  'https://luminio-project.netlify.app',
+  'https://web-app-beryl-gamma.vercel.app',
+];
+
+const dnsServers = process.env.MONGO_DNS_SERVERS
+  ?.split(',')
+  .map(server => server.trim())
+  .filter(Boolean);
+if (dnsServers?.length) {
+  dns.setServers(dnsServers);
+}
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -37,15 +46,6 @@ app.use(cors({
   },
   credentials: true
 }));
-
-mongoose.connect(uri, {
-  dbName: 'app',
-})
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
-    process.exit(1);
-  });
 
 app.use(express.json());
 
@@ -69,7 +69,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.error('Error:', err.stack);
   
   if (err.message === 'Not allowed by CORS') {
@@ -86,6 +86,23 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+const startServer = async () => {
+  if (!uri) {
+    throw new Error('MONGO_URI is missing. Add it to server/.env.');
+  }
+
+  await mongoose.connect(uri, { dbName: 'app' });
+  console.log('MongoDB connected successfully');
+
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
+};
+
+startServer().catch(error => {
+  console.error('Server startup failed:', error.message);
+  if (error.code === 'ECONNREFUSED' && error.syscall?.startsWith('query')) {
+    console.error('Node could not reach its DNS resolver. Check the active DNS server or set MONGO_DNS_SERVERS in server/.env.');
+  }
+  process.exit(1);
 });

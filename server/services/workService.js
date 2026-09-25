@@ -71,41 +71,33 @@ export const fetchWorkById = async (id) => {
   return { ...work.toObject(), files: await getFileUrls(work.files) };
 };
 
-export const removeWork = async (id) => {
-  try {
-    const work = await Work.findById(id);
-    if (!work) {
-      console.log('Work not found');
-      return false;
-    }
-
-    if (work.files && work.files.length > 0) {
-      await Promise.all(work.files.map(async (file) => {
-        try {
-          await deleteFile(file.path);
-          console.log(`File ${file.path} deleted from S3`);
-        } catch (err) {
-          console.error(`Error deleting file ${file.path}:`, err);
-        }
-      }));
-    }
-
-    const userUpdate = await User.findByIdAndUpdate(
-      work.author,
-      { $pull: { works: work._id } },
-      { new: true }
-    );
-    
-    console.log('User after update:', userUpdate?.works?.length);
-
-    await work.deleteOne();
-    
-    console.log(`Work ${id} deleted successfully`);
-    return true;
-  } catch (error) {
-    console.error('Error in removeWork:', error);
+export const removeWork = async (id, authorId) => {
+  const work = await Work.findById(id);
+  if (!work) {
     return false;
   }
+
+  if (work.author.toString() !== authorId.toString()) {
+    throw new Error('Unauthorized to delete this work');
+  }
+
+  if (work.files && work.files.length > 0) {
+    await Promise.all(work.files.map(async (file) => {
+      try {
+        await deleteFile(file.path);
+      } catch (err) {
+        console.error(`Error deleting file ${file.path}:`, err);
+      }
+    }));
+  }
+
+  await User.findByIdAndUpdate(
+    work.author,
+    { $pull: { works: work._id } }
+  );
+
+  await work.deleteOne();
+  return true;
 };
 
 export const updateExistingWork = async (id, body, reqFiles, authorId) => {
@@ -113,6 +105,10 @@ export const updateExistingWork = async (id, body, reqFiles, authorId) => {
   const work = await Work.findById(id);
   if (!work) {
     return null;
+  }
+
+  if (work.author.toString() !== authorId.toString()) {
+    throw new Error('Unauthorized to update this work');
   }
 
   if (title) work.title = title;

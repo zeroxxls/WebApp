@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import ThreeDModelViewer from '../../Viewer/ThreeDModelViewer';
 import { ThreeDModelLogo } from '../../../ui/ThreeDModelLogo';
 import { ViewerLayoutBtns } from '../../../ui/ViewerLayoutBtns';
 import { FullScreenBtn } from '../../../ui/FullScreenBtn';
 
-export const ModelViewerWithLoader = ({ file, isFullscreen,  viewerRef,toggleFullscreen, isModelLoading, setIsModelLoading }) => {
-  
+export const ModelViewerWithLoader = ({ file, isFullscreen, viewerRef, toggleFullscreen }) => {
+  const [isModelLoading, setIsModelLoading] = useState(true);
+  const [modelError, setModelError] = useState(null);
+  const modelUrl = useMemo(() => {
+    const apiBaseUrl = import.meta.env.VITE_BACKEND_URL || '';
+    return `${apiBaseUrl}/works/file?path=${encodeURIComponent(file.path)}`;
+  }, [file.path]);
 
   return (
     <div
@@ -16,8 +21,12 @@ export const ModelViewerWithLoader = ({ file, isFullscreen,  viewerRef,toggleFul
       }`}
     >
       <ThreeDModelViewer
-        modelUrl={file.url}
+        modelUrl={modelUrl}
         onLoaded={() => setIsModelLoading(false)}
+        onError={() => {
+          setIsModelLoading(false);
+          setModelError('The 3D model could not be loaded. Verify its format and dependent assets.');
+        }}
       />
       <ThreeDModelLogo/>
       <ViewerLayoutBtns/>
@@ -36,6 +45,11 @@ export const ModelViewerWithLoader = ({ file, isFullscreen,  viewerRef,toggleFul
             </svg>
             <span className="text-indigo-300 font-medium">Loading 3D Model...</span>
           </div>
+        </div>
+      )}
+      {modelError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900/90 p-6 text-center text-red-300">
+          {modelError}
         </div>
       )}
     </div>

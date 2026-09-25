@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FiUploadCloud } from 'react-icons/fi';
 
-export const UploadLayout = ({ children, files, setFiles }) => {
+export const UploadLayout = ({ children }) => {
   return (
     <div className="min-h-screen text-white p-6 bg-gradient-to-br from-gray-900 to-gray-800">
       <div className="max-w-7xl mx-auto bg-gray-800/50 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl mb-12 border border-gray-700">
