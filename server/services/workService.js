@@ -22,7 +22,7 @@ export const fetchUserWorks = async (userId) => {
 
 export const fetchLikedWorksForUser = async (userId) => {
   try {
-    const user = await User.findById(userId).populate({
+    const user = await User.findById(userId).select('+likedWorks').populate({
       path: 'likedWorks',
       populate: [
         { path: 'author', select: 'fullName avatar' },

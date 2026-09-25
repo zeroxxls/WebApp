@@ -9,16 +9,16 @@ import {
     streamWorkFile,
 } from '../controllers/workController.js';
 import  {authMiddleware }  from '../middlewares/authMiddleware.js';
-import upload from '../middlewares/uploadMiddleware.js';
+import { uploadFiles } from '../middlewares/uploadMiddleware.js';
 
 const router = express.Router();
 
-router.post('/upload', authMiddleware , upload.array('files'), uploadWork);
+router.post('/upload', authMiddleware , uploadFiles('files'), uploadWork);
 router.get('/', getWorks);
 router.get('/user/:userId', getUserWorks);
 router.get('/file', streamWorkFile);
 router.get('/:id', getWorkById);
-router.put('/:id', authMiddleware , upload.array('files'), updateWork);
+router.put('/:id', authMiddleware , uploadFiles('files'), updateWork);
 router.delete('/:id', authMiddleware , deleteWork);
 
 export default router;

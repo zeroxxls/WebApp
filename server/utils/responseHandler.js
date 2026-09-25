@@ -17,7 +17,7 @@ export const handleError = (res, error, defaultMessage = 'An error occurred') =>
     
     res.status(500).json({
         success: false,
-        message: error.message || defaultMessage,
+        message: defaultMessage,
         error: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
 };

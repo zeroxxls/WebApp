@@ -1,7 +1,9 @@
 import User from '../models/User.js';
 
 export const getUserById = async (id) => {
-  const user = await User.findById(id).populate('works');
+  const user = await User.findById(id)
+    .select('-passwordHash -likedWorks -savedWorks -likedArticles -savedArticles')
+    .populate('works');
   if (!user) {
     throw new Error('User not found');
   }
@@ -13,7 +15,18 @@ export const getUserById = async (id) => {
 };
 
 export const updateUserProfile = async (userId, updateData) => {
-  const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true }).select('-passwordHash');
+  const editableFields = ['fullName', 'email', 'phone', 'bio', 'techStack', 'contacts'];
+  const safeUpdate = Object.fromEntries(
+    editableFields
+      .filter((field) => Object.prototype.hasOwnProperty.call(updateData, field))
+      .map((field) => [field, updateData[field]])
+  );
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { $set: safeUpdate },
+    { new: true, runValidators: true }
+  ).select('-passwordHash -likedWorks -savedWorks -likedArticles -savedArticles');
   if (!updatedUser) {
     throw new Error('User not found');
   }

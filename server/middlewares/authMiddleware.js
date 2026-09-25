@@ -30,8 +30,7 @@ export const authMiddleware = async (req, res, next) => {
     } catch (error) {
         res.status(401).json({ 
             success: false, 
-            message: 'Token is not valid',
-            error: error.message 
+            message: 'Token is not valid'
         });
     }
 };

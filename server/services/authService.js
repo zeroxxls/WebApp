@@ -35,7 +35,7 @@ export const registerUser = async (userData) => {
 };
 
 export const loginUser = async (email, password) => {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+passwordHash');
     if (!user) {
         throw new Error('Invalid email or password');
     }

@@ -12,8 +12,11 @@ export const getUserById = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   try {
-    const userId = req.params.id;
-    const updateData = req.body;
+    if (req.user._id.toString() !== req.params.id) {
+      return res.status(403).json({ success: false, message: 'You can only update your own profile' });
+    }
+    const userId = req.user._id;
+    const updateData = req.body && typeof req.body === 'object' && !Array.isArray(req.body) ? req.body : {};
     const updatedUser = await userService.updateUserProfile(userId, updateData);
     handleResponse(res, 200, { user: updatedUser }, 'Profile updated successfully');
   } catch (error) {

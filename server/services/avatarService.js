@@ -23,7 +23,7 @@ export const uploadAvatar = async (userId, requestingUserId, file) => {
       userId,
       updateData,
       { new: true }
-    ).select('-passwordHash');
+    ).select('-passwordHash -likedWorks -savedWorks -likedArticles -savedArticles');
 
     if (!updatedUser) {
       throw new Error('User not found after update');

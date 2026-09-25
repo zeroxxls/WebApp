@@ -45,20 +45,20 @@ export const purchaseWorksService = async (userId, workIds) => {
     { new: true }
   );
 
-  const sellersToUpdate = {};
+  const previousOwnersToUpdate = {};
   newWorks.forEach(work => {
-    if (work.author && work.author._id.toString() !== userId.toString()) {
-      const sellerId = work.author._id.toString();
-      if (!sellersToUpdate[sellerId]) sellersToUpdate[sellerId] = [];
-      sellersToUpdate[sellerId].push(work._id);
+    if (work.owner && work.owner._id.toString() !== userId.toString()) {
+      const previousOwnerId = work.owner._id.toString();
+      if (!previousOwnersToUpdate[previousOwnerId]) previousOwnersToUpdate[previousOwnerId] = [];
+      previousOwnersToUpdate[previousOwnerId].push(work._id);
     }
   });
 
   await Promise.all(
-    Object.keys(sellersToUpdate).map(async sellerId => {
+    Object.keys(previousOwnersToUpdate).map(async previousOwnerId => {
       await User.findByIdAndUpdate(
-        sellerId,
-        { $pull: { works: { $in: sellersToUpdate[sellerId] } } },
+        previousOwnerId,
+        { $pull: { works: { $in: previousOwnersToUpdate[previousOwnerId] } } },
         { new: true }
       );
     })
