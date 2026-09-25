@@ -1,5 +1,4 @@
 import React  from "react";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useProfileData } from "../../hooks/useProfileData";
@@ -11,19 +10,15 @@ import { Footer } from "../../../Footer/index.js";
 export const Profile = () => {
   const { id } = useParams();
   const currentUser = useSelector((state) => state.auth.user);
-  const [profileUser, setProfileUser] = useState(null);
 
   const {
-    profileUser: fetchedProfileUser,
+    profileUser,
+    setProfileUser,
     userWorks,
     isOwnProfile,
     isLoading,
     onDeleteWork,
   } = useProfileData(id, currentUser);
-
-  if (fetchedProfileUser && !profileUser) {
-    setProfileUser(fetchedProfileUser);
-  }
 
   const {
     open,

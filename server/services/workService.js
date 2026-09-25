@@ -58,14 +58,28 @@ export const createWork = async (reqFiles, body, authorId) => {
   return { ...savedWork.toObject(), files: await getFileUrls(savedWork.files) };
 };
 
-export const fetchAllWorks = async () => {
-  const works = await Work.find()
+export const fetchAllWorks = async ({ page = 1, limit = 24, search = '' } = {}) => {
+  const trimmedSearch = search.trim();
+  let query = Work.find(trimmedSearch ? { $text: { $search: trimmedSearch } } : {});
+
+  query = query
     .select('title description price filters technologies files author owner createdAt updatedAt')
     .populate('author', 'fullName name updatedAt')
     .populate('owner', 'fullName name updatedAt')
-    .sort({ createdAt: -1, _id: -1 })
-    .lean();
-  return Promise.all(works.map(addCoverUrl));
+    .skip((page - 1) * limit)
+    .limit(limit + 1);
+
+  if (trimmedSearch) {
+    query = query.select({ score: { $meta: 'textScore' } })
+      .sort({ score: { $meta: 'textScore' }, createdAt: -1, _id: -1 });
+  } else {
+    query = query.sort({ createdAt: -1, _id: -1 });
+  }
+
+  const results = await query.lean();
+  const hasMore = results.length > limit;
+  const works = await Promise.all(results.slice(0, limit).map(addCoverUrl));
+  return { works, page, hasMore };
 };
 
 export const fetchWorkById = async (id) => {

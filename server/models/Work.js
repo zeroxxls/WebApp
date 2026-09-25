@@ -41,6 +41,12 @@ workSchema.pre('save', function(next) {
 });
 
 workSchema.index({ createdAt: -1, _id: -1 });
+workSchema.index({
+    title: 'text',
+    description: 'text',
+    technologies: 'text',
+    filters: 'text'
+});
 const Work = mongoose.model('Work', workSchema);
 
 export default Work;

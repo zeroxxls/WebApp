@@ -11,7 +11,8 @@ export const useAddToCartWork = (selectedWork) => {
 
   const handleAddToCart = async () => {
     if (!selectedWork) return;
-    if (selectedWork.author?._id === userId) {
+    const currentOwner = selectedWork.owner || selectedWork.author;
+    if (currentOwner?._id === userId) {
       alert("You cannot add your own work to the cart.");
       return;
     }
@@ -21,10 +22,10 @@ export const useAddToCartWork = (selectedWork) => {
       addToCart({
         workId: selectedWork._id,
         title: selectedWork.title,
-        author: selectedWork.author?.fullName || 'Unknown',
+        author: currentOwner?.fullName || selectedWork.author?.fullName || 'Unknown',
         price: selectedWork.price,
         image: selectedWork.files?.[0]?.url || 'https://via.placeholder.com/150',
-        authorId: selectedWork.author?._id,
+        authorId: currentOwner?._id,
       });
     } catch (error) {
       console.error('Error adding to cart:', error);

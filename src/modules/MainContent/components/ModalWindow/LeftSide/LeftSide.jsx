@@ -13,7 +13,7 @@ export const LeftSide = ({ selectedWork, allWorks }) => {
   const { isFullscreen, toggleFullscreen } = useFullscreen();
 
   return (
-    <div className="p-4 w-full h-full overflow-y-auto scroll-smooth pr-2 hide-scrollbar">
+    <div className="p-3 sm:p-4 w-full h-1/2 shrink-0 overflow-y-auto scroll-smooth pr-2 hide-scrollbar md:h-full md:w-2/3">
       <div className="flex flex-col items-center justify-start space-y-4 mb-8">
         {selectedWork.files &&
           selectedWork.files.map((file) => {

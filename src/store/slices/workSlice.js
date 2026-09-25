@@ -4,7 +4,12 @@ import { fetchUserWorks, uploadWork } from "../../api/worksApi";
 const initialState = {
   userWorks: [],
   isLoading: true,
-  error: null
+  error: null,
+  isLoadingMore: false,
+  page: 0,
+  hasMore: true,
+  search: '',
+  currentRequestId: null,
 };
 
 export const workSlice = createSlice({
@@ -41,17 +46,31 @@ export const workSlice = createSlice({
     .addCase(uploadNewWork.fulfilled, (state, action) => {
       state.userWorks.unshift(action.payload);
     })
-    .addCase(fetchAllWorks.pending, (state) => {
-      state.isLoading = true;
+    .addCase(fetchAllWorks.pending, (state, action) => {
+      const page = action.meta.arg?.page || 1;
+      state.isLoading = page === 1;
+      state.isLoadingMore = page > 1;
       state.error = null;
+      state.search = action.meta.arg?.search || '';
+      state.currentRequestId = action.meta.requestId;
     })
     .addCase(fetchAllWorks.fulfilled, (state, action) => {
+      if (state.currentRequestId !== action.meta.requestId) return;
       state.isLoading = false;
-      state.userWorks = action.payload;
+      state.isLoadingMore = false;
+      state.page = action.payload.page;
+      state.hasMore = action.payload.hasMore;
+      state.userWorks = action.payload.page === 1
+        ? action.payload.works
+        : [...state.userWorks, ...action.payload.works];
+      state.currentRequestId = null;
     })
     .addCase(fetchAllWorks.rejected, (state, action) => {
+      if (state.currentRequestId !== action.meta.requestId) return;
       state.isLoading = false;
+      state.isLoadingMore = false;
       state.error = action.payload;
+      state.currentRequestId = null;
     });
   }
 });
@@ -70,12 +89,13 @@ export const fetchWorks = createAsyncThunk(
 
 export const fetchAllWorks = createAsyncThunk(
   'works/fetchAllWorks',
-  async (_, { rejectWithValue }) => {
+  async ({ page = 1, limit = 24, search = '' } = {}, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works`);
+      const params = new URLSearchParams({ page: String(page), limit: String(limit), search });
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/works?${params}`);
       if (!response.ok) throw new Error('Failed to fetch works');
       const data = await response.json();
-      return data.works;
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

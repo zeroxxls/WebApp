@@ -61,8 +61,11 @@ export const uploadWork = async (req, res) => {
 
 export const getWorks = async (req, res) => {
   try {
-    const works = await fetchAllWorks();
-    res.json({ success: true, works });
+    const page = Math.max(1, Number.parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(48, Math.max(1, Number.parseInt(req.query.limit, 10) || 24));
+    const search = typeof req.query.search === 'string' ? req.query.search.trim().slice(0, 100) : '';
+    const result = await fetchAllWorks({ page, limit, search });
+    res.json({ success: true, ...result });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to fetch works', error: error.message });
   }

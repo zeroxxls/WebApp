@@ -8,18 +8,18 @@ export const RelatedWorks = ({ relatedWorks, onOpenModal }) => (
         <div
           key={work._id}
           className="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300 cursor-pointer"
-          onClick={() => onOpenModal(work, work.author)}
+          onClick={() => onOpenModal(work, work.owner || work.author)}
         >
           <img src={work.files?.[0]?.url || "https://via.placeholder.com/100"} alt={work.title} className="w-full h-32 object-cover" />
           <div className="p-4">
             <h3 className="font-semibold text-lg mb-1">{work.title}</h3>
-            <p className="text-gray-400 text-sm mb-2">{work.author?.fullName || 'Unknown'}</p>
+            <p className="text-gray-400 text-sm mb-2">{work.owner?.fullName || work.author?.fullName || 'Unknown'}</p>
             <p className="text-blue-400 font-medium">${work.price?.toFixed(2)}</p>
             <button
               className="mt-3 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg text-sm transition duration-300"
               onClick={(e) => {
                 e.stopPropagation();
-                onOpenModal(work, work.author);
+                onOpenModal(work, work.owner || work.author);
               }}
             >
               View

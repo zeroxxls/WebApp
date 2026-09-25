@@ -13,6 +13,7 @@ import workRoutes from './routes/workRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import likeSaveRoutes from './routes/likeSaveRoutes.js';
 import articleRoutes from './routes/articleRoutes.js';
+import Work from './models/Work.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -92,6 +93,7 @@ const startServer = async () => {
   }
 
   await mongoose.connect(uri, { dbName: 'app' });
+  await Work.createIndexes();
   console.log('MongoDB connected successfully');
 
   app.listen(PORT, () => {

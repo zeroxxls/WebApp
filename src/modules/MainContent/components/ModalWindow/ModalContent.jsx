@@ -43,9 +43,9 @@ export const ModalContent = ({
   });
 
   return (
-    <div className="flex z-10 max-w-10xl h-[90vh] bg-[#1c1c25] rounded-lg shadow-xl overflow-hidden">
+    <div className="flex z-10 w-full max-w-6xl h-[92vh] md:h-[90vh] flex-col md:flex-row bg-[#1c1c25] rounded-lg shadow-xl overflow-y-auto md:overflow-hidden">
       <LeftSide selectedWork={selectedWork} allWorks={allWorks} />
-      <div className="flex flex-col w-1/4 p-6 border-l border-gray-800 relative overflow-y-auto">
+      <div className="flex flex-col w-full min-h-[50%] p-4 sm:p-6 border-t md:border-t-0 md:border-l border-gray-800 relative overflow-y-auto md:w-1/3 md:min-h-0">
         <OnCloseBtn onClose={onClose} />
         <UserInfoBlock
           selectedUser={selectedUser}
@@ -62,7 +62,7 @@ export const ModalContent = ({
           isAddingToCart={isAddingToCart}
           handleAddToCart={handleAddToCart}
           disabled={isAddingToCart}
-          isOwnWork={selectedWork?.author?._id === userId}
+          isOwnWork={(selectedWork?.owner?._id || selectedWork?.author?._id) === userId}
         />
         <DescriptionBlock title={title} description={description} />
         <TechnologiesBlock technologies={technologiesWithIcons} />

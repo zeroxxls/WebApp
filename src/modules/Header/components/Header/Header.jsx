@@ -17,24 +17,24 @@ export const Header = () => {
   const { isDropdownOpen, handleMouseEnter, handleMouseLeave, handleLogout, navigate } = useUserDropdown();
 
   return (
-    <header className="flex justify-between items-center border-b border-gray-200/10
+    <header className="flex flex-col gap-3 px-3 py-3 border-b border-gray-200/10 lg:flex-row lg:justify-between lg:items-center
     transition-all duration-600 hover:border-blue-400 hover:shadow-[0_4px_12px_-1px_rgba(59,130,246,0.5)]">
-      <div className="flex">
-        <Logo />
-        <Brand />
+      <div className="flex items-center justify-center lg:justify-start">
+        <Logo size="sm" className="sm:w-16 sm:h-16 lg:w-24 lg:h-24" />
+        <Brand textSize="lg" className="mx-2 sm:text-3xl" />
       </div>
       <InfoBtn />
       <SearchInput />
-      <div className="flex items-center">
+      <div className="flex items-center justify-center lg:justify-end">
         {user && token ? (
           <>
             <Link to="/CartPage">
-              <div className="bg-gray-700 mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+              <div className="bg-gray-700 mr-2 sm:mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
                 <GiShoppingCart className="w-6 h-6 text-white transition hover:scale-110" />
               </div>
             </Link>
             <Link to="/UploadSelection">
-              <div className="bg-gray-700 mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+              <div className="bg-gray-700 mr-2 sm:mr-4 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
                 <MdFileUpload className="w-6 h-6 text-white transition hover:scale-110" />
               </div>
             </Link>
@@ -48,7 +48,7 @@ export const Header = () => {
             />
           </>
         ) : (
-          <div className="flex gap-7 mr-6">
+          <div className="flex gap-3 sm:gap-7 mr-2 sm:mr-6">
             <Link to="/RegisterPage">
               <AuthHeaderBtn variant="signHeaderUp">Sign Up</AuthHeaderBtn>
             </Link>
@@ -58,7 +58,7 @@ export const Header = () => {
           </div>
         )}
         <Link to="/SettingsPage">
-          <div className="bg-gray-700 mx-10 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
+          <div className="bg-gray-700 mx-2 sm:mx-4 lg:mx-6 rounded-xl p-2 transition hover:bg-gray-500 cursor-pointer">
             <VscSettings className="w-6 h-6 text-white transition hover:scale-110" />
           </div>
         </Link>

@@ -6,8 +6,8 @@ export const LikedWorksGrid = ({ works, onOpenModal }) => (
       <WorkCard
         key={work._id}
         work={work}
-        user={work.author}
-        onClick={() => onOpenModal(work, work.author)}
+        user={work.owner || work.author}
+        onClick={() => onOpenModal(work, work.owner || work.author)}
       />
     ))}
   </div>

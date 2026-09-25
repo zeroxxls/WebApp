@@ -80,7 +80,7 @@ export const NewsSlider = () => {
           const proxiedImageUrl = getProxiedImageUrl(article.previewImage);
           
           return (
-            <SwiperSlide key={article._id} className="!w-[500px]">
+            <SwiperSlide key={article._id} className="!w-[85vw] sm:!w-[500px]">
               <div 
                 className="relative h-72 rounded-2xl overflow-hidden shadow-lg cursor-pointer group" 
                 onClick={() => navigate(`/article/${article._id}`)}

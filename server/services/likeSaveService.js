@@ -60,6 +60,7 @@ export const getLikedWorksService = async (userId) => {
     populate: [
       { path: 'author', select: 'fullName avatar' },
       { path: 'owner', select: 'fullName avatar' },
+      { path: 'owner', select: 'fullName avatar' },
       { path: 'files' },
     ],
   });
@@ -76,6 +77,7 @@ export const getSavedWorksService = async (userId) => {
     path: 'savedWorks',
     populate: [
       { path: 'author', select: 'fullName avatar' },
+      { path: 'owner', select: 'fullName avatar' },
       { path: 'files' },
     ],
   });

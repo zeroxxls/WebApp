@@ -17,6 +17,7 @@ import { CartPage } from "./pages/CartPage/CartPage";
 import { UploadSelection } from "./pages/UploadPage/UploadSelection";
 import { ArticleUploadPage } from "./pages/UploadPage/ArticleUploadPage";
 import { NewsContent } from "./modules/News";
+import { LearningPage } from "./pages/LearningPage/LearningPage";
 
 
 export const App =()=>{
@@ -29,6 +30,11 @@ export const App =()=>{
                 <Route path="/AuthPage" element={<AuthPage/>}/>
                 <Route path="/SettingsPage" element={<SettingsPage/>}/>
                 <Route path="/NewsPage" element={<NewsPage/>}/>
+                <Route path="/LearningPage" element={
+                    <WithHeader>
+                        <LearningPage/>
+                    </WithHeader>
+                }/>
                 <Route path="/UploadPage" element={<UploadPage/>}/>
                 <Route path="/LikedPage" element={<LikedPage/>}/>
                 <Route path="/SavedPage" element={<SavedPage/>}/>

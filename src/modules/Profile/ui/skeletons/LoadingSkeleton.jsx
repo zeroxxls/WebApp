@@ -4,7 +4,7 @@ import { ProfileWorksGrid } from "../../components/Profile/ProfileWorksGrid";
 
 export const LoadingSkeleton = ({ isAvatarLoading, isOwnProfile }) => {
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       <ProfileHeader
         user={null}
         isLoading={true}

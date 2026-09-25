@@ -6,8 +6,8 @@ export const SavedWorksGrid = ({ works, onWorkClick }) => (
       <WorkCard
         key={work._id}
         work={work}
-        user={work.author}
-        onClick={() => onWorkClick(work, work.author)}
+        user={work.owner || work.author}
+        onClick={() => onWorkClick(work, work.owner || work.author)}
       />
     ))}
   </div>

@@ -3,17 +3,19 @@ import { Link } from "react-router-dom";
 
 export const InfoBtn =()=>{
     return(
-        <div className="flex gap-12">
-                <Link to="/MainPage">
-                <button className="cursor-pointer m-auto text-gray-300 text-xl font-semibold bg-transparent transition-all duration-300 
-                border-0 border-b-2 border-transparent hover:border-b-blue-500">Explore</button>
+        <nav className="flex flex-wrap justify-center gap-4 sm:gap-8 lg:gap-12">
+                <Link to="/MainPage" className="cursor-pointer m-auto text-gray-300 text-sm sm:text-base lg:text-xl font-semibold bg-transparent transition-all duration-300
+                border-0 border-b-2 border-transparent hover:border-b-blue-500">
+                Explore
                 </Link>
-                <button className="cursor-pointer m-auto text-gray-300 text-xl font-semibold bg-transparent transition-all duration-300 
-                border-0 border-b-2 border-transparent hover:border-b-blue-500">Learning</button>
-                <Link to="/NewsPage">
-                <button className="cursor-pointer m-auto text-gray-300 text-xl font-semibold bg-transparent transition-all duration-300 
-                border-0 border-b-2 border-transparent hover:border-b-blue-500">News</button>
+                <Link to="/LearningPage" className="cursor-pointer m-auto text-gray-300 text-sm sm:text-base lg:text-xl font-semibold bg-transparent transition-all duration-300
+                border-0 border-b-2 border-transparent hover:border-b-blue-500">
+                Learning
                 </Link>
-        </div>
+                <Link to="/NewsPage" className="cursor-pointer m-auto text-gray-300 text-sm sm:text-base lg:text-xl font-semibold bg-transparent transition-all duration-300
+                border-0 border-b-2 border-transparent hover:border-b-blue-500">
+                News
+                </Link>
+        </nav>
     )
 }
