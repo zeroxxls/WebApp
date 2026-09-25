@@ -35,14 +35,13 @@ export const NewsSlider = () => {
   useEffect(() => {
     const loadArticles = async () => {
       try {
-        const data = await fetchAllArticles();
+        const data = await fetchAllArticles({ limit: 5 });
         
         if (!Array.isArray(data)) {
           throw new Error(`API returned non-array data: ${JSON.stringify(data)}`);
         }
         
-        const shuffled = [...data].sort(() => 0.5 - Math.random());
-        setArticles(shuffled.slice(0, 5));
+        setArticles(data);
       } catch (err) {
         console.error('Error loading articles:', err);
         setError(err.message);

@@ -23,6 +23,7 @@ const articleSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
+articleSchema.index({ createdAt: -1, _id: -1 });
 articleSchema.plugin(mongoosePaginate);
 
 export default mongoose.model('Article', articleSchema);

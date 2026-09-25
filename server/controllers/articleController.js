@@ -57,10 +57,23 @@ export const createArticle = async (req, res) => {
 
 export const getArticles = async (req, res) => {
   try {
-    const articles = await Article.find()
-      .populate('author', 'fullName avatar')
-      .sort({ createdAt: -1 });
-    return res.json(articles);
+    const page = Math.max(1, Number.parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(24, Math.max(1, Number.parseInt(req.query.limit, 10) || 12));
+    const results = await Article.find()
+      .select('title description previewImage author createdAt tags')
+      .populate('author', 'fullName')
+      .sort({ createdAt: -1, _id: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit + 1)
+      .lean();
+    const hasMore = results.length > limit;
+    const articles = hasMore ? results.slice(0, limit) : results;
+
+    return res.json({
+      articles,
+      page,
+      hasMore,
+    });
   } catch (error) {
     console.error('Error fetching articles:', error);
     return res.status(500).json({ message: 'Failed to fetch articles', error: error.message });

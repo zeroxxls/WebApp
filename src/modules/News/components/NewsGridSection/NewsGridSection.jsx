@@ -42,6 +42,8 @@ export const NewsGridSection = ({ articles }) => {
                             src={`${API_BASE_URL}/articles/image/${encodeURIComponent(imageKey)}`}
                             alt={article.title}
                             className="w-full h-56 object-cover cursor-pointer"
+                            loading="lazy"
+                            decoding="async"
                             onClick={() => handleArticleClick(article._id)}
                             onError={(e) => {
                               // Fallback на оригинальный URL если прокси не сработал

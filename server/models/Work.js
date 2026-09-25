@@ -40,6 +40,7 @@ workSchema.pre('save', function(next) {
     next();
 });
 
+workSchema.index({ createdAt: -1, _id: -1 });
 const Work = mongoose.model('Work', workSchema);
 
 export default Work;

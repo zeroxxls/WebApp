@@ -5,6 +5,9 @@ export const UserInfoBlock = ({ selectedUser, onProfileClick }) => {
 
   const userId = selectedUser?._id;
   const displayName = selectedUser?.fullName || selectedUser?.name || 'Creator';
+  const avatarVersion = selectedUser?.updatedAt
+    ? `?v=${encodeURIComponent(selectedUser.updatedAt)}`
+    : '';
 
   return (
     <div className="mb-8 flex items-center">
@@ -13,7 +16,7 @@ export const UserInfoBlock = ({ selectedUser, onProfileClick }) => {
         onClick={() => userId && onProfileClick(userId)}
       >
         <img
-          src={userId ? `${import.meta.env.VITE_BACKEND_URL}/avatars/${userId}/avatar?${Date.now()}` : '/default-avatar.png'}
+          src={userId ? `${import.meta.env.VITE_BACKEND_URL}/avatars/${userId}/avatar${avatarVersion}` : '/default-avatar.png'}
           alt={displayName}
           className="absolute inset-0 w-full h-full object-cover"
           onError={(e) => { e.target.src = '/default-avatar.png'; }}

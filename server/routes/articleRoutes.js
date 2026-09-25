@@ -39,7 +39,7 @@ router.get('/image/:key', async (req, res) => {
     // Устанавливаем правильные заголовки
     res.set({
       'Content-Type': ContentType,
-      'Cache-Control': 'public, max-age=31536000' // Кэшируем на год
+      'Cache-Control': 'public, max-age=31536000, immutable' // Image keys are unique per upload.
     });
     
     // Потоково передаем изображение

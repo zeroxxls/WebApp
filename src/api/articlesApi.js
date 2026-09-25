@@ -20,24 +20,18 @@ export const uploadArticle = async (formData) => {
   }
 };
 
-export const fetchAllArticles = async () => {
+export const fetchArticlesPage = async (page = 1, limit = 12) => {
   try {
-    const response = await axios.get(API_URL); 
-    
-    if (Array.isArray(response.data)) {
-        return response.data; 
-    } else if (response.data.articles?.docs) {
-        return response.data.articles.docs; 
-    } else if (response.data.articles) {
-        return response.data.articles; 
-    } else if (response.data.docs) {
-        return response.data.docs; 
-    } else {
-        throw new Error(`Unexpected API structure: ${JSON.stringify(response.data)}`);
-    }
+    const response = await axios.get(API_URL, { params: { page, limit } });
+    return response.data;
   } catch (error) {
     throw error.response?.data?.message || error.message;
   }
+};
+
+export const fetchAllArticles = async ({ page = 1, limit = 12 } = {}) => {
+  const result = await fetchArticlesPage(page, limit);
+  return result.articles;
 };
 
 export const fetchArticleById = async (id) => {

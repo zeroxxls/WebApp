@@ -48,7 +48,10 @@ export const getAvatar = async (req, res) => {
     const avatarData = await avatarService.getAvatar(req.params.id);
     
     if (avatarData?.data) {
-      res.set('Content-Type', avatarData.contentType);
+      res.set({
+        'Content-Type': avatarData.contentType,
+        'Cache-Control': 'private, max-age=31536000, immutable',
+      });
       return res.send(avatarData.data);
     }
     

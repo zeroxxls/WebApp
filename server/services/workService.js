@@ -1,16 +1,23 @@
 import Work from '../models/Work.js';
 import User from '../models/User.js';
 import { saveFilesToS3, getFileUrls } from '../utils/fileUtils.js';
-import { deleteFile } from '../services/s3Service.js';
+import { deleteFile, getFileUrl } from '../services/s3Service.js';
+
+const addCoverUrl = async (work) => {
+  const files = (work.files || []).map(file => ({ ...file }));
+  if (files[0]) {
+    files[0].url = await getFileUrl(files[0].path);
+  }
+  return { ...work, files };
+};
 
 export const fetchUserWorks = async (userId) => {
-    const works = await Work.find({ owner: userId })
-    .populate('author', 'fullName avatar')
-    .populate('owner', 'fullName avatar');
-  return Promise.all(works.map(async work => ({
-    ...work.toObject(),
-    files: await getFileUrls(work.files),
-  })));
+  const works = await Work.find({ owner: userId })
+    .populate('author', 'fullName updatedAt')
+    .populate('owner', 'fullName updatedAt')
+    .sort({ createdAt: -1, _id: -1 })
+    .lean();
+  return Promise.all(works.map(addCoverUrl));
 };
 
 export const fetchLikedWorksForUser = async (userId) => {
@@ -53,18 +60,18 @@ export const createWork = async (reqFiles, body, authorId) => {
 
 export const fetchAllWorks = async () => {
   const works = await Work.find()
-    .populate('author', 'fullName name avatar')
-    .populate('owner', 'fullName name avatar');
-  return Promise.all(works.map(async work => ({
-    ...work.toObject(),
-    files: await getFileUrls(work.files),
-  })));
+    .select('title description price filters technologies files author owner createdAt updatedAt')
+    .populate('author', 'fullName name updatedAt')
+    .populate('owner', 'fullName name updatedAt')
+    .sort({ createdAt: -1, _id: -1 })
+    .lean();
+  return Promise.all(works.map(addCoverUrl));
 };
 
 export const fetchWorkById = async (id) => {
   const work = await Work.findById(id)
-    .populate('author', 'fullName avatar')
-    .populate('owner', 'fullName avatar');
+    .populate('author', 'fullName updatedAt')
+    .populate('owner', 'fullName updatedAt');
   if (!work) {
     return null;
   }

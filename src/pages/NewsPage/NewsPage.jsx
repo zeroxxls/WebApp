@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { NewsGridSection } from '../../modules/News';
 import { Footer } from '../../modules/Footer';
-import { setIsPostLoading } from '../../store/slices/loadingSlice';
 import { Loader } from '../../shared/ui/Loader';
 import { fetchArticles } from '../../store/slices/articleSlice'; 
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
@@ -11,20 +10,14 @@ import { useNavigate } from 'react-router-dom';
 export const NewsPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isPostLoading = useSelector((state) => state.loading.isPostLoading);
     const articles = useSelector((state) => state.articles.list); 
     const articlesLoading = useSelector((state) => state.articles.loading);
-    console.log('Redux articles:', articles);
+    const articlePage = useSelector((state) => state.articles.page);
+    const hasMoreArticles = useSelector((state) => state.articles.hasMore);
+    const articlesError = useSelector((state) => state.articles.error);
 
     useEffect(() => {
-        dispatch(setIsPostLoading(true));
-        dispatch(fetchArticles());
-        
-        const timer = setTimeout(() => {
-            dispatch(setIsPostLoading(false));
-        }, 1000);
-        
-        return () => clearTimeout(timer);
+        dispatch(fetchArticles(1));
     }, [dispatch]);
 
     if (!articles || !Array.isArray(articles)) {
@@ -57,7 +50,20 @@ export const NewsPage = () => {
                 <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-center">
                     Latest Articles
                 </h2>
-                {isPostLoading || articlesLoading ? <Loader /> : <NewsGridSection articles={articles} />}
+                {articlesLoading && articles.length === 0 ? <Loader /> : <NewsGridSection articles={articles} />}
+                {articlesError && <p className="mt-6 text-center text-red-400">{articlesError}</p>}
+                {hasMoreArticles && articles.length > 0 && (
+                    <div className="mt-8 text-center">
+                        <button
+                            type="button"
+                            onClick={() => dispatch(fetchArticles(articlePage + 1))}
+                            disabled={articlesLoading}
+                            className="rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-wait disabled:opacity-60"
+                        >
+                            {articlesLoading ? 'Loading…' : 'Load more articles'}
+                        </button>
+                    </div>
+                )}
             </section>
 
             <Footer />

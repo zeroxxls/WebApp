@@ -7,6 +7,9 @@ export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => {
   const displayUser = work.owner || work.author;
   const ownerId = displayUser?._id;
   const ownerName = displayUser?.fullName;
+  const avatarVersion = displayUser?.updatedAt
+    ? `?v=${encodeURIComponent(displayUser.updatedAt)}`
+    : '';
 
   let imageUrl = 'URL_ЗАГЛУШКИ';
 
@@ -37,6 +40,8 @@ export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => {
         src={imageUrl}
         alt={work.title || 'Work'}
         className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+        decoding="async"
       />
       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-30 transition duration-300 z-10" />
       <div className="absolute inset-0 flex flex-col items-start justify-end p-4 space-y-1 bg-gradient-to-t from-black/50 to-transparent">
@@ -46,8 +51,9 @@ export const WorkCard = ({ work,  onClick, isOwnProfile, onDelete }) => {
         <div className="flex items-center space-x-2 transform -translate-x-full group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-50">
           {ownerId && (
             <img
-              src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${ownerId}/avatar?${Date.now()}`}
+              src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${ownerId}/avatar${avatarVersion}`}
               className="w-6 h-6 rounded-full object-cover cursor-pointer"
+              loading="lazy"
             />
           )}
           <span className="text-white text-sm">{ownerName }</span>

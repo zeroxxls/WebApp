@@ -1,26 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchAllArticles, uploadArticle } from '../../api/articlesApi';
+import { fetchArticlesPage, uploadArticle } from '../../api/articlesApi';
 
 const initialState = {
     list: [],
     loading: false,
-    error: null
+    error: null,
+    page: 0,
+    hasMore: true,
 };
 
 export const fetchArticles = createAsyncThunk(
     'articles/fetchAll',
-    async (_, { rejectWithValue }) => {
+    async (page = 1, { rejectWithValue }) => {
         try {
-            const data = await fetchAllArticles();
-            console.log('API response data:', data); // Логируем полученные данные
-            
-            if (!Array.isArray(data)) {
-                throw new Error(`Expected array but got ${typeof data}: ${JSON.stringify(data)}`);
+            const data = await fetchArticlesPage(page, 12);
+            if (!Array.isArray(data.articles)) {
+                throw new Error('Unexpected articles response');
             }
-            
             return data;
         } catch (error) {
-            return rejectWithValue(error.message);
+            return rejectWithValue(typeof error === 'string' ? error : error.message);
+        }
+    },
+    {
+        condition: (page = 1, { getState }) => {
+            const state = getState().articles;
+            return !state.loading && (page === 1
+                || (page === state.page + 1 && state.hasMore));
         }
     }
 );
@@ -30,7 +36,7 @@ export const createNewArticle = createAsyncThunk(
     async (formData, { rejectWithValue }) => {
         try {
             const response = await uploadArticle(formData);
-            return response.docs;
+            return response.article;
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -53,14 +59,17 @@ const articleSlice = createSlice({
             })
             .addCase(fetchArticles.fulfilled, (state, action) => {
                 state.loading = false;
-                state.list = action.payload;
+                const { articles, page, hasMore } = action.payload;
+                state.list = page === 1 ? articles : [...state.list, ...articles];
+                state.page = page;
+                state.hasMore = hasMore;
             })
             .addCase(fetchArticles.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })
             .addCase(createNewArticle.fulfilled, (state, action) => {
-                state.list.unshift(action.payload);
+                state.list.unshift(action.payload.article || action.payload);
             });
     }
 });
