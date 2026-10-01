@@ -20,11 +20,11 @@ export const Header = () => {
     <header className="flex flex-col gap-3 px-3 py-3 border-b border-gray-200/10 lg:flex-row lg:justify-between lg:items-center
     transition-all duration-600 hover:border-blue-400 hover:shadow-[0_4px_12px_-1px_rgba(59,130,246,0.5)]">
       <div className="flex items-center justify-center lg:justify-start">
-        <Logo size="sm" className="sm:w-16 sm:h-16 lg:w-24 lg:h-24" />
-        <Brand textSize="lg" className="mx-2 sm:text-3xl" />
+        <Logo size="sm" className="w-10 h-10 sm:w-16 sm:h-16 lg:w-24 lg:h-24" />
+        <Brand textSize="lg" className="mx-2 text-xl sm:text-3xl" />
       </div>
       <InfoBtn />
-      <SearchInput />
+      <div className="w-full lg:w-auto lg:flex-1 lg:max-w-md"><SearchInput /></div>
       <div className="flex items-center justify-center lg:justify-end">
         {user && token ? (
           <>

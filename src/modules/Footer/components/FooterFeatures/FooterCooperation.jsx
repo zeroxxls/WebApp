@@ -11,14 +11,14 @@ export const FooterCooperation = () => {
     <div>
       <h3 className="text-blue-500 font-bold mb-4 text-lg">Cooperation</h3>
       <ul className="space-y-2 text-gray-400 text-sm">
-        <li className="flex items-center">
+        <li className="flex flex-wrap items-center gap-y-2">
           <EnvelopeIcon className="w-4 h-4 mr-2" />
           art@luminio.com
         </li>
         <li className="flex items-center">
           <GlobeAltIcon className="w-4 h-4 mr-2" />
           Social:
-          <div className="flex ml-3 space-x-2">
+          <div className="flex flex-wrap ml-3 gap-x-2 gap-y-1">
             {CooperationLinks.map((item) => (
               <a
                 key={item.name}  

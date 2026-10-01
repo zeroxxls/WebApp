@@ -17,7 +17,7 @@ export const ModelViewerWithLoader = ({ file, isFullscreen, viewerRef, toggleFul
       ref={viewerRef}
       key={`model-${file.path}`}
       className={`w-full rounded-lg relative overflow-hidden shadow-2xl border-2 border-indigo-500/30 bg-gradient-to-br from-gray-900 to-gray-800 transition-all duration-300 ${
-        isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen m-0' : 'h-[700px]'
+        isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen m-0' : 'h-[42dvh] min-h-64 md:h-[700px]'
       }`}
     >
       <ThreeDModelViewer

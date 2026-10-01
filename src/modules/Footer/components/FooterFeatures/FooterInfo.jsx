@@ -4,12 +4,12 @@ import { Brand } from "../../../../shared/ui/Brand";
 
 export const FooterInfo =()=>{
     return(
-        <div className="md:col-span-2">
+        <div className="sm:col-span-2 md:col-span-2">
           <div className="flex items-center mb-4">
             <Logo/>
             <Brand />
           </div>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm leading-6 max-w-xl">
           The world of digital art, where everyone can find something new for themselves.
            A platform for artists who create universes and worlds.
           </p>
