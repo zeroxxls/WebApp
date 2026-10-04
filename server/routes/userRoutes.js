@@ -5,7 +5,7 @@ import {
   followUser, 
   unfollowUser, 
   getFollowers, 
-  getFollowing 
+  getFollowing
 } from '../controllers/followController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 

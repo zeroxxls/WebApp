@@ -18,7 +18,15 @@ export const ProfileHeaderUI = ({
     closeEditModal,
     worksCount,
 }) => {
-   const { getFollowers, getFollowing } = useFollow(user?._id);
+   const {
+       getFollowers,
+       getFollowing,
+       isFollowing,
+       isLoading: isFollowLoading,
+       toggleFollow,
+       followersCount,
+       followingCount,
+   } = useFollow(user);
     return (
         <div className="mb-8 pb-8 border-b border-gray-700/50">
             <div className="flex flex-col md:flex-row items-center gap-6">
@@ -38,15 +46,19 @@ export const ProfileHeaderUI = ({
                     <ContactStatsSection
                         contacts={user.contacts}
                         worksCount={worksCount}
-                        followersCount={user.followers?.length || 0}
-                        followingCount={user.following?.length || 0}
+                        followersCount={followersCount}
+                        followingCount={followingCount}
                         profileUserId={user._id}
                         getFollowers={getFollowers}
                         getFollowing={getFollowing}
                     />
                     {!isOwnProfile && (
                         <div className="mt-4 flex justify-center md:justify-start">
-                            <FollowBtn profileUserId={user._id} />
+                            <FollowBtn
+                                isFollowing={isFollowing}
+                                isLoading={isFollowLoading}
+                                onToggle={toggleFollow}
+                            />
                         </div>
                     )}
                 </div>

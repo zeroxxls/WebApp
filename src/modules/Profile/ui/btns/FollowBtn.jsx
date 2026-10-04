@@ -1,12 +1,9 @@
 import React from 'react';
-import { useFollow } from '../../hooks/follow/useFollow';
 
-export const FollowBtn = ({ profileUserId }) => {
-  const { isFollowing, isLoading, toggleFollow, } = useFollow(profileUserId);
-
+export const FollowBtn = ({ isFollowing, isLoading, onToggle }) => {
   return (
     <button 
-      onClick={toggleFollow}
+      onClick={onToggle}
       disabled={isLoading}
       className={`px-8 py-3 text-lg rounded-full transition-all duration-300 shadow-lg md:px-6 md:py-2 md:text-base ${
         isFollowing 

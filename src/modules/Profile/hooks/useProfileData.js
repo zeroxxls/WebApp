@@ -20,7 +20,10 @@ export const useProfileData = (id, currentUser) => {
     try {
       const profileRequest = isOwnProfile
         ? Promise.resolve({ data: { user: currentUser } })
-        : axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`, { signal });
+        : axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`, {
+            signal,
+            headers: { 'Cache-Control': 'no-cache' },
+          });
       const worksRequest = axios.get(`${import.meta.env.VITE_BACKEND_URL}/works/user/${id}`, { signal });
       const [profileResponse, worksResponse] = await Promise.all([profileRequest, worksRequest]);
 

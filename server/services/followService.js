@@ -4,12 +4,12 @@ import mongoose from 'mongoose';
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 export const followUserService = async (currentUserId, targetUserId) => {
-  if (currentUserId === targetUserId) {
-    throw new Error('You cannot follow yourself');
-  }
-
   if (!isValidObjectId(targetUserId)) {
     throw new Error('Invalid user ID');
+  }
+
+  if (String(currentUserId) === String(targetUserId)) {
+    throw new Error('You cannot follow yourself');
   }
 
   const [currentUserExists, targetUserExists] = await Promise.all([
@@ -45,24 +45,13 @@ export const followUserService = async (currentUserId, targetUserId) => {
 };
 
 export const unfollowUserService = async (currentUserId, targetUserId) => {
-  if (currentUserId === targetUserId) {
-    throw new Error('You cannot unfollow yourself');
-  }
-
   if (!isValidObjectId(targetUserId)) {
     throw new Error('Invalid user ID');
   }
 
-  await Promise.all([
-    User.updateOne(
-      { _id: currentUserId },
-      { $pull: { following: { $not: { $type: 'objectId' } } } }
-    ),
-    User.updateOne(
-      { _id: targetUserId },
-      { $pull: { followers: { $not: { $type: 'objectId' } } } }
-    )
-  ]);
+  if (String(currentUserId) === String(targetUserId)) {
+    throw new Error('You cannot unfollow yourself');
+  }
 
   const [currentUser, targetUser] = await Promise.all([
     User.findByIdAndUpdate(
@@ -82,8 +71,8 @@ export const unfollowUserService = async (currentUserId, targetUserId) => {
   }
 
   return {
-    following: currentUser.following.length,
-    followers: targetUser.followers.length
+    followingCount: currentUser.following.length,
+    followersCount: targetUser.followers.length
   };
 };
 

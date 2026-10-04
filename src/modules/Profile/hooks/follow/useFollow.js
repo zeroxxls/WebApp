@@ -7,64 +7,58 @@ import {
   getFollowingApi,
   fetchFollowCountsApi,
 } from '../../api/followApi';
-import { checkMutualFollowApi } from '../../utils/mutualFollowUtils';
 
-export const useFollow = (profileUserId) => {
+const containsUser = (userIds = [], userId) =>
+  userIds.some((entry) => String(entry?._id || entry) === String(userId));
+
+export const useFollow = (profileUser) => {
   const currentUser = useSelector((state) => state.auth.user);
+  const profileUserId = profileUser?._id;
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
-  const [isMutualFollow, setIsMutualFollow] = useState(false);
-
-  const checkMutualFollow = useCallback(async () => {
-    if (!currentUser || !profileUserId) return;
-    try {
-      const isMutual = await checkMutualFollowApi(profileUserId, currentUser._id);
-      setIsMutualFollow(isMutual);
-    } catch (error) {
-      console.error("Error checking mutual follow:", error);
-    }
-  }, [currentUser, profileUserId]);
-
-  const fetchFollowCounts = useCallback(async () => {
-    if (!profileUserId) return;
-    try {
-      const { followers, following } = await fetchFollowCountsApi(profileUserId);
-      setFollowersCount(followers);
-      setFollowingCount(following);
-    } catch (error) {
-      console.error("Error fetching follow counts:", error);
-    }
-  }, [profileUserId]);
 
   useEffect(() => {
-    if (currentUser && profileUserId) {
-      const following = currentUser.following?.includes(profileUserId) || false;
-      setIsFollowing(following);
-      if (following) checkMutualFollow();
-      fetchFollowCounts();
-    }
-  }, [currentUser, profileUserId, checkMutualFollow, fetchFollowCounts]);
+    setIsFollowing(Boolean(currentUser && containsUser(profileUser?.followers, currentUser._id)));
+  }, [currentUser, profileUser]);
+
+  useEffect(() => {
+    if (!profileUserId) return undefined;
+
+    let isCurrent = true;
+    fetchFollowCountsApi(profileUserId)
+      .then(({ followers, following }) => {
+        if (!isCurrent) return;
+        setFollowersCount(followers);
+        setFollowingCount(following);
+      })
+      .catch((error) => {
+        console.error('Error fetching follow counts:', error);
+      });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [profileUserId]);
 
   const toggleFollow = async () => {
     if (!currentUser || !profileUserId || isLoading) return;
 
     setIsLoading(true);
     try {
-      if (isFollowing) {
-        await unfollowUserApi(profileUserId);
-        setIsFollowing(false);
-        setIsMutualFollow(false);
-        setFollowersCount(prev => Math.max(0, prev - 1));
-      } else {
-        await followUserApi(profileUserId);
-        setIsFollowing(true);
-        await checkMutualFollow();
-        setFollowersCount(prev => prev + 1);
-      }
+      const result = isFollowing
+        ? await unfollowUserApi(profileUserId)
+        : await followUserApi(profileUserId);
 
-      await fetchFollowCounts();
+      const nextIsFollowing = !isFollowing;
+      setIsFollowing(nextIsFollowing);
+      setFollowersCount(
+        result.followersCount ?? result.followers ?? Math.max(0, followersCount + (nextIsFollowing ? 1 : -1))
+      );
+      setFollowingCount(
+        result.followingCount ?? result.following ?? Math.max(0, followingCount + (nextIsFollowing ? 1 : -1))
+      );
     } catch (error) {
       console.error('Error toggling follow:', error);
     } finally {
@@ -75,7 +69,6 @@ export const useFollow = (profileUserId) => {
   return {
     isFollowing,
     isLoading,
-    isMutualFollow,
     toggleFollow,
     followersCount,
     followingCount,
