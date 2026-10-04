@@ -29,14 +29,11 @@ export const ProfileHeaderUI = ({
                     onAvatarUpload={onAvatarUpload}
                 />
                 <div className="text-center md:text-left flex-1">
-                    <div className="flex items-center justify-center md:justify-start gap-4">
-                        <BasicInfoSection
-                            user={user}
-                            isOwnProfile={isOwnProfile}
-                            setIsEditModalOpen={openEditModal}
-                        />
-                        {!isOwnProfile && <FollowBtn profileUserId={user._id} />}
-                    </div>
+                    <BasicInfoSection
+                        user={user}
+                        isOwnProfile={isOwnProfile}
+                        setIsEditModalOpen={openEditModal}
+                    />
                     <TechStackSection techStack={user.techStack} />
                     <ContactStatsSection
                         contacts={user.contacts}
@@ -47,6 +44,11 @@ export const ProfileHeaderUI = ({
                         getFollowers={getFollowers}
                         getFollowing={getFollowing}
                     />
+                    {!isOwnProfile && (
+                        <div className="mt-4 flex justify-center md:justify-start">
+                            <FollowBtn profileUserId={user._id} />
+                        </div>
+                    )}
                 </div>
             </div>
             <EditProfileModalWrapper

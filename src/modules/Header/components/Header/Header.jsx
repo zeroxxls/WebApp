@@ -23,7 +23,7 @@ export const Header = () => {
         <Logo size="sm" className="w-10 h-10 sm:w-16 sm:h-16 lg:w-24 lg:h-24" />
         <Brand textSize="lg" className="mx-2 text-xl sm:text-3xl" />
       </div>
-      <div className="flex min-w-0 flex-1 flex-col gap-3 lg:contents">
+      <div className="flex min-w-0 flex-1 flex-col gap-3 self-center lg:contents">
         <InfoBtn />
         <div className="w-full lg:w-auto lg:flex-1 lg:max-w-md"><SearchInput /></div>
       </div>
