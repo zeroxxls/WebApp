@@ -5,7 +5,7 @@ import { FiBookmark } from 'react-icons/fi';
 
 export const LikeSaveProfileBtns =()=>{
     return(
-    <div className="flex justify-center md:justify-start gap-4 mt-4">
+    <div className="mt-4 flex w-full justify-center gap-4">
      <Link to="/LikedPage" className="text-gray-400 hover:text-red-500">
        <AiOutlineHeart size={24} />
      </Link>

@@ -7,12 +7,12 @@ import { handleProfileClick } from '../../../../shared/utils/navigation';
 export const UserDropdown = ({ user, isDropdownOpen, onMouseEnter, onMouseLeave, onLogout, navigate }) => {
   return (
     <div
-      className="relative flex flex-col items-end gap-2 lg:flex-row lg:items-center lg:gap-4"
+      className="relative flex flex-col items-center gap-2 self-center lg:self-auto lg:flex-row lg:items-center lg:gap-4"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
 
-      <div className="flex cursor-pointer flex-col items-end gap-2 lg:flex-row lg:items-center">
+      <div className="flex cursor-pointer flex-col items-center gap-2 lg:flex-row lg:items-center">
         <img
           src={`${import.meta.env.VITE_BACKEND_URL}/avatars/${user._id}/avatar?${Date.now()}`}
           alt={user.fullName || user.name || 'User'}

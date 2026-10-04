@@ -9,7 +9,7 @@ export const BasicInfoSection = ({ user, isOwnProfile, setIsEditModalOpen }) => 
             <p className="text-gray-400 mt-2">{user.bio || "No bio yet"}</p>
         </div>
         {isOwnProfile && (
-            <div className="flex flex-col items-end gap-3">
+            <div className="flex flex-col items-center gap-3 md:items-end">
                 <button
                     onClick={() => setIsEditModalOpen(true)}
                     className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
