@@ -51,7 +51,7 @@ export const createArticle = async (req, res) => {
     return res.status(201).json(savedArticle);
   } catch (error) {
     console.error('Error creating article:', error);
-    return res.status(500).json({ message: 'Failed to create article', error: error.message });
+    return res.status(500).json({ message: 'Failed to create article' });
   }
 };
 
@@ -76,7 +76,7 @@ export const getArticles = async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching articles:', error);
-    return res.status(500).json({ message: 'Failed to fetch articles', error: error.message });
+    return res.status(500).json({ message: 'Failed to fetch articles' });
   }
 };
 
@@ -93,7 +93,7 @@ export const getArticleById = async (req, res) => {
     return res.json(article);
   } catch (error) {
     console.error('Error fetching article:', error);
-    return res.status(500).json({ message: 'Failed to fetch article', error: error.message });
+    return res.status(500).json({ message: 'Failed to fetch article' });
   }
 };
 
@@ -146,7 +146,7 @@ export const updateArticle = async (req, res) => {
     return res.json(article);
   } catch (error) {
     console.error('Error updating article:', error);
-    return res.status(500).json({ message: 'Failed to update article', error: error.message });
+    return res.status(500).json({ message: 'Failed to update article' });
   }
 };
 
@@ -185,7 +185,7 @@ export const deleteArticle = async (req, res) => {
     return res.json({ message: 'Article deleted successfully' });
   } catch (error) {
     console.error('Error deleting article:', error);
-    return res.status(500).json({ message: 'Failed to delete article', error: error.message });
+    return res.status(500).json({ message: 'Failed to delete article' });
   }
 };
 
@@ -197,7 +197,7 @@ export const getUserArticles = async (req, res) => {
     return res.json(articles);
   } catch (error) {
     console.error('Error fetching user articles:', error);
-    return res.status(500).json({ message: 'Failed to fetch user articles', error: error.message });
+    return res.status(500).json({ message: 'Failed to fetch user articles' });
   }
 };
 
@@ -230,9 +230,6 @@ export const addComment = async (req, res) => {
     });
   } catch (error) {
     console.error('Error adding comment:', error);
-    return res.status(500).json({ 
-      message: 'Failed to add comment', 
-      error: error.message 
-    });
+    return res.status(500).json({ message: 'Failed to add comment' });
   }
 };

@@ -2,6 +2,10 @@ import User from '../models/User.js';
 import mongoose from 'mongoose';
 
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+const getPagination = (page, limit) => ({
+  page: Math.min(10_000, Math.max(1, Number.parseInt(page, 10) || 1)),
+  limit: Math.min(100, Math.max(1, Number.parseInt(limit, 10) || 20)),
+});
 
 export const followUserService = async (currentUserId, targetUserId) => {
   if (!isValidObjectId(targetUserId)) {
@@ -87,8 +91,7 @@ export const getFollowersService = async (userId, page = 1, limit = 20) => {
   }
 
   const options = {
-    page: parseInt(page),
-    limit: parseInt(limit),
+    ...getPagination(page, limit),
     select: 'fullName avatar createdAt',
     sort: { createdAt: -1 }
   };
@@ -117,8 +120,7 @@ export const getFollowingService = async (userId, page = 1, limit = 20) => {
   }
 
   const options = {
-    page: parseInt(page),
-    limit: parseInt(limit),
+    ...getPagination(page, limit),
     select: 'fullName avatar createdAt',
     sort: { createdAt: -1 }
   };

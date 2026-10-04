@@ -42,7 +42,8 @@ export const getUserWorks = async (req, res) => {
     const works = await fetchUserWorks(req.params.userId);
     res.json({ success: true, works });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Failed to fetch user works', error: error.message });
+    console.error('Error fetching user works:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch user works' });
   }
 };
 
@@ -55,7 +56,7 @@ export const uploadWork = async (req, res) => {
     res.status(201).json({ success: true, message: 'Work uploaded successfully', work });
   } catch (error) {
     console.error('Upload error:', error);
-    res.status(500).json({ success: false, message: 'Failed to upload work', error: error.message });
+    res.status(500).json({ success: false, message: 'Failed to upload work' });
   }
 };
 
@@ -67,7 +68,8 @@ export const getWorks = async (req, res) => {
     const result = await fetchAllWorks({ page, limit, search });
     res.json({ success: true, ...result });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Failed to fetch works', error: error.message });
+    console.error('Error fetching works:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch works' });
   }
 };
 
@@ -79,7 +81,8 @@ export const getWorkById = async (req, res) => {
     }
     res.json({ success: true, work });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Failed to fetch work', error: error.message });
+    console.error('Error fetching work:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch work' });
   }
 };
 

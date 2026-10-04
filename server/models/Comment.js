@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema({
-  text: { type: String, required: true },
+  text: { type: String, required: true, maxlength: 2000 },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

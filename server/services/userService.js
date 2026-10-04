@@ -2,7 +2,7 @@ import User from '../models/User.js';
 
 export const getUserById = async (id) => {
   const user = await User.findById(id)
-    .select('-passwordHash -likedWorks -savedWorks -likedArticles -savedArticles')
+    .select('-passwordHash -email -phone -likedWorks -savedWorks -likedArticles -savedArticles')
     .populate('works');
   if (!user) {
     throw new Error('User not found');

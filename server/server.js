@@ -20,6 +20,7 @@ const __dirname = path.dirname(__filename);
 
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 4444;
 const uri = process.env.MONGO_URI;
 
@@ -39,7 +40,7 @@ if (dnsServers?.length) {
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

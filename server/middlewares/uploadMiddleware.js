@@ -1,3 +1,4 @@
+/* global Buffer */
 import multer from 'multer';
 import path from 'path';
 

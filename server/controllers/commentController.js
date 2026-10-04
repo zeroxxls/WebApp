@@ -12,6 +12,10 @@ export const addComment = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Work not found' });
     }
 
+    if (typeof text !== 'string' || text.trim().length === 0 || text.length > 2000) {
+      return res.status(400).json({ success: false, message: 'Comment must be between 1 and 2000 characters' });
+    }
+
     const newComment = new Comment({
       text,
       author: authorId,
@@ -32,7 +36,10 @@ export const addComment = async (req, res) => {
 export const getCommentsForWork = async (req, res) => {
   try {
     const workId = req.params.workId;
-    const comments = await Comment.find({ work: workId }).populate('author', 'fullName avatar').sort({ createdAt: -1 });
+    const comments = await Comment.find({ work: workId })
+      .populate('author', 'fullName avatar')
+      .sort({ createdAt: -1 })
+      .limit(200);
     res.json({ success: true, comments });
   } catch (error) {
     console.error('Error getting comments:', error);
