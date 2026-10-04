@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setSearchQuery } from "../../../store/slices/searchSlice";
+import { FiSearch } from "react-icons/fi";
 
 const Input =()=>{
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const Input =()=>{
            focus:shadow-md focus:outline-none"
         />
         <button type="submit" className="px-3 text-gray-300 hover:text-white" aria-label="Search">
-          Search
+          <FiSearch className="h-5 w-5" aria-hidden="true" />
         </button>
       </form>
     )
