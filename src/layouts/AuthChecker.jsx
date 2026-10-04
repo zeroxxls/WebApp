@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from '../store/slices/authSlice'
+import { logout, setUser } from '../store/slices/authSlice'
 import axios from "axios";
 
 export const AuthChecker = ({ children }) => {
@@ -24,8 +24,13 @@ export const AuthChecker = ({ children }) => {
             })
           );
         } catch (error) {
-          console.error("Auth check failed:", error);
-          localStorage.removeItem("token");
+          // Keep the cached session if the API is temporarily unavailable.
+          // Clear it only when the server explicitly rejects the token.
+          if (error.response?.status === 401 || error.response?.status === 403) {
+            dispatch(logout());
+          } else {
+            console.error("Auth check failed:", error);
+          }
         }
       }
     };
